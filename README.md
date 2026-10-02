@@ -1,11 +1,29 @@
-<div align="center">
+# 兔k小手机（原作者EE）2026.1.30（在此基础修改发布请告知且标注清楚署名）
+改自EE的ephone——JCY二改———兔k机（小兔主义/Kitty酱）
 
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+还有使用KUKU老师的一些头像框等功能（非常感谢老师）
 
-  <h1>Built with AI Studio</h2>
+X功能接的吃了羊老师的软件（也非常感谢老师！）
 
-  <p>The fastest path from prompt to production with Gemini.</p>
+谢谢helrqxd提供的修改的多个代码和小剧场功能！！！
 
-  <a href="https://aistudio.google.com/apps">Start building</a>
+在此基础修改发布请告知且标注清楚署名
 
-</div>
+还有一些宝宝对兔k机的帮助，很感谢大家
+
+
+如需使用导入角色卡功能请保证：
+
+1.我是SillyTavern酒馆玩家
+
+2.我保证会在征询写卡老师同意后才会导入角色卡
+
+3.我保证绝对不会侮辱辱骂角色
+
+4.我尊重任何创作者，不会贴脸任何老师
+
+5.我会遵守社区规定，不二传兔k机链接，不二传老师角色卡
+
+6.我坚决反对商业化，不会偷取链接和角色卡进行贩卖
+
+7.我保证我是成年人，能对自己的所作所为负责任
