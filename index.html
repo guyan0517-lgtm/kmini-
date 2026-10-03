@@ -8,25 +8,10 @@
     />
 
     <!-- 1. (核心) 为苹果设备设置主屏幕图标 -->
-    <link
-      rel="apple-touch-icon"
-      href="https://i.postimg.cc/Kj8JnRcp/267611-CC01-F8-A3-B4910-A2-C2-FFDE479-DC.jpg"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="152x152"
-      href="https://i.postimg.cc/Kj8JnRcp/267611-CC01-F8-A3-B4910-A2-C2-FFDE479-DC.jpg"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="https://i.postimg.cc/Kj8JnRcp/267611-CC01-F8-A3-B4910-A2-C2-FFDE479-DC.jpg"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="167x167"
-      href="https://i.postimg.cc/Kj8JnRcp/267611-CC01-F8-A3-B4910-A2-C2-FFDE479-DC.jpg"
-    />
+    <link rel="apple-touch-icon" href="icon.png" />
+    <link rel="apple-touch-icon" sizes="152x152" href="icon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="icon.png" />
+    <link rel="apple-touch-icon" sizes="167x167" href="icon.png" />
 
     <!-- 2. (核心) 链接到manifest文件 -->
     <link rel="manifest" href="manifest.json" />
@@ -41,22 +26,18 @@
     />
 
     <!-- 5. (可选) 设置应用在主屏幕上显示的标题 -->
-    <meta name="apple-mobile-web-app-title" content="EPhone（兔k机版）" />
+    <meta name="apple-mobile-web-app-title" content="四半世紀" />
 
     <!-- 6. (兼容) 为部分安卓浏览器提供支持 -->
     <meta name="mobile-web-app-capable" content="yes" />
 
     <!-- 7. (备用) 标准浏览器页签图标 -->
-    <link
-      rel="icon"
-      type="image/png"
-      href="https://i.postimg.cc/Kj8JnRcp/267611-CC01-F8-A3-B4910-A2-C2-FFDE479-DC.jpg"
-    />
+    <link rel="icon" type="image/png" href="icon.png" />
 
-    <title>EPhone（兔k机版）</title>
-    <meta name="description" content="EPhone（兔k机版）- 虚拟手机模拟与角色聊天互动应用" />
-    <meta property="og:title" content="EPhone（兔k机版）" />
-    <meta property="og:description" content="EPhone（兔k机版）- 虚拟手机模拟与角色聊天互动应用" />
+    <title>四半世紀</title>
+    <meta name="description" content="虚拟手机模拟与角色聊天互动应用" />
+    <meta property="og:title" content="四半世紀" />
+    <meta property="og:description" content="虚拟手机模拟与角色聊天互动应用" />
 
     <link rel="stylesheet" href="style.css" />
     <script src="https://unpkg.com/dexie/dist/dexie.js"></script>
@@ -354,10 +335,10 @@
                   <img
                     id="icon-img-forum"
                     src="https://i.postimg.cc/pr0T3WfC/douban-icon.png"
-                    alt="圈子"
+                    alt="书柜"
                   />
                 </div>
-                <span class="label">圈子</span>
+                <span class="label">书柜</span>
               </div>
               <div class="desktop-app-icon" id="lovers-space-app-icon">
                 <div class="icon-bg-desktop">
@@ -1809,14 +1790,13 @@
               </svg>
             </span>
 
-            <span
-              class="action-btn"
-              id="add-dice-btn"
-              title="添加骰子"
-              style="display: inline-flex; align-items: center; justify-content: center; font-size: 16px; cursor: pointer;"
-            >🎲</span>
-
-            <span class="action-btn" id="add-chat-btn">+</span>
+            <div style="position: relative; display: inline-block;">
+              <span class="action-btn" id="add-chat-btn">+</span>
+              <div id="add-contact-dropdown" class="qq-add-dropdown" style="display: none; position: absolute; top: 100%; right: 0; margin-top: 6px; z-index: 1000; width: 110px; background: var(--card-bg, #ffffff); border: 1px solid var(--border-color, #e0e0e0); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); padding: 4px 0;">
+                <button type="button" id="add-choice-friend-btn" class="dropdown-item" style="display: flex; align-items: center; width: 100%; padding: 8px 12px; border: none; background: transparent; color: var(--text-primary); font-size: 13px; cursor: pointer; text-align: left;">添加好友</button>
+                <button type="button" id="add-choice-dice-btn" class="dropdown-item" style="display: flex; align-items: center; width: 100%; padding: 8px 12px; border: none; background: transparent; color: var(--text-primary); font-size: 13px; cursor: pointer; text-align: left;">添加骰子</button>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -5507,56 +5487,34 @@
           <!-- 2. 对方人设卡片 -->
           <!-- ============================== -->
           <div class="settings-group-card moe-card" id="ai-persona-card">
-            <div class="settings-section-title">👤 对方人设</div>
+            <div class="settings-section-title" style="display: flex; justify-content: space-between; align-items: center;">
+              <span>👤 对方人设</span>
+              <button type="button" id="sync-ai-persona-btn" class="moe-btn-mini" style="font-size: 11px; width: 40px; min-width: 40px; max-width: 44px; padding: 0; display: inline-flex; align-items: center; justify-content: center; line-height: 1; height: 20px; box-sizing: border-box;">同步</button>
+            </div>
 
             <div class="form-group" id="ai-persona-group">
               <label for="ai-persona">对方人设</label>
-              <textarea id="ai-persona" rows="3" class="moe-input" placeholder="输入对方的角色设定..."></textarea>
+              <textarea id="ai-persona" rows="10" class="moe-input" placeholder=""></textarea>
             </div>
 
             <div class="form-group" style="margin-top: 8px;">
               <label for="ai-age-input">年龄</label>
               <div style="display: flex; align-items: center; gap: 4px;">
-                <input type="number" id="ai-age-input" class="moe-input" style="width: 52px; min-width: 52px; max-width: 60px; text-align: center; padding: 2px 4px; font-size: 11px;" min="0" max="999">
+                <input type="number" id="ai-age-input" class="moe-input" style="width: 52px; min-width: 52px; max-width: 60px; text-align: center; padding: 2px 4px; font-size: 11px;" min="0" max="999" placeholder="">
                 <span style="font-size: 12px; color: var(--text-secondary);">岁</span>
               </div>
             </div>
 
             <div class="form-group" style="margin-top: 8px;">
-              <label>生日</label>
-              <div style="display: flex; gap: 4px; width: fit-content; align-items: center;">
-                <select id="ai-birthday-month-select" class="moe-input birthday-month-select" style="width: auto; min-width: 44px; padding: 2px 4px; font-size: 11px;">
-                  <option value=""></option>
-                  <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option>
-                  <option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option>
-                  <option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option>
-                </select>
-                <span style="font-size: 11px; color: var(--text-secondary);">月</span>
-                <select id="ai-birthday-day-select" class="moe-input birthday-day-select" style="width: auto; min-width: 44px; padding: 2px 4px; font-size: 11px;">
-                  <option value=""></option>
-                  <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option>
-                  <option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option>
-                  <option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option>
-                  <option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option>
-                  <option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option>
-                  <option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option>
-                  <option value="25">25</option><option value="26">26</option><option value="27">27</option><option value="28">28</option>
-                  <option value="29">29</option><option value="30">30</option><option value="31">31</option>
-                </select>
-                <span style="font-size: 11px; color: var(--text-secondary);">日</span>
-              </div>
+              <label for="ai-birthday-input">生日</label>
+              <input type="text" id="ai-birthday-input" class="moe-input" placeholder="">
             </div>
 
             <div class="form-group" style="margin-top: 8px;">
-              <label for="ai-gender-select">性别</label>
+              <label for="ai-gender-input">性别</label>
               <div style="display: flex; gap: 6px;">
-                <select id="ai-gender-select" class="moe-input" style="width: 64px; flex-shrink: 0; padding: 2px 4px; font-size: 11px;">
-                  <option value=""></option>
-                  <option value="男">男</option>
-                  <option value="女">女</option>
-                  <option value="其他">其他</option>
-                </select>
-                <input type="text" id="ai-gender-note-input" class="moe-input" placeholder="性别备注" style="flex: 1; padding: 2px 6px; font-size: 11px;">
+                <input type="text" id="ai-gender-input" class="moe-input" placeholder="" style="width: 80px; flex-shrink: 0;">
+                <input type="text" id="ai-gender-note-input" class="moe-input" placeholder="" style="flex: 1; padding: 2px 6px; font-size: 11px;">
               </div>
             </div>
 
@@ -5574,58 +5532,33 @@
 
             <div class="form-group" style="margin-top: 4px;">
               <label for="my-name-input">姓名</label>
-              <input type="text" id="my-name-input" class="moe-input" placeholder="输入姓名">
+              <input type="text" id="my-name-input" class="moe-input" placeholder="">
             </div>
 
             <div class="form-group" style="margin-top: 8px;">
               <label for="my-age-input">年龄</label>
               <div style="display: flex; align-items: center; gap: 4px;">
-                <input type="number" id="my-age-input" class="moe-input" style="width: 52px; min-width: 52px; max-width: 60px; text-align: center; padding: 2px 4px; font-size: 11px;" min="0" max="999">
+                <input type="number" id="my-age-input" class="moe-input" style="width: 52px; min-width: 52px; max-width: 60px; text-align: center; padding: 2px 4px; font-size: 11px;" min="0" max="999" placeholder="">
                 <span style="font-size: 12px; color: var(--text-secondary);">岁</span>
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-top: 8px;">
+              <label for="my-birthday-input">生日</label>
+              <input type="text" id="my-birthday-input" class="moe-input" placeholder="">
+            </div>
+
+            <div class="form-group" style="margin-top: 8px;">
+              <label for="my-gender-input">性别</label>
+              <div style="display: flex; gap: 6px;">
+                <input type="text" id="my-gender-input" class="moe-input" placeholder="" style="width: 80px; flex-shrink: 0;">
+                <input type="text" id="my-gender-note-input" class="moe-input" placeholder="" style="flex: 1; padding: 2px 6px; font-size: 11px;">
               </div>
             </div>
 
             <div class="form-group" id="my-persona-group" style="margin-top: 8px;">
               <label for="my-persona">我的人设</label>
-              <textarea id="my-persona" rows="3" class="moe-input" placeholder="输入自己的人设设定..."></textarea>
-            </div>
-
-            <div class="form-group" style="margin-top: 8px;">
-              <label>生日</label>
-              <div style="display: flex; gap: 4px; width: fit-content; align-items: center;">
-                <select id="my-birthday-month-select" class="moe-input birthday-month-select" style="width: auto; min-width: 44px; padding: 2px 4px; font-size: 11px;">
-                  <option value=""></option>
-                  <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option>
-                  <option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option>
-                  <option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option>
-                </select>
-                <span style="font-size: 11px; color: var(--text-secondary);">月</span>
-                <select id="my-birthday-day-select" class="moe-input birthday-day-select" style="width: auto; min-width: 44px; padding: 2px 4px; font-size: 11px;">
-                  <option value=""></option>
-                  <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option>
-                  <option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option>
-                  <option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option>
-                  <option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option>
-                  <option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option>
-                  <option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option>
-                  <option value="25">25</option><option value="26">26</option><option value="27">27</option><option value="28">28</option>
-                  <option value="29">29</option><option value="30">30</option><option value="31">31</option>
-                </select>
-                <span style="font-size: 11px; color: var(--text-secondary);">日</span>
-              </div>
-            </div>
-
-            <div class="form-group" style="margin-top: 8px;">
-              <label for="my-gender-select">性别</label>
-              <div style="display: flex; gap: 6px;">
-                <select id="my-gender-select" class="moe-input" style="width: 64px; flex-shrink: 0; padding: 2px 4px; font-size: 11px;">
-                  <option value=""></option>
-                  <option value="男">男</option>
-                  <option value="女">女</option>
-                  <option value="其他">其他</option>
-                </select>
-                <input type="text" id="my-gender-note-input" class="moe-input" placeholder="性别备注" style="flex: 1; padding: 2px 6px; font-size: 11px;">
-              </div>
+              <textarea id="my-persona" rows="10" class="moe-input" placeholder="输入自己的人设设定..."></textarea>
             </div>
 
             <div id="my-coc-panel-container"></div>
@@ -6660,53 +6593,31 @@
             ><input type="text" id="member-name-input" />
           </div>
           <div class="form-group">
-            <label for="member-persona-input">人设</label
-            ><textarea id="member-persona-input" rows="4"></textarea>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+              <label for="member-persona-input" style="margin-bottom: 0;">人设</label>
+              <button type="button" id="sync-member-persona-btn" class="moe-btn-mini" style="font-size: 11px; width: 40px; min-width: 40px; max-width: 44px; padding: 0; display: inline-flex; align-items: center; justify-content: center; line-height: 1; height: 20px; box-sizing: border-box;">同步</button>
+            </div>
+            <textarea id="member-persona-input" rows="4"></textarea>
           </div>
 
           <div class="form-group">
             <label for="member-age-input">年龄</label>
             <div style="display: flex; align-items: center; gap: 4px;">
-              <input type="number" id="member-age-input" class="moe-input" style="width: 52px; min-width: 52px; max-width: 60px; text-align: center; padding: 2px 4px; font-size: 11px;" min="0" max="999">
+              <input type="number" id="member-age-input" class="moe-input" style="width: 52px; min-width: 52px; max-width: 60px; text-align: center; padding: 2px 4px; font-size: 11px;" min="0" max="999" placeholder="">
               <span style="font-size: 12px; color: var(--text-secondary);">岁</span>
             </div>
           </div>
 
           <div class="form-group">
-            <label>生日</label>
-            <div style="display: flex; gap: 4px; width: fit-content; align-items: center;">
-              <select id="member-birthday-month-select" class="moe-input birthday-month-select" style="width: auto; min-width: 44px; padding: 2px 4px; font-size: 11px;">
-                <option value=""></option>
-                <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option>
-                <option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option>
-                <option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option>
-              </select>
-              <span style="font-size: 11px; color: var(--text-secondary);">月</span>
-              <select id="member-birthday-day-select" class="moe-input birthday-day-select" style="width: auto; min-width: 44px; padding: 2px 4px; font-size: 11px;">
-                <option value=""></option>
-                <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option>
-                <option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option>
-                <option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option>
-                <option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option>
-                <option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option>
-                <option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option>
-                <option value="25">25</option><option value="26">26</option><option value="27">27</option><option value="28">28</option>
-                <option value="29">29</option><option value="30">30</option><option value="31">31</option>
-              </select>
-              <span style="font-size: 11px; color: var(--text-secondary);">日</span>
-            </div>
+            <label for="member-birthday-input">生日</label>
+            <input type="text" id="member-birthday-input" class="moe-input" placeholder="">
           </div>
 
           <div class="form-group">
-            <label for="member-gender-select">性别</label>
+            <label for="member-gender-input">性别</label>
             <div style="display: flex; gap: 6px;">
-              <select id="member-gender-select" class="moe-input" style="width: 64px; flex-shrink: 0; padding: 2px 4px; font-size: 11px;">
-                <option value=""></option>
-                <option value="男">男</option>
-                <option value="女">女</option>
-                <option value="其他">其他</option>
-              </select>
-              <input type="text" id="member-gender-note-input" class="moe-input" placeholder="性别备注" style="flex: 1; padding: 2px 6px; font-size: 11px;" />
+              <input type="text" id="member-gender-input" class="moe-input" placeholder="" style="width: 80px; flex-shrink: 0;">
+              <input type="text" id="member-gender-note-input" class="moe-input" placeholder="" style="flex: 1; padding: 2px 6px; font-size: 11px;" />
             </div>
           </div>
 
@@ -6747,11 +6658,55 @@
       <div class="modal-content">
         <div class="modal-header"><span>导入设定</span></div>
         <div class="modal-body">
-          <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 8px;">选择一个联系人，将其中的我的姓名、人设与面板导入当前群聊：</p>
+          <div style="display: flex; gap: 8px; margin-bottom: 10px;">
+            <button type="button" id="import-tab-contacts" class="moe-btn-mini import-type-tab active" style="flex: 1; padding: 4px 8px; font-size: 12px; cursor: pointer;">联系人</button>
+            <button type="button" id="import-tab-groups" class="moe-btn-mini import-type-tab" style="flex: 1; padding: 4px 8px; font-size: 12px; cursor: pointer;">群聊</button>
+          </div>
           <div id="import-my-persona-list" class="moe-list-box" style="max-height: 280px; overflow-y: auto;"></div>
         </div>
         <div class="modal-footer">
           <button class="cancel" id="cancel-import-my-persona-btn">取消</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="sync-persona-modal" class="modal">
+      <div class="modal-content" style="max-width: 320px;">
+        <div class="modal-header"><span id="sync-persona-modal-title">同步人设</span></div>
+        <div class="modal-body" style="padding: 15px;">
+          <div id="sync-persona-list" class="moe-list-box" style="max-height: 280px; overflow-y: auto;"></div>
+        </div>
+        <div class="modal-footer">
+          <button class="cancel" id="cancel-sync-persona-btn">取消</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="add-contact-choice-modal" class="modal">
+      <div class="modal-content" style="max-width: 260px; text-align: center;">
+        <div class="modal-header"><span>新增</span></div>
+        <div class="modal-body" style="display: flex; flex-direction: column; gap: 10px; padding: 16px 20px;">
+          <button type="button" class="moe-btn" id="add-choice-friend-btn" style="width: 100%;">好友</button>
+          <button type="button" class="moe-btn-secondary" id="add-choice-dice-btn" style="width: 100%;">骰子</button>
+        </div>
+        <div class="modal-footer" style="padding: 8px;">
+          <button type="button" class="cancel" id="cancel-add-choice-btn" style="width: 100%; height: 32px; padding: 4px; font-size: 13px;">取消</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="add-dice-modal" class="modal">
+      <div class="modal-content" style="max-width: 280px;">
+        <div class="modal-header"><span>新增骰子</span></div>
+        <div class="modal-body" style="padding: 15px;">
+          <div class="form-group">
+            <label for="dice-create-name-input">名称</label>
+            <input type="text" id="dice-create-name-input" class="moe-input" placeholder="" value="骰娘">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="cancel" id="cancel-add-dice-btn">取消</button>
+          <button type="button" class="save" id="confirm-add-dice-btn">创建</button>
         </div>
       </div>
     </div>
@@ -6777,9 +6732,9 @@
         </div>
         <div class="modal-footer" style="display: flex; justify-content: space-between; align-items: center;">
           <span class="coc-total-badge">总加点数量: <span id="coc-modal-footer-points">0</span></span>
-          <div style="display: flex; gap: 8px;">
-            <button type="button" class="cancel" id="cancel-coc-skills-modal-btn">关闭</button>
-            <button type="button" class="save" id="save-coc-skills-modal-btn">保存</button>
+          <div style="display: flex; gap: 8px; flex-shrink: 0; align-items: center;">
+            <button type="button" class="cancel" id="cancel-coc-skills-modal-btn" style="width: auto; min-width: 48px; max-width: 72px; height: 26px; padding: 2px 10px; font-size: 11px; white-space: nowrap; line-height: 20px; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box; border-radius: 6px;">返回</button>
+            <button type="button" class="save" id="save-coc-skills-modal-btn" style="width: auto; min-width: 48px; max-width: 72px; height: 26px; padding: 2px 10px; font-size: 11px; white-space: nowrap; line-height: 20px; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box; border-radius: 6px;">保存</button>
           </div>
         </div>
       </div>
@@ -8377,11 +8332,11 @@ lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer
           <!-- 写作规范 -->
           <div class="fanfic-row full-width">
             <label>文风 / 写作规范</label>
-            <input
-              type="text"
+            <textarea
               id="fanfic-style-input"
+              rows="2"
               placeholder="例: 心理描写细腻，第一人称..."
-            />
+            ></textarea>
           </div>
 
           <!-- 世界观 -->
@@ -18309,15 +18264,20 @@ lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer
             const preset = presets[i];
 
             if (preset) {
-              // 如果这个卡槽有数据，就渲染成“已填充”的样式
+              const isDataUrl = preset.url && preset.url.startsWith("data:");
+              const displayUrl = isDataUrl ? "本地 Base64 数据" : (preset.url || "");
               slot.innerHTML = `
-			                <div class="font-preview-text" data-preset-id="${preset.id}">Abc 你好</div>
-			                <div class="font-preset-info">名称: ${preset.name}</div>
-			                <div class="font-preset-actions">
-			                    <button class="preset-btn apply-btn" data-preset-id="${preset.id}">应用</button>
-			                    <button class="preset-btn delete-btn delete" data-preset-id="${preset.id}">删除</button>
-			                </div>
-			            `;
+                <div class="font-preview-text" data-preset-id="${preset.id}">Abc 你好</div>
+                <div class="font-preset-info" style="font-weight: 600; margin-bottom: 4px;">名称: ${preset.name}</div>
+                <div class="font-url-edit-row" style="display: flex; gap: 4px; margin-bottom: 6px; align-items: center;">
+                  <input type="text" class="moe-input font-url-input" data-preset-id="${preset.id}" value="${displayUrl.replace(/"/g, '&quot;')}" ${isDataUrl ? "disabled" : ""} placeholder="字体 URL" style="flex: 1; font-size: 11px; padding: 2px 6px; height: 22px; box-sizing: border-box;">
+                  <button type="button" class="preset-btn update-font-url-btn" data-preset-id="${preset.id}" ${isDataUrl ? "disabled" : ""}>保存</button>
+                </div>
+                <div class="font-preset-actions">
+                  <button class="preset-btn apply-btn" data-preset-id="${preset.id}">应用</button>
+                  <button class="preset-btn delete-btn delete" data-preset-id="${preset.id}">删除</button>
+                </div>
+              `;
             } else {
               // 如果这个卡槽在数据库中没有对应的数据，就渲染成“空卡槽”的样式
               slot.classList.add("empty");
@@ -18374,6 +18334,30 @@ lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer
          * 为预设卡槽中的所有按钮统一添加事件监听器
          */
         function addFontPresetButtonListeners() {
+          document.querySelectorAll(".update-font-url-btn").forEach((btn) => {
+            btn.onclick = async () => {
+              const presetId = btn.dataset.presetId;
+              const input = document.querySelector(`.font-url-input[data-preset-id="${presetId}"]`);
+              if (!input) return;
+              const newUrl = input.value.trim();
+              if (!newUrl || !newUrl.startsWith("http")) {
+                if (typeof window.showCustomAlert === "function") window.showCustomAlert("提示", "请输入有效的 HTTP/HTTPS 链接");
+                else alert("请输入有效的 HTTP/HTTPS 链接");
+                return;
+              }
+              const presets = await db.fontPresets.toArray();
+              const p = presets.find(x => x.id === presetId);
+              if (p) {
+                p.url = newUrl;
+                await db.fontPresets.put(p);
+                const styleEl = document.getElementById(`font-style-${presetId}`);
+                if (styleEl) styleEl.remove();
+                loadFontForPreview(p);
+                if (typeof window.showCustomAlert === "function") window.showCustomAlert("提示", "字体 URL 已成功保存");
+                else alert("字体 URL 已成功保存");
+              }
+            };
+          });
           document.querySelectorAll(".upload-url-btn").forEach((btn) => {
             btn.onclick = () =>
               handleUploadFontUrl(parseInt(btn.dataset.slotIndex));
@@ -54537,30 +54521,149 @@ ${libraryList}
               displayArea.classList.toggle("show-lyrics");
             });
 
-          const addDiceBtn = document.getElementById("add-dice-btn");
-          if (addDiceBtn) {
-            addDiceBtn.addEventListener("click", async () => {
+          const addContactChoiceModal = document.getElementById("add-contact-choice-modal");
+          const addDiceModal = document.getElementById("add-dice-modal");
+          const addChoiceFriendBtn = document.getElementById("add-choice-friend-btn");
+          const addChoiceDiceBtn = document.getElementById("add-choice-dice-btn");
+          const cancelAddChoiceBtn = document.getElementById("cancel-add-choice-btn");
+          const cancelAddDiceBtn = document.getElementById("cancel-add-dice-btn");
+          const confirmAddDiceBtn = document.getElementById("confirm-add-dice-btn");
+          const diceCreateAvatarFile = document.getElementById("dice-create-avatar-file");
+          const diceCreateAvatarInput = document.getElementById("dice-create-avatar-input");
+          const diceCreateAvatarPreview = document.getElementById("dice-create-avatar-preview");
+          const diceCreateNameInput = document.getElementById("dice-create-name-input");
+
+          const DEFAULT_DICE_AVATAR = "https://api.iconify.design/lucide:dice-5.svg?color=%23ff7f50";
+
+          if (cancelAddChoiceBtn && addContactChoiceModal) {
+            cancelAddChoiceBtn.addEventListener("click", () => {
+              addContactChoiceModal.classList.remove("visible");
+            });
+          }
+
+          if (cancelAddDiceBtn && addDiceModal) {
+            cancelAddDiceBtn.addEventListener("click", () => {
+              addDiceModal.classList.remove("visible");
+            });
+          }
+
+          if (diceCreateAvatarInput && diceCreateAvatarPreview) {
+            diceCreateAvatarInput.addEventListener("input", () => {
+              const val = diceCreateAvatarInput.value.trim();
+              diceCreateAvatarPreview.src = val || DEFAULT_DICE_AVATAR;
+            });
+          }
+
+          if (diceCreateAvatarFile && diceCreateAvatarPreview) {
+            diceCreateAvatarFile.addEventListener("change", (e) => {
+              const file = e.target.files && e.target.files[0];
+              if (!file) return;
+              const reader = new FileReader();
+              reader.onload = (evt) => {
+                diceCreateAvatarPreview.src = evt.target.result;
+                if (diceCreateAvatarInput) {
+                  diceCreateAvatarInput.value = evt.target.result;
+                }
+              };
+              reader.readAsDataURL(file);
+            });
+          }
+
+          async function createDiceChat(name, avatar) {
+            const finalAvatar = (avatar && avatar.trim()) ? avatar.trim() : DEFAULT_DICE_AVATAR;
+            const newChatId = "chat_" + Date.now();
+            const diceChat = {
+              id: newChatId,
+              name: name.trim(),
+              roleType: "dice",
+              isGroup: false,
+              isPinned: false,
+              npcLibrary: [],
+              relationship: {
+                status: "friend",
+                blockedTimestamp: null,
+                applicationReason: "",
+              },
+              status: {
+                text: "在线",
+                lastUpdate: Date.now(),
+                isBusy: false,
+              },
+              settings: {
+                aiPersona: "",
+                myPersona: "我是谁呀。",
+                maxMemory: 10,
+                aiAvatar: finalAvatar,
+                myAvatar: defaultAvatar,
+                background: "",
+                theme: "default",
+                fontSize: 13,
+                customCss: "",
+                linkedWorldBookIds: [],
+                aiAvatarLibrary: [],
+                stickerLibrary: [],
+                linkedMemories: [],
+                offlineMode: {
+                  enabled: false,
+                  prompt: "",
+                  style: "",
+                  wordCount: 300,
+                  presets: [],
+                },
+                timePerceptionEnabled: true,
+                customTime: "",
+                isCoupleAvatar: false,
+                coupleAvatarDescription: "",
+                weiboProfession: "",
+                weiboInstruction: "",
+              },
+              history: [],
+              musicData: { totalTime: 0 },
+              characterPhoneData: {
+                lastGenerated: null,
+                chats: {},
+                shoppingCart: [],
+                memos: [],
+                browserHistory: [],
+                photoAlbum: [],
+                bank: { balance: 0, transactions: [] },
+                trajectory: [],
+                appUsage: [],
+                diary: [],
+              },
+              houseData: null,
+            };
+
+            state.chats[newChatId] = diceChat;
+            await db.chats.put(diceChat);
+            renderChatList();
+          }
+
+          if (confirmAddDiceBtn) {
+            confirmAddDiceBtn.addEventListener("click", async () => {
+              const name = diceCreateNameInput ? diceCreateNameInput.value.trim() : "";
+              if (!name) {
+                alert("请输入骰子名称");
+                return;
+              }
+              const avatar = diceCreateAvatarPreview ? diceCreateAvatarPreview.src : DEFAULT_DICE_AVATAR;
+              await createDiceChat(name, avatar);
+              if (addDiceModal) addDiceModal.classList.remove("visible");
+            });
+          }
+
+          if (addChoiceFriendBtn) {
+            addChoiceFriendBtn.addEventListener("click", async () => {
+              if (addContactChoiceModal) addContactChoiceModal.classList.remove("visible");
               const name = await showCustomPrompt(
-                "添加骰子",
-                "请输入骰子角色的名字",
-                "骰娘",
+                "创建新聊天",
+                "请输入Ta的名字",
               );
               if (name && name.trim()) {
-                const avatar = await showCustomPrompt(
-                  "骰子头像",
-                  "请输入头像图片链接，留空使用默认骰子头像",
-                  "https://api.iconify.design/lucide:dice-5.svg?color=%23ff7f50",
-                );
-                const finalAvatar =
-                  avatar && avatar.trim()
-                    ? avatar.trim()
-                    : "https://api.iconify.design/lucide:dice-5.svg?color=%23ff7f50";
                 const newChatId = "chat_" + Date.now();
-
-                const diceChat = {
+                const newChat = {
                   id: newChatId,
                   name: name.trim(),
-                  roleType: "dice",
                   isGroup: false,
                   isPinned: false,
                   npcLibrary: [],
@@ -54575,10 +54678,10 @@ ${libraryList}
                     isBusy: false,
                   },
                   settings: {
-                    aiPersona: "",
+                    aiPersona: "你是谁呀。",
                     myPersona: "我是谁呀。",
                     maxMemory: 10,
-                    aiAvatar: finalAvatar,
+                    aiAvatar: defaultAvatar,
                     myAvatar: defaultAvatar,
                     background: "",
                     theme: "default",
@@ -54618,92 +54721,45 @@ ${libraryList}
                   },
                   houseData: null,
                 };
-
-                state.chats[newChatId] = diceChat;
-                await db.chats.put(diceChat);
-                renderChatList();
-              }
-            });
-          }
-
-          document
-            .getElementById("add-chat-btn")
-            .addEventListener("click", async () => {
-              const name = await showCustomPrompt(
-                "创建新聊天",
-                "请输入Ta的名字",
-              );
-              if (name && name.trim()) {
-                const newChatId = "chat_" + Date.now();
-
-                const newChat = {
-                  id: newChatId,
-                  name: name.trim(),
-                  isGroup: false,
-                  isPinned: false,
-                  npcLibrary: [], // 角色专属NPC库
-                  relationship: {
-                    status: "friend",
-                    blockedTimestamp: null,
-                    applicationReason: "",
-                  },
-                  status: {
-                    text: "在线",
-                    lastUpdate: Date.now(),
-                    isBusy: false,
-                  },
-                  settings: {
-                    aiPersona: "你是谁呀。",
-                    myPersona: "我是谁呀。",
-                    maxMemory: 10,
-                    aiAvatar: defaultAvatar,
-                    myAvatar: defaultAvatar,
-                    background: "",
-                    theme: "default",
-                    fontSize: 13,
-                    customCss: "",
-                    linkedWorldBookIds: [],
-                    aiAvatarLibrary: [],
-                    stickerLibrary: [], // 专属表情库
-                    // === 以下是本次修复新增的初始化属性 ===
-                    linkedMemories: [], // 【修复核心】初始化记忆互通数组
-                    offlineMode: {
-                      enabled: false,
-                      prompt: "",
-                      style: "",
-                      wordCount: 300,
-                      presets: [],
-                    }, // 初始化线下模式
-                    timePerceptionEnabled: true, // 初始化时间感知
-                    customTime: "", // 初始化自定义时间
-                    isCoupleAvatar: false, // 初始化情侣头像开关
-                    coupleAvatarDescription: "", // 初始化情侣头像描述
-                    weiboProfession: "", // 初始化微博职业
-                    weiboInstruction: "", // 初始化微博指令
-                  },
-                  history: [],
-                  musicData: { totalTime: 0 },
-                  // 手机数据也保持完整
-                  characterPhoneData: {
-                    lastGenerated: null,
-                    chats: {},
-                    shoppingCart: [],
-                    memos: [],
-                    browserHistory: [],
-                    photoAlbum: [],
-                    bank: { balance: 0, transactions: [] },
-                    trajectory: [],
-                    appUsage: [],
-                    diary: [],
-                  },
-                  houseData: null,
-                };
-
                 state.chats[newChatId] = newChat;
                 await db.chats.put(newChat);
                 renderChatList();
               }
             });
+          }
+
+          const addChatBtn = document.getElementById("add-chat-btn");
+          const addContactDropdown = document.getElementById("add-contact-dropdown");
+
+          if (addChatBtn && addContactDropdown) {
+            addChatBtn.addEventListener("click", (e) => {
+              e.stopPropagation();
+              const isVisible = addContactDropdown.style.display === "block";
+              addContactDropdown.style.display = isVisible ? "none" : "block";
+            });
+            document.addEventListener("click", (e) => {
+              if (addContactDropdown && !addContactDropdown.contains(e.target) && e.target !== addChatBtn) {
+                addContactDropdown.style.display = "none";
+              }
+            });
+          }
+
+          if (addChoiceDiceBtn) {
+            addChoiceDiceBtn.addEventListener("click", () => {
+              if (addContactDropdown) addContactDropdown.style.display = "none";
+              if (addContactChoiceModal) addContactChoiceModal.classList.remove("visible");
+              if (diceCreateNameInput) diceCreateNameInput.value = "骰娘";
+              if (diceCreateAvatarInput) diceCreateAvatarInput.value = "";
+              if (diceCreateAvatarPreview) diceCreateAvatarPreview.src = DEFAULT_DICE_AVATAR;
+              if (addDiceModal) addDiceModal.classList.add("visible");
+            });
+          }
+
+          if (addChoiceFriendBtn) {
+            addChoiceFriendBtn.addEventListener("click", () => {
+              if (addContactDropdown) addContactDropdown.style.display = "none";
+            });
+          }
 
           // 创建群聊按钮现在打开联系人选择器
           document
@@ -55964,6 +56020,11 @@ ${libraryList}
           }
 
           function setBirthdaySelects(prefix, val) {
+            const inp = document.getElementById(`${prefix}-birthday-input`);
+            if (inp) {
+              inp.value = val || "";
+              return;
+            }
             const mSel = document.getElementById(`${prefix}-birthday-month-select`);
             const dSel = document.getElementById(`${prefix}-birthday-day-select`);
             if (!mSel || !dSel) return;
@@ -55983,10 +56044,26 @@ ${libraryList}
           }
 
           function getBirthdayFromSelects(prefix) {
+            const inp = document.getElementById(`${prefix}-birthday-input`);
+            if (inp) return inp.value.trim();
             const mSel = document.getElementById(`${prefix}-birthday-month-select`);
             const dSel = document.getElementById(`${prefix}-birthday-day-select`);
             if (!mSel || !dSel || !mSel.value) return "";
             return dSel.value ? `${mSel.value}月${dSel.value}日` : `${mSel.value}月`;
+          }
+
+          function setGenderInputValue(prefix, val) {
+            const inp = document.getElementById(`${prefix}-gender-input`);
+            if (inp) inp.value = val || "";
+            const sel = document.getElementById(`${prefix}-gender-select`);
+            if (sel) sel.value = val || "";
+          }
+
+          function getGenderInputValue(prefix) {
+            const inp = document.getElementById(`${prefix}-gender-input`);
+            if (inp) return inp.value.trim();
+            const sel = document.getElementById(`${prefix}-gender-select`);
+            return sel ? sel.value : "";
           }
 
           const chatSettingsModal = document.getElementById(
@@ -56426,11 +56503,11 @@ ${libraryList}
               // 显隐对方人设卡片与导入我的人设按钮
               const aiPersonaCard = document.getElementById("ai-persona-card");
               if (aiPersonaCard) {
-                aiPersonaCard.style.display = isGroup ? "none" : "block";
+                aiPersonaCard.style.display = (isGroup || chat.roleType === "dice") ? "none" : "block";
               }
               const importMyPersonaBtn = document.getElementById("import-my-persona-btn");
               if (importMyPersonaBtn) {
-                importMyPersonaBtn.style.display = isGroup ? "inline-block" : "none";
+                importMyPersonaBtn.style.display = "inline-block";
               }
 
               // --- 加载表单数据 ---
@@ -56454,8 +56531,7 @@ ${libraryList}
               document.getElementById("my-persona").value =
                 chat.settings.myPersona || "";
               setBirthdaySelects("my", chat.settings.myBirthday);
-              document.getElementById("my-gender-select").value =
-                chat.settings.myGender || "";
+              setGenderInputValue("my", chat.settings.myGender);
               document.getElementById("my-gender-note-input").value =
                 chat.settings.myGenderNote || "";
               if (window.myCocPanel) {
@@ -56624,8 +56700,7 @@ ${libraryList}
                   chat.settings.aiPersona || "";
                 setAgeSelectValue("ai-age-input", chat.settings.age);
                 setBirthdaySelects("ai", chat.settings.birthday);
-                document.getElementById("ai-gender-select").value =
-                  chat.settings.gender || "";
+                setGenderInputValue("ai", chat.settings.gender);
                 document.getElementById("ai-gender-note-input").value =
                   chat.settings.genderNote || "";
                 if (window.aiCocPanel) {
@@ -56903,8 +56978,7 @@ ${libraryList}
               member.persona;
             setAgeSelectValue("member-age-input", member.age);
             setBirthdaySelects("member", member.birthday);
-            document.getElementById("member-gender-select").value =
-              member.gender || "";
+            setGenderInputValue("member", member.gender);
             document.getElementById("member-gender-note-input").value =
               member.genderNote || "";
             document.getElementById("member-avatar-preview").src =
@@ -56961,9 +57035,7 @@ ${libraryList}
               ).value;
               member.age = getAgeSelectValue("member-age-input");
               member.birthday = getBirthdayFromSelects("member");
-              member.gender = document
-                .getElementById("member-gender-select")
-                .value;
+              member.gender = getGenderInputValue("member");
               member.genderNote = document
                 .getElementById("member-gender-note-input")
                 .value.trim();
@@ -56991,88 +57063,391 @@ ${libraryList}
             });
 
           const importMyPersonaBtn = document.getElementById("import-my-persona-btn");
+          const importAiPersonaBtn = document.getElementById("import-ai-persona-btn");
           const importMyPersonaModal = document.getElementById("import-my-persona-modal");
           const cancelImportMyPersonaBtn = document.getElementById("cancel-import-my-persona-btn");
 
-          if (importMyPersonaBtn && importMyPersonaModal) {
-            importMyPersonaBtn.addEventListener("click", () => {
+          let importPersonaTarget = "my";
+
+          if (importMyPersonaModal) {
+            const importTabContacts = document.getElementById("import-tab-contacts");
+            const importTabGroups = document.getElementById("import-tab-groups");
+            let currentImportPersonaTab = "contacts";
+
+            function updateImportPersonaTabsUI() {
+              if (importTabContacts && importTabGroups) {
+                if (currentImportPersonaTab === "contacts") {
+                  importTabContacts.classList.add("active");
+                  importTabGroups.classList.remove("active");
+                } else {
+                  importTabGroups.classList.add("active");
+                  importTabContacts.classList.remove("active");
+                }
+              }
+            }
+
+            function renderImportPersonaList() {
               const listEl = document.getElementById("import-my-persona-list");
               if (!listEl) return;
               listEl.innerHTML = "";
-
-              const contacts = Object.values(state.chats).filter((c) => !c.isGroup);
-              if (contacts.length === 0) {
-                listEl.innerHTML = '<p style="text-align:center; color:var(--text-secondary); padding:20px;">暂无单聊联系人</p>';
+              const currentChatId = state.activeChatId;
+              let items = [];
+              if (currentImportPersonaTab === "contacts") {
+                items = Object.values(state.chats).filter((c) => !c.isGroup && c.id !== currentChatId);
               } else {
-                contacts.forEach((contact) => {
-                  const item = document.createElement("div");
-                  item.style.display = "flex";
-                  item.style.alignItems = "center";
-                  item.style.justifyContent = "space-between";
-                  item.style.padding = "8px 10px";
-                  item.style.borderBottom = "1px solid var(--border-color)";
-                  item.style.cursor = "pointer";
-                  item.style.backgroundColor = "var(--card-bg)";
-                  item.style.borderRadius = "6px";
-                  item.style.marginBottom = "6px";
+                items = Object.values(state.chats).filter((c) => c.isGroup && c.id !== currentChatId);
+              }
 
-                  const avatarUrl = contact.settings?.aiAvatar || defaultAvatar;
-                  const myName = contact.settings?.myNickname || contact.settings?.remarkName || "未设置";
-                  const myPersonaText = contact.settings?.myPersona || "无设定";
+              if (items.length === 0) {
+                const emptyTip = currentImportPersonaTab === "contacts" ? "暂无其他联系人" : "暂无其他群聊";
+                listEl.innerHTML = `<p style="text-align:center; color:var(--text-secondary); padding:20px; font-size:12px;">${emptyTip}</p>`;
+                return;
+              }
 
-                  item.innerHTML = `
-                    <div style="display:flex; align-items:center; gap:8px; overflow:hidden;">
-                      <img src="${avatarUrl}" style="width:36px; height:36px; border-radius:50%; object-fit:cover; flex-shrink:0;">
-                      <div style="overflow:hidden;">
-                        <div style="font-weight:600; font-size:13px; color:var(--text-primary); text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">${contact.name}</div>
-                      </div>
+              items.forEach((sourceChat) => {
+                const item = document.createElement("div");
+                item.style.display = "flex";
+                item.style.alignItems = "center";
+                item.style.justifyContent = "space-between";
+                item.style.padding = "8px 10px";
+                item.style.borderBottom = "1px solid var(--border-color)";
+                item.style.cursor = "pointer";
+                item.style.backgroundColor = "var(--card-bg)";
+                item.style.borderRadius = "6px";
+                item.style.marginBottom = "6px";
+
+                const avatarUrl = sourceChat.settings?.aiAvatar || sourceChat.settings?.groupAvatar || defaultAvatar;
+
+                item.innerHTML = `
+                  <div style="display:flex; align-items:center; gap:8px; overflow:hidden;">
+                    <img src="${avatarUrl}" style="width:36px; height:36px; border-radius:50%; object-fit:cover; flex-shrink:0;">
+                    <div style="overflow:hidden;">
+                      <div style="font-weight:600; font-size:13px; color:var(--text-primary); text-overflow:ellipsis; overflow:hidden; white-space:nowrap;">${sourceChat.name}</div>
                     </div>
-                    <button type="button" class="moe-btn-mini import-contact-act-btn" style="flex-shrink:0; width:44px; min-width:44px; text-align:center; padding:3px 0; font-size:11px; box-sizing:border-box;">导入</button>
-                  `;
+                  </div>
+                  <button type="button" class="moe-btn-mini import-contact-act-btn">导入</button>
+                `;
 
-                  item.addEventListener("click", () => {
-                    const importedName = contact.settings?.myName || contact.settings?.myNickname || "";
+                item.addEventListener("click", () => {
+                  const s = sourceChat.settings || {};
+                  if (importPersonaTarget === "ai") {
+                    if (sourceChat.name) {
+                      const chatNameInput = document.getElementById("chat-name-input");
+                      if (chatNameInput) chatNameInput.value = sourceChat.name;
+                    }
+                    if (s.aiPersona) {
+                      const aiPersonaInput = document.getElementById("ai-persona");
+                      if (aiPersonaInput) aiPersonaInput.value = s.aiPersona;
+                    }
+                    if (s.age) {
+                      const aiAgeInput = document.getElementById("ai-age-input");
+                      if (aiAgeInput) aiAgeInput.value = s.age;
+                    }
+                    if (s.birthday) {
+                      const aiBirthdayInput = document.getElementById("ai-birthday-input");
+                      if (aiBirthdayInput) aiBirthdayInput.value = s.birthday;
+                    }
+                    if (s.gender) {
+                      const aiGenderInput = document.getElementById("ai-gender-input");
+                      if (aiGenderInput) aiGenderInput.value = s.gender;
+                    }
+                    if (s.genderNote) {
+                      const aiGenderNoteInput = document.getElementById("ai-gender-note-input");
+                      if (aiGenderNoteInput) aiGenderNoteInput.value = s.genderNote;
+                    }
+                    if (s.aiCocPanel && window.aiCocPanel) {
+                      window.aiCocPanel.setData(s.aiCocPanel);
+                    }
+                  } else {
+                    const importedName = s.myName || s.myNickname || "";
                     if (importedName) {
                       const myNameInput = document.getElementById("my-name-input");
                       if (myNameInput) myNameInput.value = importedName;
                       const nickInput = document.getElementById("my-group-nickname-input");
                       if (nickInput) nickInput.value = importedName;
                     }
-                    if (contact.settings?.myAge) {
-                      setAgeSelectValue("my-age-input", contact.settings.myAge);
+                    if (s.myAge) {
+                      setAgeSelectValue("my-age-input", s.myAge);
                     }
-                    if (contact.settings?.myBirthday) {
-                      setBirthdaySelects("my", contact.settings.myBirthday);
+                    if (s.myBirthday) {
+                      setBirthdaySelects("my", s.myBirthday);
                     }
-                    if (contact.settings?.myGender) {
-                      const genderSelect = document.getElementById("my-gender-select");
-                      if (genderSelect) genderSelect.value = contact.settings.myGender;
+                    if (s.myGender) {
+                      setGenderInputValue("my", s.myGender);
                     }
-                    if (contact.settings?.myGenderNote) {
+                    if (s.myGenderNote) {
                       const gNoteInput = document.getElementById("my-gender-note-input");
-                      if (gNoteInput) gNoteInput.value = contact.settings.myGenderNote;
+                      if (gNoteInput) gNoteInput.value = s.myGenderNote;
                     }
-                    if (contact.settings?.myPersona) {
-                      document.getElementById("my-persona").value = contact.settings.myPersona;
+                    if (s.myPersona) {
+                      const myPersonaInput = document.getElementById("my-persona");
+                      if (myPersonaInput) myPersonaInput.value = s.myPersona;
                     }
-                    if (contact.settings?.myCocPanel && window.myCocPanel) {
-                      window.myCocPanel.setData(contact.settings.myCocPanel);
+                    if (s.myCocPanel && window.myCocPanel) {
+                      window.myCocPanel.setData(s.myCocPanel);
                     }
-                    importMyPersonaModal.classList.remove("visible");
-                    alert("导入成功");
-                  });
-
-                  listEl.appendChild(item);
+                  }
+                  importMyPersonaModal.classList.remove("visible");
                 });
-              }
 
-              importMyPersonaModal.classList.add("visible");
-            });
+                listEl.appendChild(item);
+              });
+            }
+
+            if (importTabContacts) {
+              importTabContacts.addEventListener("click", () => {
+                currentImportPersonaTab = "contacts";
+                updateImportPersonaTabsUI();
+                renderImportPersonaList();
+              });
+            }
+
+            if (importTabGroups) {
+              importTabGroups.addEventListener("click", () => {
+                currentImportPersonaTab = "groups";
+                updateImportPersonaTabsUI();
+                renderImportPersonaList();
+              });
+            }
+
+            if (importMyPersonaBtn) {
+              importMyPersonaBtn.addEventListener("click", () => {
+                importPersonaTarget = "my";
+                currentImportPersonaTab = "contacts";
+                updateImportPersonaTabsUI();
+                renderImportPersonaList();
+                importMyPersonaModal.classList.add("visible");
+              });
+            }
+
+            if (importAiPersonaBtn) {
+              importAiPersonaBtn.addEventListener("click", () => {
+                importPersonaTarget = "ai";
+                currentImportPersonaTab = "contacts";
+                updateImportPersonaTabsUI();
+                renderImportPersonaList();
+                importMyPersonaModal.classList.add("visible");
+              });
+            }
           }
 
           if (cancelImportMyPersonaBtn && importMyPersonaModal) {
             cancelImportMyPersonaBtn.addEventListener("click", () => {
               importMyPersonaModal.classList.remove("visible");
+            });
+          }
+
+          // 同步人设功能实现
+          const syncAiPersonaBtn = document.getElementById("sync-ai-persona-btn");
+          const syncMemberPersonaBtn = document.getElementById("sync-member-persona-btn");
+          const syncPersonaModal = document.getElementById("sync-persona-modal");
+          const cancelSyncPersonaBtn = document.getElementById("cancel-sync-persona-btn");
+          const syncPersonaList = document.getElementById("sync-persona-list");
+
+          function normalizeNameStr(str) {
+            return str ? String(str).trim().toLowerCase() : "";
+          }
+
+          function checkNameMatched(nameA, nameB) {
+            const a = normalizeNameStr(nameA);
+            const b = normalizeNameStr(nameB);
+            if (!a || !b) return false;
+            return a === b || a.includes(b) || b.includes(a);
+          }
+
+          if (cancelSyncPersonaBtn && syncPersonaModal) {
+            cancelSyncPersonaBtn.addEventListener("click", () => {
+              syncPersonaModal.classList.remove("visible");
+            });
+          }
+
+          if (syncAiPersonaBtn && syncPersonaModal && syncPersonaList) {
+            syncAiPersonaBtn.addEventListener("click", () => {
+              if (!state.activeChatId) return;
+              const currentChat = state.chats[state.activeChatId];
+              if (!currentChat || currentChat.isGroup) return;
+
+              const targetNames = [
+                currentChat.name,
+                currentChat.title,
+                currentChat.settings?.aiName,
+                currentChat.settings?.myName
+              ].map(normalizeNameStr).filter(Boolean);
+
+              const friendDisplayName = currentChat.settings?.aiName || currentChat.name || currentChat.title || "好友";
+
+              if (targetNames.length === 0) {
+                if (typeof window.showCustomAlert === "function") window.showCustomAlert("提示", "未找到当前好友名称");
+                return;
+              }
+
+              syncPersonaList.innerHTML = "";
+              const matches = [];
+
+              Object.values(state.chats).forEach((c) => {
+                if (c.isGroup && Array.isArray(c.members)) {
+                  c.members.forEach((m) => {
+                    const mNames = [m.name, m.nickname, m.card, m.originalName].map(normalizeNameStr).filter(Boolean);
+                    const matched = targetNames.some(tn => mNames.some(mn => checkNameMatched(tn, mn)));
+                    if (matched) {
+                      matches.push({
+                        sourceName: c.name || c.title || "群聊",
+                        memberName: m.name || m.nickname || friendDisplayName,
+                        persona: m.persona || "",
+                        age: m.age || "",
+                        birthday: m.birthday || "",
+                        gender: m.gender || "",
+                        genderNote: m.genderNote || "",
+                        cocPanel: m.cocPanel || null
+                      });
+                    }
+                  });
+                }
+              });
+
+              if (matches.length === 0) {
+                syncPersonaList.innerHTML = `<p style="text-align:center; color:var(--text-secondary); padding:20px; font-size:12px;">暂未在群聊中找到同名成员的人设</p>`;
+              } else {
+                matches.forEach((item) => {
+                  const row = document.createElement("div");
+                  row.style.cssText = "display:flex; flex-direction:column; gap:6px; padding:10px; background:var(--card-bg); border:1px solid var(--border-color); border-radius:8px; margin-bottom:8px;";
+
+                  const previewText = item.persona ? (item.persona.length > 40 ? item.persona.slice(0, 40) + "..." : item.persona) : "暂无人设文本";
+                  row.innerHTML = `
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                      <strong style="font-size:12px; color:var(--text-primary);">${item.sourceName} - ${item.memberName}</strong>
+                      <button type="button" class="moe-btn-mini sync-apply-btn" style="padding:2px 8px; font-size:11px;">同步</button>
+                    </div>
+                    <div style="font-size:11px; color:var(--text-secondary); line-height:1.4;">${previewText}</div>
+                  `;
+
+                  row.querySelector(".sync-apply-btn").addEventListener("click", () => {
+                    const aiPersonaInput = document.getElementById("ai-persona");
+                    if (aiPersonaInput) aiPersonaInput.value = item.persona;
+                    const aiAgeInput = document.getElementById("ai-age-input");
+                    if (aiAgeInput) aiAgeInput.value = item.age;
+                    const aiBirthdayInput = document.getElementById("ai-birthday-input");
+                    if (aiBirthdayInput) aiBirthdayInput.value = item.birthday;
+                    const aiGenderInput = document.getElementById("ai-gender-input");
+                    if (aiGenderInput) aiGenderInput.value = item.gender;
+                    const aiGenderNoteInput = document.getElementById("ai-gender-note-input");
+                    if (aiGenderNoteInput) aiGenderNoteInput.value = item.genderNote;
+                    if (item.cocPanel && window.aiCocPanel) {
+                      window.aiCocPanel.setData(item.cocPanel);
+                    }
+                    syncPersonaModal.classList.remove("visible");
+                    if (typeof window.showCustomAlert === "function") {
+                      window.showCustomAlert("提示", "已成功同步人设");
+                    } else {
+                      alert("已成功同步人设");
+                    }
+                  });
+
+                  syncPersonaList.appendChild(row);
+                });
+              }
+
+              const titleEl = document.getElementById("sync-persona-modal-title");
+              if (titleEl) titleEl.textContent = `同步 ${friendDisplayName} 的人设`;
+              syncPersonaModal.classList.add("visible");
+            });
+          }
+
+          if (syncMemberPersonaBtn && syncPersonaModal && syncPersonaList) {
+            syncMemberPersonaBtn.addEventListener("click", () => {
+              const memberNameInput = document.getElementById("member-name-input");
+              const memberName = memberNameInput ? memberNameInput.value.trim() : "";
+              if (!memberName) {
+                if (typeof window.showCustomAlert === "function") window.showCustomAlert("提示", "请先输入成员名字");
+                return;
+              }
+
+              syncPersonaList.innerHTML = "";
+              const matches = [];
+
+              Object.values(state.chats).forEach((c) => {
+                if (!c.isGroup) {
+                  const cNames = [c.name, c.title, c.settings?.aiName].map(normalizeNameStr).filter(Boolean);
+                  if (cNames.some(cn => checkNameMatched(cn, memberName))) {
+                    matches.push({
+                      sourceName: `私聊: ${c.name || c.title || memberName}`,
+                      memberName: memberName,
+                      persona: c.settings?.aiPersona || "",
+                      age: c.settings?.aiAge || "",
+                      birthday: c.settings?.aiBirthday || "",
+                      gender: c.settings?.aiGender || "",
+                      genderNote: c.settings?.aiGenderNote || "",
+                      cocPanel: c.settings?.aiCocPanel || null
+                    });
+                  }
+                }
+              });
+
+              Object.values(state.chats).forEach((c) => {
+                if (c.isGroup && Array.isArray(c.members)) {
+                  c.members.forEach((m) => {
+                    const mNames = [m.name, m.nickname, m.card, m.originalName].map(normalizeNameStr).filter(Boolean);
+                    if (mNames.some(mn => checkNameMatched(mn, memberName))) {
+                      matches.push({
+                        sourceName: `群聊: ${c.name || c.title || "群聊"}`,
+                        memberName: m.name || m.nickname || memberName,
+                        persona: m.persona || "",
+                        age: m.age || "",
+                        birthday: m.birthday || "",
+                        gender: m.gender || "",
+                        genderNote: m.genderNote || "",
+                        cocPanel: m.cocPanel || null
+                      });
+                    }
+                  });
+                }
+              });
+
+              if (matches.length === 0) {
+                syncPersonaList.innerHTML = `<p style="text-align:center; color:var(--text-secondary); padding:20px; font-size:12px;">未找到同名私聊或群聊成员的人设</p>`;
+              } else {
+                matches.forEach((item) => {
+                  const row = document.createElement("div");
+                  row.style.cssText = "display:flex; flex-direction:column; gap:6px; padding:10px; background:var(--card-bg); border:1px solid var(--border-color); border-radius:8px; margin-bottom:8px;";
+
+                  const previewText = item.persona ? (item.persona.length > 40 ? item.persona.slice(0, 40) + "..." : item.persona) : "暂无人设文本";
+                  row.innerHTML = `
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                      <strong style="font-size:12px; color:var(--text-primary);">${item.sourceName}</strong>
+                      <button type="button" class="moe-btn-mini sync-apply-btn" style="padding:2px 8px; font-size:11px;">同步</button>
+                    </div>
+                    <div style="font-size:11px; color:var(--text-secondary); line-height:1.4;">${previewText}</div>
+                  `;
+
+                  row.querySelector(".sync-apply-btn").addEventListener("click", () => {
+                    const mPersonaInput = document.getElementById("member-persona-input");
+                    if (mPersonaInput) mPersonaInput.value = item.persona;
+                    const mAgeInput = document.getElementById("member-age-input");
+                    if (mAgeInput) mAgeInput.value = item.age;
+                    const mBirthdayInput = document.getElementById("member-birthday-input");
+                    if (mBirthdayInput) mBirthdayInput.value = item.birthday;
+                    const mGenderInput = document.getElementById("member-gender-input");
+                    if (mGenderInput) mGenderInput.value = item.gender;
+                    const mGenderNoteInput = document.getElementById("member-gender-note-input");
+                    if (mGenderNoteInput) mGenderNoteInput.value = item.genderNote;
+                    if (item.cocPanel && window.memberCocPanel) {
+                      window.memberCocPanel.setData(item.cocPanel);
+                    }
+                    syncPersonaModal.classList.remove("visible");
+                    if (typeof window.showCustomAlert === "function") {
+                      window.showCustomAlert("提示", "已成功同步人设");
+                    } else {
+                      alert("已成功同步人设");
+                    }
+                  });
+
+                  syncPersonaList.appendChild(row);
+                });
+              }
+
+              const titleEl = document.getElementById("sync-persona-modal-title");
+              if (titleEl) titleEl.textContent = `同步 ${memberName} 的人设`;
+              syncPersonaModal.classList.add("visible");
             });
           }
 
@@ -57134,9 +57509,7 @@ ${libraryList}
               chat.settings.myPersona =
                 document.getElementById("my-persona").value;
               chat.settings.myBirthday = getBirthdayFromSelects("my");
-              chat.settings.myGender = document
-                .getElementById("my-gender-select")
-                .value;
+              chat.settings.myGender = getGenderInputValue("my");
               chat.settings.myGenderNote = document
                 .getElementById("my-gender-note-input")
                 .value.trim();
@@ -57184,9 +57557,7 @@ ${libraryList}
                   document.getElementById("ai-persona").value;
                 chat.settings.age = getAgeSelectValue("ai-age-input");
                 chat.settings.birthday = getBirthdayFromSelects("ai");
-                chat.settings.gender = document
-                  .getElementById("ai-gender-select")
-                  .value;
+                chat.settings.gender = getGenderInputValue("ai");
                 chat.settings.genderNote = document
                   .getElementById("ai-gender-note-input")
                   .value.trim();
