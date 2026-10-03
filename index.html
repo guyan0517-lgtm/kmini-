@@ -6828,19 +6828,17 @@
     </div>
 
     <div id="system-status-col-type-modal" class="modal">
-      <div class="modal-content" style="max-width: 220px; padding: 12px; border-radius: 16px;">
-        <div class="modal-header" style="font-size: 14px; padding-bottom: 6px; text-align: center;"><span>选择栏目类型</span></div>
-        <div class="modal-body" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 8px 0;">
-          <button type="button" class="moe-btn-secondary status-col-type-option" data-type="general" style="font-size: 12px; padding: 6px 8px; border-radius: 10px;">一般栏目</button>
-          <button type="button" class="moe-btn-secondary status-col-type-option" data-type="date" style="font-size: 12px; padding: 6px 8px; border-radius: 10px;">日期</button>
-          <button type="button" class="moe-btn-secondary status-col-type-option" data-type="time" style="font-size: 12px; padding: 6px 8px; border-radius: 10px;">时间</button>
-          <button type="button" class="moe-btn-secondary status-col-type-option" data-type="weather" style="font-size: 12px; padding: 6px 8px; border-radius: 10px;">天气</button>
-          <button type="button" class="moe-btn-secondary status-col-type-option" data-type="affection" style="font-size: 12px; padding: 6px 8px; border-radius: 10px;">好感度</button>
-          <button type="button" class="moe-btn-secondary status-col-type-option" data-type="luck" style="font-size: 12px; padding: 6px 8px; border-radius: 10px;">幸运</button>
-          <button type="button" class="moe-btn-secondary status-col-type-option" data-type="location" style="font-size: 12px; padding: 6px 8px; border-radius: 10px; grid-column: span 2;">地点</button>
-        </div>
-        <div class="modal-footer" style="padding-top: 6px;">
-          <button type="button" class="cancel" id="cancel-status-col-type-btn" style="width: 100%; height: 30px; font-size: 12px; border-radius: 10px;">取消</button>
+      <div class="modal-content" style="max-width: 260px; padding: 16px; border-radius: 16px;">
+        <div class="modal-header" style="font-size: 14px; font-weight: 600; padding-bottom: 8px; text-align: center; color: var(--text-primary); border-bottom: 1px solid var(--border-color); margin-bottom: 6px;"><span>选择栏目类型</span></div>
+        <div class="modal-body" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 6px 0 2px 0;">
+          <button type="button" class="moe-btn-secondary status-col-type-option" data-type="general" style="font-size: 13px; font-weight: 500; height: 38px; min-height: 38px; padding: 0 8px; border-radius: 12px; border: 1px solid var(--border-color); background: var(--secondary-bg); color: var(--text-primary); display: flex; align-items: center; justify-content: center; box-sizing: border-box; cursor: pointer; margin: 0;">一般栏目</button>
+          <button type="button" class="moe-btn-secondary status-col-type-option" data-type="date" style="font-size: 13px; font-weight: 500; height: 38px; min-height: 38px; padding: 0 8px; border-radius: 12px; border: 1px solid var(--border-color); background: var(--secondary-bg); color: var(--text-primary); display: flex; align-items: center; justify-content: center; box-sizing: border-box; cursor: pointer; margin: 0;">日期</button>
+          <button type="button" class="moe-btn-secondary status-col-type-option" data-type="time" style="font-size: 13px; font-weight: 500; height: 38px; min-height: 38px; padding: 0 8px; border-radius: 12px; border: 1px solid var(--border-color); background: var(--secondary-bg); color: var(--text-primary); display: flex; align-items: center; justify-content: center; box-sizing: border-box; cursor: pointer; margin: 0;">时间</button>
+          <button type="button" class="moe-btn-secondary status-col-type-option" data-type="weather" style="font-size: 13px; font-weight: 500; height: 38px; min-height: 38px; padding: 0 8px; border-radius: 12px; border: 1px solid var(--border-color); background: var(--secondary-bg); color: var(--text-primary); display: flex; align-items: center; justify-content: center; box-sizing: border-box; cursor: pointer; margin: 0;">天气</button>
+          <button type="button" class="moe-btn-secondary status-col-type-option" data-type="affection" style="font-size: 13px; font-weight: 500; height: 38px; min-height: 38px; padding: 0 8px; border-radius: 12px; border: 1px solid var(--border-color); background: var(--secondary-bg); color: var(--text-primary); display: flex; align-items: center; justify-content: center; box-sizing: border-box; cursor: pointer; margin: 0;">好感度</button>
+          <button type="button" class="moe-btn-secondary status-col-type-option" data-type="luck" style="font-size: 13px; font-weight: 500; height: 38px; min-height: 38px; padding: 0 8px; border-radius: 12px; border: 1px solid var(--border-color); background: var(--secondary-bg); color: var(--text-primary); display: flex; align-items: center; justify-content: center; box-sizing: border-box; cursor: pointer; margin: 0;">幸运</button>
+          <button type="button" class="moe-btn-secondary status-col-type-option" data-type="location" style="font-size: 13px; font-weight: 500; height: 38px; min-height: 38px; padding: 0 8px; border-radius: 12px; border: 1px solid var(--border-color); background: var(--secondary-bg); color: var(--text-primary); display: flex; align-items: center; justify-content: center; box-sizing: border-box; cursor: pointer; margin: 0;">地点</button>
+          <button type="button" class="moe-btn-secondary" id="cancel-status-col-type-btn" style="font-size: 13px; font-weight: 500; height: 38px; min-height: 38px; padding: 0 8px; border-radius: 12px; border: 1px solid var(--border-color); background: var(--secondary-bg); color: var(--text-primary); display: flex; align-items: center; justify-content: center; box-sizing: border-box; cursor: pointer; margin: 0;">取消</button>
         </div>
       </div>
     </div>
@@ -54972,54 +54970,8 @@ ${colSpecs.join('\n')}
 
           document
             .getElementById("import-character-card-btn")
-            .addEventListener("click", async () => {
-              const unlockKey = "isCharacterImportUnlocked";
-
-              // 1. 检查是否已经解锁
-              if (localStorage.getItem(unlockKey) === "true") {
-                document.getElementById("character-card-input").click();
-                return;
-              }
-
-              // 2. 如果未解锁，获取设备码
-              const deviceCode = getDeviceCode();
-
-              // 3. 构建一个包含设备码和输入框的HTML内容
-              const modalHtmlContent = `
-			        <p style="margin-bottom: 15px;">请前往取PIN网站，使用下面的设备码获取PIN。</p>
-			        <div style="background: #eee; padding: 10px; border-radius: 6px; margin-bottom: 15px; user-select: all; cursor: copy;" title="点击复制设备码">
-			            <strong>设备码:</strong> <span id="device-code-to-copy">${deviceCode}</span>
-			        </div>
-			        <p id="copy-device-code-feedback" style="height: 15px; font-size: 12px; color: green;"></p>
-			    `;
-
-              // 4. 使用 showCustomPrompt 弹出增强版模态框
-              const userPin = await window.showCustomPrompt(
-                "功能解锁",
-                "请在此输入获取到的PIN码...", // 这是输入框的placeholder
-                "",
-                "text",
-                modalHtmlContent, // 这是我们额外添加的HTML内容
-              );
-
-              // 5. 如果用户点击了取消，则直接返回
-              if (userPin === null) return;
-
-              // 6. 验证PIN码
-              const correctPin = generatePinFromDeviceCode(deviceCode);
-              if (userPin.trim().toUpperCase() === correctPin) {
-                localStorage.setItem(unlockKey, "true");
-                await showCustomAlert(
-                  "解锁成功！",
-                  "导入功能已解锁，此设备无需再次输入PIN码。",
-                );
-                document.getElementById("character-card-input").click();
-              } else {
-                await showCustomAlert(
-                  "解锁失败",
-                  "PIN码错误，请重新获取或输入。",
-                );
-              }
+            .addEventListener("click", () => {
+              document.getElementById("character-card-input").click();
             });
 
           // 为自定义模态框添加点击复制设备码的功能
@@ -56724,55 +56676,8 @@ ${colSpecs.join('\n')}
 
           document
             .getElementById("import-world-book-btn")
-            .addEventListener("click", async () => {
-              const unlockKey = "isCharacterImportUnlocked";
-
-              // 1. 检查是否已经解锁 (和角色卡导入共用一个解锁状态)
-              if (localStorage.getItem(unlockKey) === "true") {
-                document.getElementById("world-book-import-input").click(); // 直接打开文件选择器
-                return;
-              }
-
-              // 2. 如果未解锁，获取设备码
-              const deviceCode = getDeviceCode();
-
-              // 3. 构建一个包含设备码和输入框的HTML内容 (和角色卡导入的弹窗一样)
-              const modalHtmlContent = `
-			        <p style="margin-bottom: 15px;">请前往取PIN网站，使用下面的设备码获取PIN。</p>
-			        <div style="background: #eee; padding: 10px; border-radius: 6px; margin-bottom: 15px; user-select: all; cursor: copy;" title="点击复制设备码">
-			            <strong>设备码:</strong> <span id="device-code-to-copy">${deviceCode}</span>
-			        </div>
-			        <p id="copy-device-code-feedback" style="height: 15px; font-size: 12px; color: green;"></p>
-			    `;
-
-              // 4. 使用 showCustomPrompt 弹出增强版模态框，让用户输入PIN
-              const userPin = await window.showCustomPrompt(
-                "功能解锁",
-                "请在此输入获取到的PIN码...",
-                "",
-                "text",
-                modalHtmlContent,
-              );
-
-              // 5. 如果用户点击了取消，则直接返回
-              if (userPin === null) return;
-
-              // 6. 验证PIN码
-              const correctPin = generatePinFromDeviceCode(deviceCode);
-              if (userPin.trim().toUpperCase() === correctPin) {
-                localStorage.setItem(unlockKey, "true");
-                await showCustomAlert(
-                  "解锁成功！",
-                  "导入功能已解锁，此设备无需再次输入PIN码。",
-                );
-                // 触发世界书的文件选择器
-                document.getElementById("world-book-import-input").click();
-              } else {
-                await showCustomAlert(
-                  "解锁失败",
-                  "PIN码错误，请重新获取或输入。",
-                );
-              }
+            .addEventListener("click", () => {
+              document.getElementById("world-book-import-input").click();
             });
 
           document
