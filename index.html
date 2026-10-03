@@ -2114,6 +2114,7 @@
         <div
           id="chat-pet-container"
           style="
+            display: none !important;
             position: absolute;
             width: 100%;
             height: 100%;
@@ -2198,7 +2199,8 @@
             <button
               id="quick-reply-btn"
               class="chat-action-icon-btn action-button"
-              title="快捷回复"
+              title="快捷"
+              onclick="if(typeof openQuickReplyModal==='function')openQuickReplyModal();"
             >
               <svg
                 width="24"
@@ -2346,6 +2348,7 @@
               id="video-call-btn"
               class="chat-action-icon-btn action-button"
               title="视频通话"
+              style="display: none !important;"
             >
               <svg
                 width="24"
@@ -2366,6 +2369,7 @@
               id="group-video-call-btn"
               class="chat-action-icon-btn action-button"
               title="群视频通话"
+              style="display: none !important;"
             >
               <svg
                 width="24"
@@ -2388,6 +2392,7 @@
               id="send-poll-btn"
               class="chat-action-icon-btn action-button"
               title="发起投票"
+              style="display: none !important;"
             >
               <svg
                 width="24"
@@ -2412,6 +2417,7 @@
               id="share-link-btn"
               class="chat-action-icon-btn action-button"
               title="分享链接"
+              style="display: none !important;"
             >
               <svg
                 width="24"
@@ -2437,6 +2443,7 @@
               id="send-location-btn"
               class="chat-action-icon-btn action-button"
               title="发送定位"
+              style="display: none !important;"
             >
               <svg
                 width="24"
@@ -2529,6 +2536,7 @@
               id="pet-action-btn"
               class="chat-action-icon-btn action-button"
               title="我的宠物"
+              style="display: none !important;"
             >
               <svg
                 width="24"
@@ -5794,9 +5802,9 @@
             <div class="settings-section-title">🎮 玩法与模式</div>
 
             <!-- 线下模式 -->
-            <div class="form-group" id="offline-mode-section">
+            <div class="form-group" id="offline-mode-section" style="display: none !important;">
               <label class="toggle-switch-label">
-                <span class="toggle-switch-text">线下模式 (Online Dating)</span>
+                <span class="toggle-switch-text">线下模式</span>
                 <input type="checkbox" id="offline-mode-toggle" />
                 <span class="toggle-switch-slider"></span>
               </label>
@@ -5804,7 +5812,7 @@
             <div
               id="offline-mode-details"
               class="moe-details-box"
-              style="display: none"
+              style="display: none !important;"
             >
               <div class="form-group">
                 <label>预设管理</label>
@@ -5919,9 +5927,9 @@
             </div>
 
             <!-- 续火花 -->
-            <div class="form-group" id="streak-settings-section">
+            <div class="form-group" id="streak-settings-section" style="display: none !important;">
               <label class="toggle-switch-label">
-                <span class="toggle-switch-text">续火花系统</span>
+                <span class="toggle-switch-text">续火花</span>
                 <input type="checkbox" id="streak-enabled-toggle" />
                 <span class="toggle-switch-slider"></span>
               </label>
@@ -5936,7 +5944,7 @@
               <div
                 id="streak-details-container"
                 class="moe-details-box"
-                style="display: none"
+                style="display: none !important;"
               >
                 <div class="moe-grid-row">
                   <div class="form-group">
@@ -6017,7 +6025,7 @@
               </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group" style="display: none !important;">
               <label class="toggle-switch-label">
                 <span class="toggle-switch-text">实时时间感知</span>
                 <input type="checkbox" id="time-perception-toggle" checked />
@@ -14916,10 +14924,10 @@ lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer
     </div>
 
     <!-- 快捷回复管理模态框 -->
-    <div id="quick-reply-modal" class="modal">
+    <div id="quick-reply-modal" class="modal" style="z-index: 1005;">
       <div class="modal-content" style="height: 60%">
         <div class="modal-header">
-          <span>快捷回复</span>
+          <span>快捷</span>
           <div class="header-actions">
             <!-- 顶部操作按钮 -->
             <span
@@ -14952,7 +14960,7 @@ lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer
           <!-- 列表将由JS动态生成 -->
         </div>
         <div class="modal-footer">
-          <button class="save" id="close-quick-reply-btn" style="width: 100%">
+          <button class="save" id="close-quick-reply-btn" style="width: 100%" onclick="document.getElementById('quick-reply-modal').classList.remove('visible');">
             关闭
           </button>
         </div>
@@ -24932,13 +24940,15 @@ lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer
             triggerAiResponse();
           }
 
-          // 根据是否为群聊，显示或隐藏投票按钮
-          document.getElementById("send-poll-btn").style.display = chat.isGroup
-            ? "flex"
-            : "none";
-          document.getElementById("pet-action-btn").style.display = chat.isGroup
-            ? "none"
-            : "flex";
+          // 根据是否为群聊，显示或隐藏按钮
+          const pollBtn = document.getElementById("send-poll-btn");
+          if (pollBtn) pollBtn.style.display = "none";
+          const petBtn = document.getElementById("pet-action-btn");
+          if (petBtn) petBtn.style.display = "none";
+          const transferBtn = document.getElementById("transfer-btn");
+          if (transferBtn) transferBtn.style.display = chat.isGroup ? "none" : "flex";
+          const voiceMsgBtn = document.getElementById("voice-message-btn");
+          if (voiceMsgBtn) voiceMsgBtn.style.display = "flex";
           startPetDecayTimer();
         }
 
@@ -36426,11 +36436,10 @@ ${colSpecs.join('\n')}
         }
 
         function toggleCallButtons(isGroup) {
-          document.getElementById("video-call-btn").style.display = isGroup
-            ? "none"
-            : "flex";
-          document.getElementById("group-video-call-btn").style.display =
-            isGroup ? "flex" : "none";
+          const vBtn = document.getElementById("video-call-btn");
+          if (vBtn) vBtn.style.display = "none";
+          const gvBtn = document.getElementById("group-video-call-btn");
+          if (gvBtn) gvBtn.style.display = "none";
         }
 
         async function handleWaimaiResponse(originalTimestamp, choice) {
@@ -51573,9 +51582,21 @@ ${colSpecs.join('\n')}
          * 打开快捷回复弹窗
          */
         function openQuickReplyModal() {
+          if (!window.state) window.state = {};
+          if (!window.state.globalSettings) window.state.globalSettings = {};
+          if (!window.state.globalSettings.quickReplies) {
+            window.state.globalSettings.quickReplies = [];
+          }
           renderQuickReplyList();
-          document.getElementById("quick-reply-modal").classList.add("visible");
+          const modal = document.getElementById("quick-reply-modal");
+          if (modal) {
+            modal.classList.add("visible");
+            modal.onclick = (e) => {
+              if (e.target === modal) modal.classList.remove("visible");
+            };
+          }
         }
+        window.openQuickReplyModal = openQuickReplyModal;
 
         /**
          * 渲染快捷回复列表 (带编辑功能)
@@ -54646,6 +54667,7 @@ ${colSpecs.join('\n')}
           // 初始化 COC 七版人物面板组件
           if (window.createCocPanel) {
             window.aiCocPanel = window.createCocPanel("ai-coc-panel-container", {
+              characterType: "ai",
               onSave: async (data) => {
                 if (!state.activeChatId) return;
                 const chat = state.chats[state.activeChatId];
@@ -54657,6 +54679,7 @@ ${colSpecs.join('\n')}
             });
 
             window.myCocPanel = window.createCocPanel("my-coc-panel-container", {
+              characterType: "my",
               onSave: async (data) => {
                 if (!state.activeChatId) return;
                 const chat = state.chats[state.activeChatId];
@@ -54668,7 +54691,19 @@ ${colSpecs.join('\n')}
             });
 
             window.presetCocPanel = window.createCocPanel("preset-coc-panel-container");
-            window.memberCocPanel = window.createCocPanel("member-coc-panel-container");
+            window.memberCocPanel = window.createCocPanel("member-coc-panel-container", {
+              characterType: "member",
+              onSave: async (data) => {
+                if (!state.activeChatId || !editingMemberId) return;
+                const chat = state.chats[state.activeChatId];
+                if (!chat || !chat.members) return;
+                const member = chat.members.find(m => m.id === editingMemberId);
+                if (member) {
+                  member.cocPanel = data;
+                  await db.chats.put(chat);
+                }
+              },
+            });
           }
 
           // ==========================================================
@@ -55519,8 +55554,9 @@ ${colSpecs.join('\n')}
                 const currentVal = col.format || weatherPoolsList[0].name;
                 const firstChar = (currentVal && currentVal.length > 0) ? currentVal[0] : "";
                 rightControlHtml = `
-                  <div class="moe-input col-weather-selector-btn" style="flex: 1; min-width: 0; height: 34px; padding: 0 10px; font-size: 13px; border-radius: 12px; background: var(--secondary-bg); border: 1px solid var(--border-color); box-sizing: border-box; display: flex; align-items: center; justify-content: center; cursor: pointer; user-select: none;">
+                  <div class="moe-input col-weather-selector-btn" style="flex: 1; min-width: 0; height: 34px; padding: 0 10px; font-size: 13px; border-radius: 12px; background: var(--secondary-bg); border: 1px solid var(--border-color); box-sizing: border-box; display: flex; align-items: center; justify-content: center; gap: 4px; cursor: pointer; user-select: none;">
                     <span class="col-weather-pool-name" style="color: var(--text-primary); font-size: 13px; font-weight: 600;">${firstChar}</span>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--text-secondary); flex-shrink: 0;"><polyline points="6 9 12 15 18 9"></polyline></svg>
                   </div>
                 `;
               } else {
@@ -63926,8 +63962,8 @@ ${colSpecs.join('\n')}
           document
             .getElementById("reset-app-names-btn")
             .addEventListener("click", resetAppNamesToDefault);
-          document.addEventListener("DOMContentLoaded", function () {
-            const toggleCheckbox = document.getElementById("dark-mode-toggle");
+          const toggleCheckbox = document.getElementById("dark-mode-toggle");
+          if (toggleCheckbox) {
             const storageKey = "darkModeManualPref";
             const darkReaderOptions = {
               brightness: 100,
@@ -63944,7 +63980,7 @@ ${colSpecs.join('\n')}
             } else {
               DarkReader.auto(darkReaderOptions);
               setTimeout(() => {
-                toggleCheckbox.checked = DarkReader.isEnabled();
+                if (toggleCheckbox) toggleCheckbox.checked = DarkReader.isEnabled();
               }, 100);
             }
             toggleCheckbox.addEventListener("change", function () {
@@ -63956,7 +63992,7 @@ ${colSpecs.join('\n')}
                 localStorage.setItem(storageKey, "false");
               }
             });
-          });
+          }
 
           document
             .getElementById("sticker-category-tabs")
