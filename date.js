@@ -251,6 +251,12 @@ function openEditThinkingChainModal(tcObj, isNew = false) {
   };
 }
 
+// 兼容旧约会场景预设调用
+function handleDatingPresetSelect() {}
+function openDatingPresetManager() {}
+window.handleDatingPresetSelect = handleDatingPresetSelect;
+window.openDatingPresetManager = openDatingPresetManager;
+
 // 页面加载完成后自动绑定入口
 document.addEventListener("DOMContentLoaded", () => {
   const appIcon = document.getElementById("date-a-live-app-icon");
@@ -260,3 +266,4 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
