@@ -181,13 +181,9 @@ class CocPanel {
 
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
           <div class="coc-section-label" style="margin-bottom: 0;">属性</div>
-          <button type="button" class="moe-btn-mini coc-download-btn" title="导入" style="flex: 0 0 auto !important; width: 24px !important; min-width: 24px !important; height: 20px !important; min-height: 20px !important; padding: 0 !important; display: inline-flex !important; align-items: center !important; justify-content: center !important; border-radius: 6px; cursor: pointer; background: var(--secondary-bg); border: 1px solid var(--border-color); color: var(--text-primary);">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-              <polyline points="7 10 12 15 17 10"></polyline>
-              <line x1="12" y1="15" x2="12" y2="3"></line>
-            </svg>
-          </button>
+          ${this.options.showInject ? `
+            <button type="button" class="moe-btn-mini coc-inject-btn" style="flex: 0 0 auto !important; width: auto !important; height: 20px !important; min-height: 20px !important; padding: 1px 8px !important; font-size: 11px !important; line-height: 18px !important; border-radius: 6px; cursor: pointer;">注入</button>
+          ` : ''}
         </div>
         <div class="coc-stats-grid">
           <div class="coc-stat-item"><label>力量</label><input type="number" class="coc-stat-input" data-stat="str" value="50" min="0" max="999"></div>
@@ -230,14 +226,16 @@ class CocPanel {
   }
 
   bindEvents() {
-    const downloadBtn = this.container.querySelector(".coc-download-btn");
-    if (downloadBtn) {
-      downloadBtn.addEventListener("click", (e) => {
+    const injectBtn = this.container.querySelector(".coc-inject-btn");
+    if (injectBtn) {
+      injectBtn.addEventListener("click", (e) => {
         if (e) {
           e.preventDefault();
           e.stopPropagation();
         }
-        openCocFillModal(this);
+        if (typeof window.openCocInjectModal === "function") {
+          window.openCocInjectModal(this);
+        }
       });
     }
 
@@ -717,267 +715,6 @@ if (document.readyState === "loading") {
 } else {
   initCocSkillsModalEvents();
 }
-
-function openCocFillModal(cocPanel) {
-  let modal = document.getElementById("coc-inject-modal");
-  if (!modal) {
-    modal = document.getElementById("coc-worldbook-fill-modal");
-    if (!modal) {
-      modal = document.createElement("div");
-      modal.id = "coc-inject-modal";
-      modal.className = "modal";
-      modal.innerHTML = `
-        <div class="modal-content" style="max-width: 320px; padding: 14px; border-radius: 16px;">
-          <div class="modal-header" style="font-size: 14px; font-weight: 600; text-align: center; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
-            <span>数据注入</span>
-            <button type="button" class="close-btn" id="close-coc-inject-modal-btn" style="background: none; border: none; font-size: 18px; cursor: pointer; color: var(--text-secondary);">&times;</button>
-          </div>
-          <div class="modal-body" style="padding: 4px 0;">
-            <div style="display: flex; gap: 8px; margin-bottom: 12px;">
-              <button type="button" class="moe-btn-secondary coc-inject-tab-btn" id="coc-inject-tab-wb" data-type="worldbook" style="flex: 1; height: 28px; font-size: 12px; border-radius: 8px; border: 1px solid var(--accent-color); background: var(--accent-color); color: #ffffff; cursor: pointer;">世界书</button>
-              <button type="button" class="moe-btn-secondary coc-inject-tab-btn" id="coc-inject-tab-mod" data-type="module" style="flex: 1; height: 28px; font-size: 12px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--secondary-bg); color: var(--text-primary); cursor: pointer;">模组</button>
-            </div>
-            <div id="coc-inject-wb-section">
-              <label style="font-size: 12px; color: var(--text-secondary); margin-bottom: 6px; display: block;">选择世界书</label>
-              <select id="coc-inject-wb-select" class="moe-input" style="width: 100%; height: 32px; font-size: 12px; border-radius: 8px; padding: 4px 8px; box-sizing: border-box; color: var(--text-primary); background: var(--card-bg);">
-              </select>
-            </div>
-            <div id="coc-inject-mod-section" style="display: none;">
-              <div style="padding: 24px 10px; text-align: center; color: var(--text-secondary); font-size: 12px; background: var(--secondary-bg); border-radius: 8px; border: 1px dashed var(--border-color);">
-                暂无可用模组
-              </div>
-            </div>
-          </div>
-          <div class="modal-footer" style="display: flex; gap: 8px; margin-top: 14px;">
-            <button type="button" class="cancel" id="cancel-coc-inject-btn" style="flex: 1; height: 30px; font-size: 12px; border-radius: 8px;">取消</button>
-            <button type="button" class="moe-btn" id="confirm-coc-inject-btn" style="flex: 1; height: 30px; font-size: 12px; border-radius: 8px;">确定</button>
-          </div>
-        </div>
-      `;
-      document.body.appendChild(modal);
-    }
-  }
-
-  const wbTab = modal.querySelector("#coc-inject-tab-wb");
-  const modTab = modal.querySelector("#coc-inject-tab-mod");
-  const wbSection = modal.querySelector("#coc-inject-wb-section");
-  const modSection = modal.querySelector("#coc-inject-mod-section");
-  const wbSelect = modal.querySelector("#coc-inject-wb-select");
-  const cancelBtn = modal.querySelector("#cancel-coc-inject-btn");
-  const closeBtn = modal.querySelector("#close-coc-inject-modal-btn");
-  const confirmBtn = modal.querySelector("#confirm-coc-inject-btn");
-
-  let currentTab = "worldbook";
-
-  function updateTabsUI() {
-    if (wbTab && modTab && wbSection && modSection) {
-      if (currentTab === "worldbook") {
-        wbTab.style.borderColor = "var(--accent-color)";
-        wbTab.style.background = "var(--accent-color)";
-        wbTab.style.color = "#ffffff";
-        modTab.style.borderColor = "var(--border-color)";
-        modTab.style.background = "var(--secondary-bg)";
-        modTab.style.color = "var(--text-primary)";
-        wbSection.style.display = "block";
-        modSection.style.display = "none";
-      } else {
-        modTab.style.borderColor = "var(--accent-color)";
-        modTab.style.background = "var(--accent-color)";
-        modTab.style.color = "#ffffff";
-        wbTab.style.borderColor = "var(--border-color)";
-        wbTab.style.background = "var(--secondary-bg)";
-        wbTab.style.color = "var(--text-primary)";
-        wbSection.style.display = "none";
-        modSection.style.display = "block";
-      }
-    }
-  }
-
-  if (wbTab) wbTab.onclick = () => { currentTab = "worldbook"; updateTabsUI(); };
-  if (modTab) modTab.onclick = () => { currentTab = "module"; updateTabsUI(); };
-  updateTabsUI();
-
-  const worldBooks = (window.state && window.state.worldBooks) || [];
-  if (wbSelect) {
-    wbSelect.innerHTML = "";
-    if (worldBooks.length === 0) {
-      const opt = document.createElement("option");
-      opt.value = "";
-      opt.textContent = "暂无可用世界书";
-      wbSelect.appendChild(opt);
-    } else {
-      worldBooks.forEach(b => {
-        const opt = document.createElement("option");
-        opt.value = b.id;
-        opt.textContent = b.name || "未命名世界书";
-        wbSelect.appendChild(opt);
-      });
-    }
-  }
-
-  modal.classList.add("visible");
-
-  const closeModal = () => modal.classList.remove("visible");
-  if (cancelBtn) cancelBtn.onclick = closeModal;
-  if (closeBtn) closeBtn.onclick = closeModal;
-
-  if (confirmBtn) {
-    confirmBtn.onclick = async () => {
-      if (currentTab === "module") {
-        if (typeof window.showCustomAlert === "function") {
-          await window.showCustomAlert("提示", "暂无可用模组");
-        } else {
-          alert("暂无可用模组");
-        }
-        return;
-      }
-
-      const selectedBookId = wbSelect ? wbSelect.value : null;
-      if (!selectedBookId) {
-        closeModal();
-        return;
-      }
-      const book = worldBooks.find(b => b.id === selectedBookId);
-      if (!book) {
-        closeModal();
-        return;
-      }
-
-      confirmBtn.disabled = true;
-      confirmBtn.textContent = "解析中";
-
-      try {
-        let charName = "";
-        let charPersona = "";
-        const currentChatId = window.state?.activeChatId;
-        const currentChat = currentChatId ? window.state?.chats?.[currentChatId] : null;
-
-        if (cocPanel.options.characterType === "my" || cocPanel.containerId === "my-coc-panel-container") {
-          charName = currentChat?.settings?.myNickname || "我";
-          charPersona = currentChat?.settings?.myPersona || document.getElementById("my-persona")?.value || "";
-        } else if (cocPanel.options.characterType === "member" || cocPanel.containerId === "member-coc-panel-container") {
-          const memId = window.editingMemberId;
-          const member = (currentChat?.members || []).find(m => m.id === memId);
-          charName = member?.groupNickname || member?.originalName || document.getElementById("member-name-input")?.value || "";
-          charPersona = member?.persona || document.getElementById("member-persona-input")?.value || "";
-        } else {
-          charName = currentChat?.name || document.getElementById("chat-name-input")?.value || "";
-          charPersona = currentChat?.settings?.aiPersona || document.getElementById("ai-persona")?.value || "";
-        }
-
-        const promptText = `你是一个TRPG COC第七版角色数据解析助手。请阅读以下角色设定与世界书内容，提取或生成该角色在世界书设定下的COC第七版基础属性数值与技能加点数值。
-角色名称: ${charName}
-角色设定: ${charPersona}
-世界书名称: ${book.name}
-世界书内容:
-${(book.content || '').slice(0, 3000)}
-
-请严格且仅返回如下格式的 JSON 对象，严禁输出任何 markdown 代码块或解释文本：
-{"stats": {"str": 50, "dex": 50, "con": 50, "pow": 50, "siz": 50, "edu": 50, "app": 50, "int": 50, "luk": 50}, "skills": {"闪避": 25, "侦查": 60}}`;
-
-        const apiConfig = window.state?.apiConfig;
-        const apiKey = apiConfig?.apiKey;
-        const proxyUrl = apiConfig?.proxyUrl || "https://api.openai.com";
-        const model = apiConfig?.model || "gpt-3.5-turbo";
-
-        if (!apiKey) {
-          if (typeof window.showCustomAlert === "function") {
-            await window.showCustomAlert("提示", "请先配置密钥");
-          } else {
-            alert("请先配置密钥");
-          }
-          return;
-        }
-
-        let rawText = "";
-        const isGemini = (proxyUrl === window.GEMINI_API_URL || proxyUrl.includes("googleapis.com"));
-        if (isGemini) {
-          let geminiConfig = typeof window.toGeminiRequestData === "function"
-            ? window.toGeminiRequestData(model, apiKey, promptText, [{ role: "user", content: "请输出角色COC数据JSON" }], isGemini)
-            : null;
-          if (geminiConfig) {
-            const res = await fetch(geminiConfig.url, geminiConfig.data);
-            const json = await res.json();
-            rawText = json?.candidates?.[0]?.content?.parts?.[0]?.text || "";
-          }
-        } else {
-          const res = await fetch(`${proxyUrl}/v1/chat/completions`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${apiKey}`
-            },
-            body: JSON.stringify({
-              model: model,
-              messages: [
-                { role: "system", content: promptText },
-                { role: "user", content: "请输出JSON" }
-              ],
-              temperature: 0.2
-            })
-          });
-          const json = await res.json();
-          rawText = json?.choices?.[0]?.message?.content || "";
-        }
-
-        const match = rawText.match(/\{[\s\S]*\}/);
-        if (match) {
-          const parsed = JSON.parse(match[0]);
-          if (parsed.stats) {
-            Object.keys(parsed.stats).forEach(k => {
-              const val = parseInt(parsed.stats[k], 10);
-              if (!isNaN(val)) cocPanel.data.stats[k] = Math.max(0, Math.min(999, val));
-            });
-          }
-          if (parsed.skills && typeof parsed.skills === "object") {
-            Object.keys(parsed.skills).forEach(s => {
-              const val = parseInt(parsed.skills[s], 10);
-              if (!isNaN(val)) cocPanel.data.skills[s] = Math.max(0, Math.min(999, val));
-            });
-          }
-          cocPanel.data.calculated = calculateCocStats(cocPanel.data.stats, cocPanel.data.calculated);
-          cocPanel.updateCalculatedUI();
-          cocPanel.updateTotalPoints();
-          cocPanel.container.querySelectorAll(".coc-stat-input").forEach(input => {
-            const stat = input.dataset.stat;
-            if (typeof cocPanel.data.stats[stat] !== "undefined") {
-              input.value = cocPanel.data.stats[stat];
-            }
-          });
-          if (typeof cocPanel.options.onSave === "function") {
-            cocPanel.options.onSave(cocPanel.data);
-          }
-          if (cocPanel.options.characterType === "member" || cocPanel.containerId === "member-coc-panel-container") {
-            const memId = window.editingMemberId;
-            const member = (currentChat?.members || []).find(m => m.id === memId);
-            if (member && currentChat) {
-              member.cocPanel = cocPanel.data;
-              if (window.db && window.db.chats) await window.db.chats.put(currentChat);
-            }
-          }
-          if (typeof window.showCustomAlert === "function") {
-            await window.showCustomAlert("提示", "解析完成");
-          } else {
-            alert("解析完成");
-          }
-        }
-      } catch (err) {
-        console.error("COC数据填充失败:", err);
-        if (typeof window.showCustomAlert === "function") {
-          await window.showCustomAlert("提示", "解析失败请重试");
-        } else {
-          alert("解析失败请重试");
-        }
-      } finally {
-        confirmBtn.disabled = false;
-        confirmBtn.textContent = "确定";
-        closeModal();
-      }
-    };
-  }
-}
-
-window.openCocFillModal = openCocFillModal;
 
 window.CocPanel = CocPanel;
 window.createCocPanel = function(containerId, options = {}) {
