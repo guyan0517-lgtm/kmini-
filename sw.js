@@ -1,70 +1,117 @@
-/*
- * EPhone Service Worker
- * 核心功能：接管安卓系统的通知弹窗点击事件，并在安装后立即激活。
- */
+const CACHE_NAME = "ephone-tuk-cache-v1";
+const ASSETS_TO_CACHE = [
+  "/",
+  "/index.html",
+  "/style.css",
+  "/manifest.json",
+  "/icon.png",
+  "/icon-192.png",
+  "/apple-touch-icon.png",
+  "/icon.svg",
+  "/main-app.js"
+];
 
-// 1. 安装事件：强制跳过等待，立即让新版本生效
-self.addEventListener('install', event => {
-  // console.log('[Service Worker] Installing...');
+self.addEventListener("install", event => {
   self.skipWaiting();
+  event.waitUntil(
+    caches.open(CACHE_NAME).then(cache => {
+      return cache.addAll(ASSETS_TO_CACHE).catch(err => {
+        console.warn("Pre-cache warning: " + err);
+      });
+    })
+  );
 });
 
-// 2. 激活事件：立即接管所有页面
-self.addEventListener('activate', event => {
-  // console.log('[Service Worker] Activating...');
-  event.waitUntil(self.clients.claim());
+self.addEventListener("activate", event => {
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cache => {
+          if (cache !== CACHE_NAME) {
+            return caches.delete(cache);
+          }
+        })
+      );
+    }).then(() => self.clients.claim())
+  );
 });
 
-// 3. 核心：处理通知的点击事件
-self.addEventListener('notificationclick', event => {
-  // 点击通知后，第一件事是关闭通知栏
+self.addEventListener("fetch", event => {
+  if (event.request.method !== "GET") return;
+  
+  const url = new URL(event.request.url);
+  if (!url.protocol.startsWith("http")) return;
+  if (url.pathname.startsWith("/api") || url.hostname.includes("socket") || url.hostname.includes("hmr")) {
+    return;
+  }
+
+  event.respondWith(
+    caches.match(event.request).then(cachedResponse => {
+      if (cachedResponse) {
+        fetch(event.request).then(networkResponse => {
+          if (networkResponse.status === 200) {
+            caches.open(CACHE_NAME).then(cache => cache.put(event.request, networkResponse));
+          }
+        }).catch(() => {});
+        return cachedResponse;
+      }
+
+      return fetch(event.request).then(networkResponse => {
+        if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== "basic") {
+          return networkResponse;
+        }
+        const responseToCache = networkResponse.clone();
+        caches.open(CACHE_NAME).then(cache => {
+          cache.put(event.request, responseToCache);
+        });
+        return networkResponse;
+      }).catch(err => {
+        return caches.match("/index.html") || Promise.reject(err);
+      });
+    })
+  );
+});
+
+self.addEventListener("notificationclick", event => {
   event.notification.close();
 
-  // 获取通知携带的数据（如果有的话，比如 chatId）
-  // const chatId = event.notification.data ? event.notification.data.chatId : null;
-
-  // 尝试寻找已打开的浏览器窗口并聚焦
   event.waitUntil(
     self.clients
       .matchAll({
-        type: 'window',
-        includeUncontrolled: true, // 包含所有受控和未受控的窗口
+        type: "window",
+        includeUncontrolled: true
       })
       .then(clientList => {
-        // 策略 A: 如果已经有打开的窗口，直接聚焦第一个
         for (let i = 0; i < clientList.length; i++) {
           const client = clientList[i];
-          // 如果窗口可见或不可见，且具有聚焦能力
-          if ('focus' in client) {
+          if ("focus" in client) {
             return client.focus();
           }
         }
 
-        // 策略 B: 如果没有打开的窗口，打开主页
         if (self.clients.openWindow) {
-          return self.clients.openWindow('/');
+          return self.clients.openWindow("/");
         }
-      }),
+      })
   );
 });
 
-// 4. (可选) 监听来自服务器的推送（如果你以后接了 Web Push 服务器）
-self.addEventListener('push', event => {
+self.addEventListener("push", event => {
   if (!event.data) return;
 
   let data = {};
   try {
     data = event.data.json();
   } catch (e) {
-    data = { title: '新消息', body: event.data.text() };
+    data = { title: "新消息", body: event.data.text() };
   }
 
-  const title = data.title || '四半世紀';
+  const title = data.title || "四半世紀";
   const options = {
     body: data.body,
-    icon: 'icon.png',
-    badge: 'icon.png',
-    data: data.data || {},
+    icon: "icon.png",
+    badge: "icon.png",
+    data: data.data || {}
   };
 
   event.waitUntil(self.registration.showNotification(title, options));

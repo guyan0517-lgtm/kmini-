@@ -137,11 +137,39 @@ const COC7_RULEBOOK_COMMAND_DOCS = [
   }
 ];
 
-// 现实气候天数换算的默认天气池
+// 现实气候天数换算的默认天气池（支持四季细分）
 const DEFAULT_WEATHER_POOLS = [
   {
     id: "weather_temperate",
     name: "温带气候",
+    seasons: {
+      "春季": [
+        { name: "晴天", rate: 35, note: "春光明媚，微风和煦，万物复苏" },
+        { name: "多云", rate: 25, note: "春云淡淡，微风习习，舒适宜人" },
+        { name: "小雨", rate: 20, note: "细雨绵绵，滋润大地，空气湿润" },
+        { name: "微风", rate: 15, note: "杨柳轻拂，暖意融融" },
+        { name: "雷阵雨", rate: 5, note: "春雷乍响，短时阵雨" }
+      ],
+      "夏季": [
+        { name: "晴朗酷热", rate: 40, note: "烈日高照，骄阳似火，气温炎热" },
+        { name: "雷阵雨", rate: 25, note: "午后骤起暴雨，电闪雷鸣，阵风强劲" },
+        { name: "多云闷热", rate: 20, note: "云层厚重，气压较低，体感闷热" },
+        { name: "大雨", rate: 15, note: "大雨滂沱，水汽漫漫，道路积水" }
+      ],
+      "秋季": [
+        { name: "秋高气爽", rate: 40, note: "天高云淡，凉风送爽，体感极佳" },
+        { name: "阴天", rate: 25, note: "天色阴沉，落叶缤纷，凉意渐浓" },
+        { name: "小雨", rate: 20, note: "秋雨连绵，夜凉如水，泥土湿润" },
+        { name: "大风", rate: 15, note: "秋风瑟瑟，树影摇曳，气温明显走低" }
+      ],
+      "冬季": [
+        { name: "晴冷", rate: 35, note: "天空湛蓝，寒风刺骨，阳光清冷" },
+        { name: "小雪", rate: 25, note: "雪花飘洒，轻盈落地，草木覆霜" },
+        { name: "阴沉大风", rate: 20, note: "天寒地冻，冷风呼啸，极度阴凉" },
+        { name: "大雪", rate: 15, note: "漫天飞雪，银装素裹，积雪深厚" },
+        { name: "冻雨", rate: 5, note: "冰冷雨丝落地成冰，地面极滑" }
+      ]
+    },
     items: [
       { name: "晴天", rate: 36, note: "温和宜人，阳光明媚，视野开阔" },
       { name: "多云", rate: 25, note: "云层较厚，微风习习，体感舒适" },
@@ -154,6 +182,29 @@ const DEFAULT_WEATHER_POOLS = [
   {
     id: "weather_tropical",
     name: "热带气候",
+    seasons: {
+      "春季": [
+        { name: "晴朗温暖", rate: 45, note: "日光明媚，海风轻拂，温暖明朗" },
+        { name: "阵雨", rate: 30, note: "短时热带阵雨，很快雨过天晴" },
+        { name: "多云", rate: 25, note: "云絮散落，气候温润" }
+      ],
+      "夏季": [
+        { name: "艳阳高照", rate: 40, note: "烈日炎炎，气温极高，闷热难耐" },
+        { name: "热带暴雨", rate: 30, note: "午后骤起倾盆大雨，雨势凶猛，水汽弥漫" },
+        { name: "湿热多云", rate: 20, note: "云层厚重，空气湿度极高，体感黏热" },
+        { name: "台风大风", rate: 10, note: "强风肆虐，暴雨交加，海浪汹涌" }
+      ],
+      "秋季": [
+        { name: "晴朗微热", rate: 45, note: "阳光充沛，体感微热，微风送爽" },
+        { name: "骤雨", rate: 35, note: "午后局部降雨，稍带凉意" },
+        { name: "多云", rate: 20, note: "云霞绚丽，海风和煦" }
+      ],
+      "冬季": [
+        { name: "和煦晴天", rate: 55, note: "阳光柔和，微风不燥，温度最为舒适" },
+        { name: "多云凉爽", rate: 30, note: "云层适中，清晨微凉，舒适惬意" },
+        { name: "小雨", rate: 15, note: "细雨飘过，空气清新怡人" }
+      ]
+    },
     items: [
       { name: "艳阳高照", rate: 41, note: "烈日炎炎，气温极高，闷热难耐" },
       { name: "热带暴雨", rate: 30, note: "午后骤起倾盆大雨，雨势凶猛，水汽弥漫" },
@@ -164,6 +215,30 @@ const DEFAULT_WEATHER_POOLS = [
   {
     id: "weather_frigid",
     name: "寒带气候",
+    seasons: {
+      "春季": [
+        { name: "初融晴冷", rate: 40, note: "积雪初融，阳光清冽但寒气逼人" },
+        { name: "小雪", rate: 30, note: "春雪纷飞，料峭微寒" },
+        { name: "阴冷大风", rate: 30, note: "寒风呼啸，气温仍然在冰点以下" }
+      ],
+      "夏季": [
+        { name: "极昼凉晴", rate: 45, note: "极地阳光普照，微风清爽，短暂宜人" },
+        { name: "多云阴凉", rate: 35, note: "薄雾笼罩，体感微冷" },
+        { name: "冷雨", rate: 20, note: "冰冷细雨，带着刺骨寒意" }
+      ],
+      "秋季": [
+        { name: "早雪", rate: 40, note: "初冬早雪降临，大地转白" },
+        { name: "晴冷大风", rate: 35, note: "狂风卷着寒流，冰冷刺骨" },
+        { name: "阴沉结冰", rate: 25, note: "地面结冰，冷气凝结" }
+      ],
+      "冬季": [
+        { name: "暴风雪", rate: 35, note: "大雪纷飞，狂风卷雪，能见度极低，极度严寒" },
+        { name: "极夜晴冷", rate: 25, note: "天色幽暗，极地严寒，滴水成冰" },
+        { name: "小雪", rate: 20, note: "轻雪飘落，寒风料峭，积雪皑皑" },
+        { name: "阴沉大风", rate: 15, note: "极地寒风呼啸，体感极冷" },
+        { name: "冻雨", rate: 5, note: "冰冷雨丝接触地面即凝结成冰，道路极滑" }
+      ]
+    },
     items: [
       { name: "暴风雪", rate: 30, note: "大雪纷飞，狂风卷雪，能见度极低，极度严寒" },
       { name: "小雪", rate: 25, note: "轻雪飘落，寒风料峭，积雪皑皑" },
@@ -220,16 +295,62 @@ function getActiveDicePreset() {
   return found || presets[0] || { id: "preset_default", name: "标准规则播报", templates: { ...DEFAULT_DICE_TEMPLATES } };
 }
 
+// 季节识别辅助
+function getSeasonNameByMonth(month) {
+  const m = parseInt(month, 10) || 1;
+  if (m >= 3 && m <= 5) return "春季";
+  if (m >= 6 && m <= 8) return "夏季";
+  if (m >= 9 && m <= 11) return "秋季";
+  return "冬季";
+}
+window.getSeasonNameByMonth = getSeasonNameByMonth;
+
+// 标准化天气池数据结构，确保四季完整存在
+function normalizeWeatherPool(pool) {
+  if (!pool) return pool;
+  if (!pool.seasons || typeof pool.seasons !== "object") {
+    const defaultList = Array.isArray(pool.items) && pool.items.length > 0 ? pool.items : [
+      { name: "晴天", rate: 50, note: "温和宜人" },
+      { name: "多云", rate: 30, note: "云层微厚" },
+      { name: "小雨", rate: 20, note: "细雨绵绵" }
+    ];
+    pool.seasons = {
+      "春季": JSON.parse(JSON.stringify(defaultList)),
+      "夏季": JSON.parse(JSON.stringify(defaultList)),
+      "秋季": JSON.parse(JSON.stringify(defaultList)),
+      "冬季": JSON.parse(JSON.stringify(defaultList))
+    };
+  } else {
+    ["春季", "夏季", "秋季", "冬季"].forEach(s => {
+      if (!Array.isArray(pool.seasons[s]) || pool.seasons[s].length === 0) {
+        pool.seasons[s] = Array.isArray(pool.items) && pool.items.length > 0
+          ? JSON.parse(JSON.stringify(pool.items))
+          : [{ name: "晴天", rate: 50, note: "温和宜人" }];
+      }
+    });
+  }
+  if (!Array.isArray(pool.items) || pool.items.length === 0) {
+    pool.items = pool.seasons["春季"] || [];
+  }
+  return pool;
+}
+
 // 获取天气池预设
 function getStoredWeatherPools() {
   try {
     const raw = localStorage.getItem("coc_weather_pools");
-    if (raw) return JSON.parse(raw);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed.map(normalizeWeatherPool);
+      }
+    }
   } catch (e) {
     console.error("读取天气池预设失败:", e);
   }
-  return JSON.parse(JSON.stringify(DEFAULT_WEATHER_POOLS));
+  return JSON.parse(JSON.stringify(DEFAULT_WEATHER_POOLS)).map(normalizeWeatherPool);
 }
+window.getStoredWeatherPools = getStoredWeatherPools;
 
 function saveStoredWeatherPools(pools) {
   try {
@@ -246,24 +367,43 @@ function getActiveWeatherPool() {
   return found || pools[0];
 }
 
-// 抽取当前天气池中的天气
-window.drawWeatherFromCurrentPool = function() {
-  const pool = getActiveWeatherPool();
-  if (!pool || !Array.isArray(pool.items) || pool.items.length === 0) {
-    return { name: "晴天", rate: 100, note: "天气晴朗" };
+// 抽取天气池中的天气（支持季节/月份传入与指定气候池名称或ID）
+window.drawWeatherFromCurrentPool = function(seasonOrMonth, poolNameOrId) {
+  let pool = null;
+  const pools = getStoredWeatherPools();
+  if (poolNameOrId) {
+    pool = pools.find(p => p.id === poolNameOrId || p.name === poolNameOrId);
   }
-  const totalRate = pool.items.reduce((sum, item) => sum + (parseFloat(item.rate) || 0), 0);
-  if (totalRate <= 0) return pool.items[0];
+  if (!pool) {
+    pool = getActiveWeatherPool();
+  }
+  if (!pool) return { name: "晴天", rate: 100, note: "温和宜人", season: "春季" };
+
+  let seasonName = "春季";
+  if (typeof seasonOrMonth === "number" || (!isNaN(parseInt(seasonOrMonth)) && !String(seasonOrMonth).includes("季"))) {
+    seasonName = getSeasonNameByMonth(seasonOrMonth);
+  } else if (typeof seasonOrMonth === "string" && ["春季", "夏季", "秋季", "冬季"].includes(seasonOrMonth)) {
+    seasonName = seasonOrMonth;
+  } else {
+    seasonName = getSeasonNameByMonth(new Date().getMonth() + 1);
+  }
+
+  const items = (pool.seasons && Array.isArray(pool.seasons[seasonName]) && pool.seasons[seasonName].length > 0)
+    ? pool.seasons[seasonName]
+    : (Array.isArray(pool.items) && pool.items.length > 0 ? pool.items : [{ name: "晴天", rate: 100, note: "温和宜人" }]);
+
+  const totalRate = items.reduce((sum, item) => sum + (parseFloat(item.rate) || 0), 0);
+  if (totalRate <= 0) return { ...items[0], season: seasonName, poolName: pool.name };
 
   let rand = Math.random() * totalRate;
-  for (const item of pool.items) {
+  for (const item of items) {
     const r = parseFloat(item.rate) || 0;
     if (rand < r) {
-      return item;
+      return { ...item, season: seasonName, poolName: pool.name };
     }
     rand -= r;
   }
-  return pool.items[pool.items.length - 1];
+  return { ...items[items.length - 1], season: seasonName, poolName: pool.name };
 };
 
 // 掷多面骰辅助函数
@@ -959,6 +1099,14 @@ function renderCommandsTab(container) {
       }
       return;
     }
+    let confirmed = false;
+    if (typeof window.showCustomConfirm === "function") {
+      confirmed = await window.showCustomConfirm("确认删除", `确定要删除预设【${activePreset.name}】吗？`);
+    } else {
+      confirmed = confirm(`确定要删除预设【${activePreset.name}】吗？`);
+    }
+    if (!confirmed) return;
+
     const idx = presets.findIndex(p => p.id === activePreset.id);
     if (idx !== -1) {
       presets.splice(idx, 1);
@@ -969,38 +1117,62 @@ function renderCommandsTab(container) {
   };
 }
 
+let activeWeatherSeason = "春季";
+
 function renderWeatherTab(container) {
   const pools = getStoredWeatherPools();
   const activePool = getActiveWeatherPool();
+  normalizeWeatherPool(activePool);
+
+  const seasonsList = ["春季", "夏季", "秋季", "冬季"];
+  if (!seasonsList.includes(activeWeatherSeason)) {
+    activeWeatherSeason = "春季";
+  }
+
+  const currentSeasonItems = activePool.seasons[activeWeatherSeason] || [];
 
   let poolOptionsHtml = pools.map(p => `<option value="${p.id}" ${p.id === activePool.id ? "selected" : ""}>${p.name}</option>`).join("");
 
-  let itemsHtml = activePool.items.map((item, index) => {
+  let seasonTabsHtml = seasonsList.map(s => {
+    const isAct = (s === activeWeatherSeason);
+    return `<button type="button" class="weather-season-tab-btn" data-season="${s}" style="flex: 1; height: 28px; font-size: 12px; border-radius: 8px; border: 1px solid ${isAct ? 'var(--accent-color)' : 'var(--border-color)'}; background: ${isAct ? 'var(--accent-color)' : 'var(--secondary-bg)'}; color: ${isAct ? '#ffffff' : 'var(--text-primary)'}; font-weight: ${isAct ? '600' : 'normal'}; cursor: pointer; transition: all 0.2s;">${s}</button>`;
+  }).join("");
+
+  let itemsHtml = currentSeasonItems.map((item, index) => {
     return `
-      <div style="display: flex; gap: 4px; align-items: center; margin-bottom: 6px; background: var(--secondary-bg); padding: 4px 6px; border-radius: 6px; border: 1px solid var(--border-color);">
-        <input type="text" class="moe-input weather-name-input" data-index="${index}" value="${item.name}" placeholder="天气名称" style="width: 70px; flex-shrink: 0; font-size: 11px; padding: 2px 4px;">
-        <div style="display: flex; align-items: center; gap: 2px; width: 60px; flex-shrink: 0;">
-          <input type="number" class="moe-input weather-rate-input" data-index="${index}" value="${item.rate}" placeholder="概率" style="width: 44px; font-size: 11px; padding: 2px 4px; text-align: right;">
+      <div style="display: flex; gap: 4px; align-items: center; margin-bottom: 6px; background: var(--secondary-bg); padding: 4px 6px; border-radius: 8px; border: 1px solid var(--border-color);">
+        <input type="text" class="moe-input weather-name-input" data-index="${index}" value="${item.name || ''}" placeholder="天气名称" style="width: 72px; flex-shrink: 0; font-size: 11px; padding: 2px 4px; border-radius: 6px;">
+        <div style="display: flex; align-items: center; gap: 2px; width: 56px; flex-shrink: 0;">
+          <input type="number" class="moe-input weather-rate-input" data-index="${index}" value="${item.rate}" placeholder="概率" style="width: 40px; font-size: 11px; padding: 2px 4px; text-align: right; border-radius: 6px;">
           <span style="font-size: 11px; color: var(--text-secondary);">%</span>
         </div>
-        <input type="text" class="moe-input weather-note-input" data-index="${index}" value="${item.note || ""}" placeholder="备注 (仅AI可见)" style="flex: 1 1 auto; font-size: 11px; padding: 2px 4px;">
-        <button type="button" class="moe-btn-mini weather-del-item-btn" data-index="${index}" style="flex: 0 0 auto !important; width: 22px !important; height: 22px !important; min-width: 22px !important; padding: 0 !important; line-height: 20px !important; text-align: center; color: #ff4d4f;">&times;</button>
+        <textarea class="moe-input weather-note-input" data-index="${index}" placeholder="备注" rows="1" style="flex: 1 1 auto; font-size: 11px; padding: 4px 6px; min-height: 26px; height: 26px; border-radius: 6px; resize: vertical; box-sizing: border-box;">${item.note || ''}</textarea>
+        <button type="button" class="moe-btn-mini weather-del-item-btn" data-index="${index}" style="flex: 0 0 auto !important; width: 22px !important; height: 22px !important; min-width: 22px !important; padding: 0 !important; line-height: 20px !important; text-align: center; color: var(--tukey-accent-red, #ff4d4f);">&times;</button>
       </div>
     `;
   }).join("");
 
   container.innerHTML = `
-    <div style="display: flex; gap: 4px; align-items: center; margin-bottom: 10px; width: 100%; box-sizing: border-box; position: relative; z-index: 5;">
-      <select id="weather-pool-select" class="moe-input" style="flex: 1 1 auto; height: 28px; min-height: 28px; font-size: 11px; padding: 2px 8px; min-width: 90px; color: var(--text-primary); background-color: var(--card-bg, #ffffff); position: relative; z-index: 5; opacity: 1; visibility: visible; border-radius: 14px;">
+    <div style="display: flex; gap: 4px; align-items: center; margin-bottom: 8px; width: 100%; box-sizing: border-box; flex-wrap: wrap;">
+      <select id="weather-pool-select" class="moe-input" style="flex: 1 1 110px; height: 28px; min-height: 28px; font-size: 11px; padding: 2px 8px; min-width: 90px; color: var(--text-primary); background-color: var(--card-bg, #ffffff); border-radius: 14px;">
         ${poolOptionsHtml}
       </select>
-      <button type="button" id="weather-new-pool-btn" class="moe-btn-mini" style="flex: 0 0 auto !important; width: auto !important; max-width: 44px !important; padding: 2px 6px !important; font-size: 11px !important; height: 26px !important; line-height: 20px !important;">新建</button>
-      <button type="button" id="weather-save-pool-btn" class="moe-btn-mini" style="flex: 0 0 auto !important; width: auto !important; max-width: 44px !important; padding: 2px 6px !important; font-size: 11px !important; height: 26px !important; line-height: 20px !important;">保存</button>
-      <button type="button" id="weather-del-pool-btn" class="moe-btn-mini" style="flex: 0 0 auto !important; width: auto !important; max-width: 44px !important; padding: 2px 6px !important; font-size: 11px !important; height: 26px !important; line-height: 20px !important;">删除</button>
+      <button type="button" id="weather-new-pool-btn" class="moe-btn-mini" style="flex: 0 0 auto !important; width: auto !important; padding: 2px 6px !important; font-size: 11px !important; height: 26px !important;">新建</button>
+      <button type="button" id="weather-save-pool-btn" class="moe-btn-mini" style="flex: 0 0 auto !important; width: auto !important; padding: 2px 6px !important; font-size: 11px !important; height: 26px !important;">保存</button>
+      <button type="button" id="weather-copy-season-btn" class="moe-btn-mini" style="flex: 0 0 auto !important; width: auto !important; padding: 2px 6px !important; font-size: 11px !important; height: 26px !important;">复制</button>
+      <button type="button" id="weather-import-file-btn" class="moe-btn-mini" style="flex: 0 0 auto !important; width: auto !important; padding: 2px 6px !important; font-size: 11px !important; height: 26px !important;">导入</button>
+      <button type="button" id="weather-prompt-guide-btn" class="moe-btn-mini" style="flex: 0 0 auto !important; width: auto !important; padding: 2px 6px !important; font-size: 11px !important; height: 26px !important;">提示</button>
+      <button type="button" id="weather-del-pool-btn" class="moe-btn-mini" style="flex: 0 0 auto !important; width: auto !important; padding: 2px 6px !important; font-size: 11px !important; height: 26px !important; color: var(--tukey-accent-red, #ff4d4f);">删除</button>
+    </div>
+
+    <input type="file" id="weather-import-hidden-input" accept=".txt,.doc,.docx,.json" style="display: none;">
+
+    <div style="display: flex; gap: 4px; margin-bottom: 8px; width: 100%;">
+      ${seasonTabsHtml}
     </div>
 
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-      <span style="font-weight: 700; font-size: 13px; color: var(--text-primary);">天气项列表</span>
+      <span style="font-weight: 700; font-size: 12px; color: var(--text-primary);">${activeWeatherSeason}天气</span>
       <div style="display: flex; gap: 6px;">
         <button type="button" id="weather-test-draw-btn" class="moe-btn-mini" style="width: auto !important; padding: 2px 8px !important; font-size: 10px !important; color: var(--accent-color);">测试抽取</button>
         <button type="button" id="weather-add-item-btn" class="moe-btn-mini" style="width: auto !important; padding: 2px 8px !important; font-size: 10px !important;">+ 添加</button>
@@ -1010,27 +1182,86 @@ function renderWeatherTab(container) {
     <div id="weather-items-list" style="margin-bottom: 12px;">
       ${itemsHtml}
     </div>
+
+    <!-- 复制季节模态弹窗 -->
+    <div id="weather-copy-season-modal" class="modal">
+      <div class="modal-content" style="max-width: 280px; padding: 14px; border-radius: 16px;">
+        <div class="modal-header" style="font-size: 13px; font-weight: 600; text-align: center; margin-bottom: 8px;">
+          <span>复制</span>
+        </div>
+        <div class="modal-body" style="display: flex; flex-direction: column; gap: 8px;">
+          <div class="form-group" style="margin-bottom: 0;">
+            <label style="font-size: 11px; color: var(--text-secondary); margin-bottom: 3px; display: block;">来源预设</label>
+            <select id="weather-copy-src-pool" class="moe-input" style="width: 100%; height: 30px; font-size: 12px; border-radius: 8px;">
+              ${pools.map(p => `<option value="${p.id}">${p.name}</option>`).join("")}
+            </select>
+          </div>
+          <div class="form-group" style="margin-bottom: 0;">
+            <label style="font-size: 11px; color: var(--text-secondary); margin-bottom: 3px; display: block;">来源季节</label>
+            <select id="weather-copy-src-season" class="moe-input" style="width: 100%; height: 30px; font-size: 12px; border-radius: 8px;">
+              <option value="春季">春季</option>
+              <option value="夏季">夏季</option>
+              <option value="秋季">秋季</option>
+              <option value="冬季">冬季</option>
+            </select>
+          </div>
+          <div style="font-size: 11px; color: var(--text-secondary); margin-top: 4px;">
+            目标季节：${activeWeatherSeason}
+          </div>
+        </div>
+        <div class="modal-footer" style="display: flex; gap: 8px; margin-top: 10px;">
+          <button type="button" id="weather-copy-confirm-btn" class="moe-btn" style="flex: 1; height: 30px; font-size: 12px; border-radius: 8px;">复制</button>
+          <button type="button" id="weather-copy-cancel-btn" class="cancel" style="flex: 1; height: 30px; font-size: 12px; border-radius: 8px;">取消</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 提示词指导模态弹窗 -->
+    <div id="weather-prompt-modal" class="modal">
+      <div class="modal-content" style="max-width: 320px; padding: 14px; border-radius: 16px;">
+        <div class="modal-header" style="font-size: 13px; font-weight: 600; text-align: center; margin-bottom: 6px;">
+          <span>提示</span>
+        </div>
+        <div class="modal-body" style="display: flex; flex-direction: column; gap: 6px;">
+          <textarea id="weather-ai-prompt-content" readonly class="moe-input" style="width: 100%; height: 210px; font-size: 11px; border-radius: 8px; resize: none; line-height: 1.5; padding: 6px; box-sizing: border-box; background: var(--secondary-bg); color: var(--text-primary);"></textarea>
+        </div>
+        <div class="modal-footer" style="display: flex; gap: 8px; margin-top: 10px;">
+          <button type="button" id="weather-copy-prompt-btn" class="moe-btn" style="flex: 1; height: 30px; font-size: 12px; border-radius: 8px;">复制</button>
+          <button type="button" id="weather-close-prompt-btn" class="cancel" style="flex: 1; height: 30px; font-size: 12px; border-radius: 8px;">关闭</button>
+        </div>
+      </div>
+    </div>
   `;
 
-  // 绑定事件
+  // 绑定事件：切换天气池
   document.getElementById("weather-pool-select").onchange = (e) => {
     localStorage.setItem("coc_active_weather_pool_id", e.target.value);
     renderWeatherTab(container);
   };
 
+  // 绑定事件：切换季节标签
+  container.querySelectorAll(".weather-season-tab-btn").forEach(btn => {
+    btn.onclick = () => {
+      activeWeatherSeason = btn.dataset.season;
+      renderWeatherTab(container);
+    };
+  });
+
+  // 绑定事件：保存当前天气池
   document.getElementById("weather-save-pool-btn").onclick = async () => {
     const names = container.querySelectorAll(".weather-name-input");
     const rates = container.querySelectorAll(".weather-rate-input");
     const notes = container.querySelectorAll(".weather-note-input");
 
-    activePool.items = [];
+    activePool.seasons[activeWeatherSeason] = [];
     for (let i = 0; i < names.length; i++) {
-      activePool.items.push({
+      activePool.seasons[activeWeatherSeason].push({
         name: names[i].value.trim(),
         rate: parseFloat(rates[i].value) || 0,
         note: notes[i].value.trim()
       });
     }
+    activePool.items = activePool.seasons[activeWeatherSeason];
 
     saveStoredWeatherPools(pools);
     const saveBtn = document.getElementById("weather-save-pool-btn");
@@ -1038,30 +1269,39 @@ function renderWeatherTab(container) {
     setTimeout(() => { saveBtn.textContent = "保存"; }, 1000);
   };
 
+  // 绑定事件：新建天气池
   document.getElementById("weather-new-pool-btn").onclick = async () => {
     let name = null;
     if (typeof window.showCustomPrompt === "function") {
-      name = await window.showCustomPrompt("新建天气池", "请输入气候/天气池名称", "自定义气候");
+      name = await window.showCustomPrompt("新建天气池", "请输入气候名称", "新气候");
     } else {
-      name = prompt("请输入气候/天气池名称:");
+      name = prompt("请输入气候名称:");
     }
     if (!name || !name.trim()) return;
     const newId = "weather_" + Date.now();
-    const newPool = {
+    const defaultList = [
+      { name: "晴天", rate: 50, note: "温和宜人" },
+      { name: "多云", rate: 30, note: "云层微厚" },
+      { name: "小雨", rate: 20, note: "细雨绵绵" }
+    ];
+    const newPool = normalizeWeatherPool({
       id: newId,
       name: name.trim(),
-      items: [
-        { name: "晴天", rate: 50, note: "晴空万里" },
-        { name: "多云", rate: 30, note: "云层微厚" },
-        { name: "雨天", rate: 20, note: "阴雨霏霏" }
-      ]
-    };
+      seasons: {
+        "春季": JSON.parse(JSON.stringify(defaultList)),
+        "夏季": JSON.parse(JSON.stringify(defaultList)),
+        "秋季": JSON.parse(JSON.stringify(defaultList)),
+        "冬季": JSON.parse(JSON.stringify(defaultList))
+      },
+      items: defaultList
+    });
     pools.push(newPool);
     saveStoredWeatherPools(pools);
     localStorage.setItem("coc_active_weather_pool_id", newId);
     renderWeatherTab(container);
   };
 
+  // 绑定事件：删除天气池
   document.getElementById("weather-del-pool-btn").onclick = async () => {
     if (pools.length <= 1) {
       if (typeof window.showCustomAlert === "function") {
@@ -1071,6 +1311,14 @@ function renderWeatherTab(container) {
       }
       return;
     }
+    let confirmed = false;
+    if (typeof window.showCustomConfirm === "function") {
+      confirmed = await window.showCustomConfirm("确认删除", `确定要删除天气池【${activePool.name}】吗？`);
+    } else {
+      confirmed = confirm(`确定要删除天气池【${activePool.name}】吗？`);
+    }
+    if (!confirmed) return;
+
     const idx = pools.findIndex(p => p.id === activePool.id);
     if (idx !== -1) {
       pools.splice(idx, 1);
@@ -1080,8 +1328,10 @@ function renderWeatherTab(container) {
     }
   };
 
+  // 绑定事件：添加天气项
   document.getElementById("weather-add-item-btn").onclick = () => {
-    activePool.items.push({
+    if (!activePool.seasons[activeWeatherSeason]) activePool.seasons[activeWeatherSeason] = [];
+    activePool.seasons[activeWeatherSeason].push({
       name: "新天气",
       rate: 10,
       note: ""
@@ -1089,22 +1339,288 @@ function renderWeatherTab(container) {
     renderWeatherTab(container);
   };
 
+  // 绑定事件：删除天气项
   container.querySelectorAll(".weather-del-item-btn").forEach(btn => {
-    btn.onclick = () => {
+    btn.onclick = async () => {
       const idx = parseInt(btn.dataset.index, 10);
-      activePool.items.splice(idx, 1);
-      renderWeatherTab(container);
+      const item = activePool.seasons[activeWeatherSeason]?.[idx];
+      const itemName = item?.name || "此天气项";
+      let confirmed = false;
+      if (typeof window.showCustomConfirm === "function") {
+        confirmed = await window.showCustomConfirm("确认删除", `确定要删除【${itemName}】吗？`);
+      } else {
+        confirmed = confirm(`确定要删除【${itemName}】吗？`);
+      }
+      if (!confirmed) return;
+
+      if (activePool.seasons[activeWeatherSeason]) {
+        activePool.seasons[activeWeatherSeason].splice(idx, 1);
+        renderWeatherTab(container);
+      }
     };
   });
 
+  // 绑定事件：测试抽取
   document.getElementById("weather-test-draw-btn").onclick = async () => {
-    const drawn = window.drawWeatherFromCurrentPool();
-    const alertMsg = `当前抽中天气: ${drawn.name} (概率: ${drawn.rate}%) 备注: ${drawn.note || "无"}`;
+    const drawn = window.drawWeatherFromCurrentPool(activeWeatherSeason);
+    const alertMsg = `${drawn.season}抽中：${drawn.name}，概率${drawn.rate}%，备注${drawn.note || "无"}`;
     if (typeof window.showCustomAlert === "function") {
-      await window.showCustomAlert("天气抽取结果", alertMsg);
+      await window.showCustomAlert("抽取结果", alertMsg);
     } else {
       alert(alertMsg);
     }
+  };
+
+  // 绑定事件：复制季节
+  const copyModal = document.getElementById("weather-copy-season-modal");
+  document.getElementById("weather-copy-season-btn").onclick = () => {
+    if (copyModal) copyModal.classList.add("visible");
+  };
+  document.getElementById("weather-copy-cancel-btn").onclick = () => {
+    if (copyModal) copyModal.classList.remove("visible");
+  };
+  document.getElementById("weather-copy-confirm-btn").onclick = () => {
+    const srcPoolId = document.getElementById("weather-copy-src-pool").value;
+    const srcSeason = document.getElementById("weather-copy-src-season").value;
+    const srcPool = pools.find(p => p.id === srcPoolId);
+    if (srcPool && srcPool.seasons && srcPool.seasons[srcSeason]) {
+      activePool.seasons[activeWeatherSeason] = JSON.parse(JSON.stringify(srcPool.seasons[srcSeason]));
+      saveStoredWeatherPools(pools);
+      if (copyModal) copyModal.classList.remove("visible");
+      renderWeatherTab(container);
+    }
+  };
+
+  // 绑定事件：导入文件
+  const hiddenFileInput = document.getElementById("weather-import-hidden-input");
+  document.getElementById("weather-import-file-btn").onclick = () => {
+    if (hiddenFileInput) hiddenFileInput.click();
+  };
+
+  hiddenFileInput.onchange = async (e) => {
+    const file = e.target.files && e.target.files[0];
+    if (!file) return;
+
+    try {
+      let rawText = "";
+      if (file.name.endsWith(".json")) {
+        rawText = await file.text();
+      } else if (file.name.endsWith(".docx")) {
+        // 解析 Word docx 文档中的 XML 文本
+        const arrayBuf = await file.arrayBuffer();
+        try {
+          // docx 是 PK zip 格式，尝试通过字符串搜索或解压读取
+          const bytes = new Uint8Array(arrayBuf);
+          let binaryStr = "";
+          for (let i = 0; i < bytes.length; i++) binaryStr += String.fromCharCode(bytes[i]);
+          const docXmlIndex = binaryStr.indexOf("word/document.xml");
+          if (docXmlIndex !== -1) {
+            // 提取 XML 中的纯文本标签 <w:t>
+            const extracted = binaryStr.match(/<w:t[^>]*>(.*?)<\/w:t>/g);
+            if (extracted && extracted.length > 0) {
+              rawText = extracted.map(tag => tag.replace(/<[^>]+>/g, "")).join("\n");
+            }
+          }
+        } catch (ex) {
+          console.warn("docx 二进制提取降级:", ex);
+        }
+        if (!rawText) {
+          rawText = await file.text();
+        }
+      } else {
+        rawText = await file.text();
+      }
+
+      if (!rawText || !rawText.trim()) {
+        alert("导入文本内容为空");
+        return;
+      }
+
+      // 解析文本
+      const importedPool = parseWeatherImportText(rawText, file.name.replace(/\.[^.]+$/, ""));
+      if (importedPool) {
+        pools.push(importedPool);
+        saveStoredWeatherPools(pools);
+        localStorage.setItem("coc_active_weather_pool_id", importedPool.id);
+        renderWeatherTab(container);
+        if (typeof window.showCustomAlert === "function") {
+          await window.showCustomAlert("导入成功", `成功导入气候：${importedPool.name}`);
+        } else {
+          alert(`成功导入气候：${importedPool.name}`);
+        }
+      } else {
+        alert("导入失败，文本格式不符合要求");
+      }
+    } catch (err) {
+      console.error("导入异常:", err);
+      alert("导入失败");
+    } finally {
+      hiddenFileInput.value = "";
+    }
+  };
+
+  // 绑定事件：提示词指导弹窗
+  const promptModal = document.getElementById("weather-prompt-modal");
+  const promptTextarea = document.getElementById("weather-ai-prompt-content");
+  const aiPromptGuideText = `你是一个气候天气预设生成助手。请按照以下兼容格式编写天气预设文本，支持直接保存为 TXT 格式导入：
+
+气候名称：这里填写气候名称
+
+春季：
+晴天 | 35% | 春光明媚微风和煦
+多云 | 25% | 春云淡淡舒适怡人
+小雨 | 20% | 细雨绵绵润物无声
+微风 | 15% | 清风拂面
+雷阵雨 | 5% | 阵雨初歇
+
+夏季：
+晴朗酷热 | 40% | 骄阳似火
+雷阵雨 | 25% | 电闪雷鸣
+多云闷热 | 20% | 空气潮湿
+大雨 | 15% | 大雨倾盆
+
+秋季：
+秋高气爽 | 40% | 凉爽舒适
+阴天 | 25% | 天色阴凉
+小雨 | 20% | 秋雨连绵
+大风 | 15% | 秋风瑟瑟
+
+冬季：
+晴冷 | 35% | 寒风凛冽阳光清冷
+小雪 | 25% | 轻盈落地
+阴沉大风 | 20% | 冷风呼啸
+大雪 | 15% | 漫天飞雪
+冻雨 | 5% | 道路湿滑
+
+规则要点：
+1. 每一季列出天气名称、概率百分比和备注，用竖线分割或空格分割。
+2. 每一季的所有天气概率总和尽量等于 100%。
+3. 可以包含四季，也可以只写单季。`;
+
+  document.getElementById("weather-prompt-guide-btn").onclick = () => {
+    if (promptTextarea) promptTextarea.value = aiPromptGuideText;
+    if (promptModal) promptModal.classList.add("visible");
+  };
+
+  document.getElementById("weather-close-prompt-btn").onclick = () => {
+    if (promptModal) promptModal.classList.remove("visible");
+  };
+
+  document.getElementById("weather-copy-prompt-btn").onclick = async () => {
+    try {
+      await navigator.clipboard.writeText(aiPromptGuideText);
+      const copyBtn = document.getElementById("weather-copy-prompt-btn");
+      copyBtn.textContent = "已复制";
+      setTimeout(() => { copyBtn.textContent = "复制"; }, 1000);
+    } catch (e) {
+      alert("复制失败");
+    }
+  };
+}
+
+// 天气导入文本解析器
+function parseWeatherImportText(rawText, fallbackName) {
+  try {
+    // 尝试 JSON 解析
+    if (rawText.trim().startsWith("{")) {
+      const parsed = JSON.parse(rawText);
+      if (parsed.name) {
+        return normalizeWeatherPool({
+          id: "weather_" + Date.now(),
+          name: parsed.name,
+          seasons: parsed.seasons,
+          items: parsed.items
+        });
+      }
+    }
+  } catch (e) {}
+
+  // 纯文本按行解析
+  const lines = rawText.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+  let poolName = fallbackName || "导入气候";
+  let seasonsData = {
+    "春季": [],
+    "夏季": [],
+    "秋季": [],
+    "冬季": []
+  };
+  let currentParseSeason = "春季";
+  let hasSeasonHeader = false;
+
+  for (const line of lines) {
+    // 匹配气候名称
+    const nameMatch = line.match(/^(?:气候名称|名称|气候|预设名称)[:：\s]+(.+)$/);
+    if (nameMatch) {
+      poolName = nameMatch[1].trim();
+      continue;
+    }
+
+    // 匹配季节分段
+    if (/^(?:\[?春季?\]?|春)[:：\s]*$/i.test(line)) {
+      currentParseSeason = "春季";
+      hasSeasonHeader = true;
+      continue;
+    }
+    if (/^(?:\[?夏季?\]?|夏)[:：\s]*$/i.test(line)) {
+      currentParseSeason = "夏季";
+      hasSeasonHeader = true;
+      continue;
+    }
+    if (/^(?:\[?秋季?\]?|秋)[:：\s]*$/i.test(line)) {
+      currentParseSeason = "秋季";
+      hasSeasonHeader = true;
+      continue;
+    }
+    if (/^(?:\[?冬季?\]?|冬)[:：\s]*$/i.test(line)) {
+      currentParseSeason = "冬季";
+      hasSeasonHeader = true;
+      continue;
+    }
+
+    // 匹配单行天气数据
+    // 格式支持：晴天 | 35% | 阳光明媚 或 晴天 35% 阳光明媚 或 晴天,35%,阳光明媚
+    const cleanLine = line.replace(/^[-\*•\d\.]+\s*/, ""); // 去除开头的列表符号
+    let parts = cleanLine.split(/[|｜,，]/).map(s => s.trim()).filter(Boolean);
+    if (parts.length < 2) {
+      parts = cleanLine.split(/\s+/).map(s => s.trim()).filter(Boolean);
+    }
+
+    if (parts.length >= 2) {
+      const name = parts[0];
+      const rateNum = parseFloat(parts[1].replace(/[^\d\.]/g, "")) || 10;
+      const note = parts.slice(2).join(" ");
+      seasonsData[currentParseSeason].push({
+        name: name,
+        rate: rateNum,
+        note: note
+      });
+    }
+  }
+
+  // 如果没有分季节，将解析出的所有项目复制到四季
+  if (!hasSeasonHeader && seasonsData["春季"].length > 0) {
+    const list = seasonsData["春季"];
+    seasonsData["夏季"] = JSON.parse(JSON.stringify(list));
+    seasonsData["秋季"] = JSON.parse(JSON.stringify(list));
+    seasonsData["冬季"] = JSON.parse(JSON.stringify(list));
+  }
+
+  // 兜底补全
+  ["春季", "夏季", "秋季", "冬季"].forEach(s => {
+    if (!seasonsData[s] || seasonsData[s].length === 0) {
+      seasonsData[s] = [
+        { name: "晴天", rate: 50, note: "温和宜人" },
+        { name: "多云", rate: 30, note: "云层微厚" },
+        { name: "小雨", rate: 20, note: "细雨绵绵" }
+      ];
+    }
+  });
+
+  return {
+    id: "weather_" + Date.now(),
+    name: poolName,
+    seasons: seasonsData,
+    items: seasonsData["春季"]
   };
 }
 

@@ -1194,4 +1194,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
     return aiContent.trim();
   }
+  window.getApiResponse = getApiResponse;
 });

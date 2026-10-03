@@ -179,7 +179,12 @@ class CocPanel {
           <span class="coc-total-badge">总加点数: <span class="coc-top-points">0</span></span>
         </div>
 
-        <div class="coc-section-label">属性</div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+          <div class="coc-section-label" style="margin-bottom: 0;">属性</div>
+          ${this.options.showInject ? `
+            <button type="button" class="moe-btn-mini coc-inject-btn" style="flex: 0 0 auto !important; width: auto !important; height: 20px !important; min-height: 20px !important; padding: 1px 8px !important; font-size: 11px !important; line-height: 18px !important; border-radius: 6px; cursor: pointer;">注入</button>
+          ` : ''}
+        </div>
         <div class="coc-stats-grid">
           <div class="coc-stat-item"><label>力量</label><input type="number" class="coc-stat-input" data-stat="str" value="50" min="0" max="999"></div>
           <div class="coc-stat-item"><label>敏捷</label><input type="number" class="coc-stat-input" data-stat="dex" value="50" min="0" max="999"></div>
@@ -221,6 +226,19 @@ class CocPanel {
   }
 
   bindEvents() {
+    const injectBtn = this.container.querySelector(".coc-inject-btn");
+    if (injectBtn) {
+      injectBtn.addEventListener("click", (e) => {
+        if (e) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+        if (typeof window.openCocInjectModal === "function") {
+          window.openCocInjectModal(this);
+        }
+      });
+    }
+
     this.container.querySelectorAll(".coc-stat-input").forEach(input => {
       input.addEventListener("input", () => {
         const stat = input.dataset.stat;

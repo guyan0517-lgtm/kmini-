@@ -1792,9 +1792,10 @@
 
             <div style="position: relative; display: inline-block;">
               <span class="action-btn" id="add-chat-btn">+</span>
-              <div id="add-contact-dropdown" class="qq-add-dropdown" style="display: none; position: absolute; top: 100%; right: 0; margin-top: 6px; z-index: 1000; width: 110px; background: var(--card-bg, #ffffff); border: 1px solid var(--border-color, #e0e0e0); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); padding: 4px 0;">
+              <div id="add-contact-dropdown" class="qq-add-dropdown" style="display: none; position: absolute; top: 100%; right: 0; margin-top: 6px; z-index: 1000; width: 130px; background: var(--card-bg, #ffffff); border: 1px solid var(--border-color, #e0e0e0); border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); padding: 4px 0;">
                 <button type="button" id="add-choice-friend-btn" class="dropdown-item" style="display: flex; align-items: center; width: 100%; padding: 8px 12px; border: none; background: transparent; color: var(--text-primary); font-size: 13px; cursor: pointer; text-align: left;">添加好友</button>
                 <button type="button" id="add-choice-dice-btn" class="dropdown-item" style="display: flex; align-items: center; width: 100%; padding: 8px 12px; border: none; background: transparent; color: var(--text-primary); font-size: 13px; cursor: pointer; text-align: left;">添加骰子</button>
+                <button type="button" id="add-choice-status-btn" class="dropdown-item" style="display: flex; align-items: center; width: 100%; padding: 8px 12px; border: none; background: transparent; color: var(--text-primary); font-size: 13px; cursor: pointer; text-align: left;">添加系统状态栏</button>
               </div>
             </div>
           </div>
@@ -5506,19 +5507,65 @@
             </div>
 
             <div class="form-group" style="margin-top: 8px;">
-              <label for="ai-birthday-input">生日</label>
-              <input type="text" id="ai-birthday-input" class="moe-input" placeholder="">
+              <label>生日</label>
+              <div style="display: flex; align-items: center; gap: 4px; width: 50%; max-width: 160px;">
+                <input type="text" id="ai-birthday-month-input" class="moe-input" placeholder="" style="width: 44px; min-width: 0; text-align: center; padding: 2px 4px; font-size: 11px; flex: 1;">
+                <span style="font-size: 12px; color: var(--text-secondary); flex-shrink: 0;">月</span>
+                <input type="text" id="ai-birthday-day-input" class="moe-input" placeholder="" style="width: 44px; min-width: 0; text-align: center; padding: 2px 4px; font-size: 11px; flex: 1;">
+                <span style="font-size: 12px; color: var(--text-secondary); flex-shrink: 0;">日</span>
+              </div>
             </div>
 
             <div class="form-group" style="margin-top: 8px;">
-              <label for="ai-gender-input">性别</label>
+              <label for="ai-gender-select">性别</label>
               <div style="display: flex; gap: 6px;">
-                <input type="text" id="ai-gender-input" class="moe-input" placeholder="" style="width: 80px; flex-shrink: 0;">
+                <select id="ai-gender-select" class="moe-input" style="width: 72px; flex-shrink: 0; padding: 2px 6px; font-size: 11px;">
+                  <option value="">选择</option>
+                  <option value="男">男</option>
+                  <option value="女">女</option>
+                </select>
                 <input type="text" id="ai-gender-note-input" class="moe-input" placeholder="" style="flex: 1; padding: 2px 6px; font-size: 11px;">
               </div>
             </div>
 
             <div id="ai-coc-panel-container"></div>
+          </div>
+
+          <!-- ============================== -->
+          <!-- 系统状态栏配置卡片 -->
+          <!-- ============================== -->
+          <div class="settings-group-card moe-card" id="system-status-settings-card" style="display: none;">
+            <div class="settings-section-title">
+              <span>系统状态配置</span>
+            </div>
+
+            <div class="form-group" style="margin-top: 8px;">
+              <label for="system-status-persona-input">人设</label>
+              <textarea id="system-status-persona-input" rows="4" class="moe-input" placeholder="输入系统状态栏人设..."></textarea>
+            </div>
+
+            <div class="form-group" style="margin-top: 12px;">
+              <label>触发模式</label>
+              <div style="display: flex; gap: 12px; margin-top: 6px; font-size: 13px; color: var(--text-primary); flex-wrap: wrap;">
+                <label style="display: flex; align-items: center; gap: 4px; cursor: pointer;">
+                  <input type="radio" name="system-status-trigger-mode" value="none"> 不触发
+                </label>
+                <label style="display: flex; align-items: center; gap: 4px; cursor: pointer;">
+                  <input type="radio" name="system-status-trigger-mode" value="default" checked> 默认
+                </label>
+                <label style="display: flex; align-items: center; gap: 4px; cursor: pointer;">
+                  <input type="radio" name="system-status-trigger-mode" value="always"> 必定触发
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-top: 14px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <label style="font-weight: 600; font-size: 13px; margin: 0;">格式栏目</label>
+                <button type="button" id="system-status-add-col-btn" class="moe-btn-mini" style="font-size: 11px; width: 36px; min-width: 36px; max-width: 36px; height: 20px; padding: 0; display: inline-flex; align-items: center; justify-content: center; border-radius: 10px; margin: 0; line-height: 1; flex-shrink: 0;">+</button>
+              </div>
+              <div id="system-status-columns-list" style="display: flex; flex-direction: column; gap: 10px;"></div>
+            </div>
           </div>
 
           <!-- ============================== -->
@@ -5532,7 +5579,7 @@
 
             <div class="form-group" style="margin-top: 4px;">
               <label for="my-name-input">姓名</label>
-              <input type="text" id="my-name-input" class="moe-input" placeholder="">
+              <input type="text" id="my-name-input" class="moe-input" placeholder="" style="width: 50%; max-width: 160px; box-sizing: border-box;">
             </div>
 
             <div class="form-group" style="margin-top: 8px;">
@@ -5544,14 +5591,23 @@
             </div>
 
             <div class="form-group" style="margin-top: 8px;">
-              <label for="my-birthday-input">生日</label>
-              <input type="text" id="my-birthday-input" class="moe-input" placeholder="">
+              <label>生日</label>
+              <div style="display: flex; align-items: center; gap: 4px; width: 50%; max-width: 160px;">
+                <input type="text" id="my-birthday-month-input" class="moe-input" placeholder="" style="width: 44px; min-width: 0; text-align: center; padding: 2px 4px; font-size: 11px; flex: 1;">
+                <span style="font-size: 12px; color: var(--text-secondary); flex-shrink: 0;">月</span>
+                <input type="text" id="my-birthday-day-input" class="moe-input" placeholder="" style="width: 44px; min-width: 0; text-align: center; padding: 2px 4px; font-size: 11px; flex: 1;">
+                <span style="font-size: 12px; color: var(--text-secondary); flex-shrink: 0;">日</span>
+              </div>
             </div>
 
             <div class="form-group" style="margin-top: 8px;">
-              <label for="my-gender-input">性别</label>
+              <label for="my-gender-select">性别</label>
               <div style="display: flex; gap: 6px;">
-                <input type="text" id="my-gender-input" class="moe-input" placeholder="" style="width: 80px; flex-shrink: 0;">
+                <select id="my-gender-select" class="moe-input" style="width: 72px; flex-shrink: 0; padding: 2px 6px; font-size: 11px;">
+                  <option value="">选择</option>
+                  <option value="男">男</option>
+                  <option value="女">女</option>
+                </select>
                 <input type="text" id="my-gender-note-input" class="moe-input" placeholder="" style="flex: 1; padding: 2px 6px; font-size: 11px;">
               </div>
             </div>
@@ -6600,7 +6656,7 @@
             <textarea id="member-persona-input" rows="4"></textarea>
           </div>
 
-          <div class="form-group">
+          <div class="form-group" id="member-age-group">
             <label for="member-age-input">年龄</label>
             <div style="display: flex; align-items: center; gap: 4px;">
               <input type="number" id="member-age-input" class="moe-input" style="width: 52px; min-width: 52px; max-width: 60px; text-align: center; padding: 2px 4px; font-size: 11px;" min="0" max="999" placeholder="">
@@ -6608,20 +6664,29 @@
             </div>
           </div>
 
-          <div class="form-group">
-            <label for="member-birthday-input">生日</label>
-            <input type="text" id="member-birthday-input" class="moe-input" placeholder="">
+          <div class="form-group" id="member-birthday-group">
+            <label>生日</label>
+            <div style="display: flex; align-items: center; gap: 4px; width: 50%; max-width: 160px;">
+              <input type="text" id="member-birthday-month-input" class="moe-input" placeholder="" style="width: 44px; min-width: 0; text-align: center; padding: 2px 4px; font-size: 11px; flex: 1;">
+              <span style="font-size: 12px; color: var(--text-secondary); flex-shrink: 0;">月</span>
+              <input type="text" id="member-birthday-day-input" class="moe-input" placeholder="" style="width: 44px; min-width: 0; text-align: center; padding: 2px 4px; font-size: 11px; flex: 1;">
+              <span style="font-size: 12px; color: var(--text-secondary); flex-shrink: 0;">日</span>
+            </div>
           </div>
 
-          <div class="form-group">
-            <label for="member-gender-input">性别</label>
+          <div class="form-group" id="member-gender-group">
+            <label for="member-gender-select">性别</label>
             <div style="display: flex; gap: 6px;">
-              <input type="text" id="member-gender-input" class="moe-input" placeholder="" style="width: 80px; flex-shrink: 0;">
+              <select id="member-gender-select" class="moe-input" style="width: 72px; flex-shrink: 0; padding: 2px 6px; font-size: 11px;">
+                <option value="">选择</option>
+                <option value="男">男</option>
+                <option value="女">女</option>
+              </select>
               <input type="text" id="member-gender-note-input" class="moe-input" placeholder="" style="flex: 1; padding: 2px 6px; font-size: 11px;" />
             </div>
           </div>
 
-          <div class="form-group">
+          <div class="form-group" id="member-avatar-group">
             <label>头像</label>
             <div class="avatar-upload">
               <img id="member-avatar-preview" />
@@ -6646,6 +6711,32 @@
             </div>
           </div>
           <div id="member-coc-panel-container"></div>
+
+          <!-- 系统状态栏专属配置区域 -->
+          <div id="member-system-status-container" style="display: none;">
+            <div class="form-group" style="margin-top: 12px;">
+              <label>触发模式</label>
+              <div style="display: flex; gap: 12px; margin-top: 6px; font-size: 13px; color: var(--text-primary); flex-wrap: wrap;">
+                <label style="display: flex; align-items: center; gap: 4px; cursor: pointer;">
+                  <input type="radio" name="member-system-status-trigger-mode" value="none"> 不触发
+                </label>
+                <label style="display: flex; align-items: center; gap: 4px; cursor: pointer;">
+                  <input type="radio" name="member-system-status-trigger-mode" value="default" checked> 默认
+                </label>
+                <label style="display: flex; align-items: center; gap: 4px; cursor: pointer;">
+                  <input type="radio" name="member-system-status-trigger-mode" value="always"> 必定触发
+                </label>
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-top: 14px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <label style="font-weight: 600; font-size: 13px; margin: 0;">格式栏目</label>
+                <button type="button" id="member-status-add-col-btn" class="moe-btn-mini" style="font-size: 11px; width: 36px; min-width: 36px; max-width: 36px; height: 20px; padding: 0; display: inline-flex; align-items: center; justify-content: center; border-radius: 10px; margin: 0; line-height: 1; flex-shrink: 0;">+</button>
+              </div>
+              <div id="member-status-columns-list" style="display: flex; flex-direction: column; gap: 10px;"></div>
+            </div>
+          </div>
         </div>
         <div class="modal-footer">
           <button class="cancel" id="cancel-member-settings-btn">取消</button>
@@ -6688,6 +6779,7 @@
         <div class="modal-body" style="display: flex; flex-direction: column; gap: 10px; padding: 16px 20px;">
           <button type="button" class="moe-btn" id="add-choice-friend-btn" style="width: 100%;">好友</button>
           <button type="button" class="moe-btn-secondary" id="add-choice-dice-btn" style="width: 100%;">骰子</button>
+          <button type="button" class="moe-btn-secondary" id="add-choice-status-btn" style="width: 100%;">系统状态栏</button>
         </div>
         <div class="modal-footer" style="padding: 8px;">
           <button type="button" class="cancel" id="cancel-add-choice-btn" style="width: 100%; height: 32px; padding: 4px; font-size: 13px;">取消</button>
@@ -6707,6 +6799,53 @@
         <div class="modal-footer">
           <button type="button" class="cancel" id="cancel-add-dice-btn">取消</button>
           <button type="button" class="save" id="confirm-add-dice-btn">创建</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="add-status-modal" class="modal">
+      <div class="modal-content" style="max-width: 280px;">
+        <div class="modal-header"><span>新增系统状态</span></div>
+        <div class="modal-body" style="padding: 15px;">
+          <div class="form-group">
+            <label for="status-create-name-input">名称</label>
+            <input type="text" id="status-create-name-input" class="moe-input" placeholder="" value="系统状态">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="cancel" id="cancel-add-status-btn">取消</button>
+          <button type="button" class="save" id="confirm-add-status-btn">创建</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="system-status-col-type-modal" class="modal">
+      <div class="modal-content" style="max-width: 220px; padding: 12px; border-radius: 16px;">
+        <div class="modal-header" style="font-size: 14px; padding-bottom: 6px; text-align: center;"><span>选择栏目类型</span></div>
+        <div class="modal-body" style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 8px 0;">
+          <button type="button" class="moe-btn-secondary status-col-type-option" data-type="general" style="font-size: 12px; padding: 6px 8px; border-radius: 10px;">一般栏目</button>
+          <button type="button" class="moe-btn-secondary status-col-type-option" data-type="date" style="font-size: 12px; padding: 6px 8px; border-radius: 10px;">日期</button>
+          <button type="button" class="moe-btn-secondary status-col-type-option" data-type="time" style="font-size: 12px; padding: 6px 8px; border-radius: 10px;">时间</button>
+          <button type="button" class="moe-btn-secondary status-col-type-option" data-type="weather" style="font-size: 12px; padding: 6px 8px; border-radius: 10px;">天气</button>
+          <button type="button" class="moe-btn-secondary status-col-type-option" data-type="affection" style="font-size: 12px; padding: 6px 8px; border-radius: 10px;">好感度</button>
+          <button type="button" class="moe-btn-secondary status-col-type-option" data-type="luck" style="font-size: 12px; padding: 6px 8px; border-radius: 10px;">幸运</button>
+          <button type="button" class="moe-btn-secondary status-col-type-option" data-type="location" style="font-size: 12px; padding: 6px 8px; border-radius: 10px; grid-column: span 2;">地点</button>
+        </div>
+        <div class="modal-footer" style="padding-top: 6px;">
+          <button type="button" class="cancel" id="cancel-status-col-type-btn" style="width: 100%; height: 30px; font-size: 12px; border-radius: 10px;">取消</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="system-status-weather-pool-modal" class="modal">
+      <div class="modal-content" style="max-width: 260px; padding: 14px; border-radius: 16px;">
+        <div class="modal-header" style="font-size: 14px; font-weight: 600; text-align: center; margin-bottom: 8px;">
+          <span>选择天气池</span>
+        </div>
+        <div class="modal-body" style="display: flex; flex-direction: column; gap: 8px; max-height: 220px; overflow-y: auto; padding: 4px 0;" id="status-weather-pools-list">
+        </div>
+        <div class="modal-footer" style="display: flex; gap: 8px; margin-top: 10px;">
+          <button type="button" class="cancel" id="cancel-status-weather-pool-btn" style="width: 100%; height: 32px; font-size: 12px; border-radius: 10px;">关闭</button>
         </div>
       </div>
     </div>
@@ -6736,6 +6875,37 @@
             <button type="button" class="cancel" id="cancel-coc-skills-modal-btn" style="width: auto; min-width: 48px; max-width: 72px; height: 26px; padding: 2px 10px; font-size: 11px; white-space: nowrap; line-height: 20px; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box; border-radius: 6px;">返回</button>
             <button type="button" class="save" id="save-coc-skills-modal-btn" style="width: auto; min-width: 48px; max-width: 72px; height: 26px; padding: 2px 10px; font-size: 11px; white-space: nowrap; line-height: 20px; display: inline-flex; align-items: center; justify-content: center; box-sizing: border-box; border-radius: 6px;">保存</button>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="coc-inject-modal" class="modal">
+      <div class="modal-content" style="max-width: 320px; padding: 14px; border-radius: 16px;">
+        <div class="modal-header" style="font-size: 14px; font-weight: 600; text-align: center; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
+          <span>数据注入</span>
+          <button type="button" class="close-btn" id="close-coc-inject-modal-btn" style="background: none; border: none; font-size: 18px; cursor: pointer; color: var(--text-secondary);">&times;</button>
+        </div>
+        <div class="modal-body" style="padding: 4px 0;">
+          <div style="display: flex; gap: 8px; margin-bottom: 12px;">
+            <button type="button" class="moe-btn-secondary coc-inject-tab-btn" id="coc-inject-tab-wb" data-type="worldbook" style="flex: 1; height: 28px; font-size: 12px; border-radius: 8px; border: 1px solid var(--accent-color); background: var(--accent-color); color: #ffffff; cursor: pointer;">世界书</button>
+            <button type="button" class="moe-btn-secondary coc-inject-tab-btn" id="coc-inject-tab-mod" data-type="module" style="flex: 1; height: 28px; font-size: 12px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--secondary-bg); color: var(--text-primary); cursor: pointer;">模组</button>
+          </div>
+
+          <div id="coc-inject-wb-section">
+            <label style="font-size: 12px; color: var(--text-secondary); margin-bottom: 6px; display: block;">选择世界书</label>
+            <select id="coc-inject-wb-select" class="moe-input" style="width: 100%; height: 32px; font-size: 12px; border-radius: 8px; padding: 4px 8px; box-sizing: border-box; color: var(--text-primary); background: var(--card-bg);">
+            </select>
+          </div>
+
+          <div id="coc-inject-mod-section" style="display: none;">
+            <div style="padding: 24px 10px; text-align: center; color: var(--text-secondary); font-size: 12px; background: var(--secondary-bg); border-radius: 8px; border: 1px dashed var(--border-color);">
+              暂无可用模组
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer" style="display: flex; gap: 8px; margin-top: 14px;">
+          <button type="button" class="cancel" id="cancel-coc-inject-btn" style="flex: 1; height: 30px; font-size: 12px; border-radius: 8px;">取消</button>
+          <button type="button" class="moe-btn" id="confirm-coc-inject-btn" style="flex: 1; height: 30px; font-size: 12px; border-radius: 8px;">确定</button>
         </div>
       </div>
     </div>
@@ -16493,6 +16663,8 @@ lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer
       const defaultGroupMemberAvatar = "https://i.postimg.cc/VkQfgzGJ/1.jpg";
       const defaultGroupAvatar =
         "https://i.postimg.cc/gc3QYCDy/1-NINE7-Five.jpg";
+      const DEFAULT_STATUS_AVATAR =
+        "https://api.iconify.design/lucide:activity.svg?color=%2310b981";
 
       const GEMINI_API_URL =
         "https://generativelanguage.googleapis.com/v1beta/models";
@@ -19484,7 +19656,7 @@ lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer
               } else {
                 // AI/成员消息
                 if (chat.isGroup) {
-                  const member = chat.members.find(
+                  const member = (chat.members || []).find(
                     (m) => m.originalName === msg.senderName,
                   );
 
@@ -22725,7 +22897,7 @@ lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer
               );
             }
             if (lastMsgObj.senderName && lastMsgObj.type !== "pat_message") {
-              const member = chat.members.find(
+              const member = (chat.members || []).find(
                 (m) => m.originalName === lastMsgObj.senderName,
               );
               const displayName = member
@@ -22852,15 +23024,15 @@ lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer
             unreadEl.style.display = "none";
           }
 
-          const infoEl = content.querySelector(".info");
-          if (infoEl) {
-            infoEl.addEventListener("click", () => openChat(chat.id));
-          }
-          const avatarEl = content.querySelector(".avatar, .avatar-with-frame");
-          if (avatarEl) {
-            avatarEl.addEventListener("click", (e) => {
-              e.stopPropagation();
-              handleUserPat(chat.id, chat.name);
+          const itemEl = content.querySelector(".chat-list-item");
+          if (itemEl) {
+            itemEl.addEventListener("click", (e) => {
+              if (e.target.closest(".avatar, .avatar-with-frame")) {
+                e.stopPropagation();
+                handleUserPat(chat.id, chat.name);
+              } else {
+                openChat(chat.id);
+              }
             });
           }
 
@@ -23768,7 +23940,7 @@ lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer
               }
             } else {
               // 如果是其他成员 (AI/NPC/Dice)，这部分逻辑保持不变
-              const member = chat.members.find(
+              const member = (chat.members || []).find(
                 (m) => m.originalName === msg.senderName || m.originalName === msg.sender || m.groupNickname === msg.senderName || m.groupNickname === msg.sender,
               );
               senderDisplayName = member
@@ -23837,7 +24009,7 @@ lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer
               avatarSrc = chat.settings.myAvatar || defaultMyGroupAvatar;
               avatarFrameSrc = chat.settings.myAvatarFrame || ""; // <--- 获取“我”的头像框
             } else {
-              const member = chat.members.find(
+              const member = (chat.members || []).find(
                 (m) => m.originalName === msg.senderName || m.originalName === msg.sender || m.groupNickname === msg.senderName || m.groupNickname === msg.sender,
               );
               avatarSrc = member ? member.avatar : (msg.senderAvatar || defaultGroupMemberAvatar);
@@ -24307,7 +24479,7 @@ lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer
             // 如果是群聊
             if (chat.isGroup) {
               // 就执行原来的逻辑：在成员列表里查找昵称
-              const member = chat.members.find(
+              const member = (chat.members || []).find(
                 (m) => m.originalName === msg.senderName,
               );
               displayName = member ? member.groupNickname : msg.senderName;
@@ -24812,6 +24984,210 @@ lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer
         }
         window.formatMessageForContext = formatMessageForContext;
 
+        async function generateSystemStatusContent(targetObj, groupChat = null) {
+          try {
+            if (!targetObj) return null;
+            const settings = targetObj.settings || targetObj;
+            const cols = settings.columns || [];
+            if (cols.length === 0) return "暂无配置状态栏项目";
+
+            // 1. 幸运：只显示命中的区间名称，不显示数字
+            const luckRoll = Math.floor(Math.random() * 100) + 1;
+            const luckIntervals = settings.luckIntervals || [];
+            const hitLuck = (luckIntervals || []).find(it => luckRoll >= it.min && luckRoll < it.max) || (luckIntervals || [])[0] || { name: "波澜不惊" };
+
+            // 2. 基础时间与日期
+            const now = new Date();
+            let dateValues = { year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() };
+            let timeValues = { hour: String(now.getHours()).padStart(2, '0'), minute: String(now.getMinutes()).padStart(2, '0') };
+
+            // 3. 好感度面板角色登记列表
+            const registeredChars = Object.values(state.chats).filter(c => !c.isGroup && c.roleType !== "system_status" && c.roleType !== "dice");
+            const maxInc = settings.affectionConfig?.maxIncrease ?? 10;
+            const maxDec = settings.affectionConfig?.maxDecrease ?? 10;
+
+            let affectionResult = null;
+            let customSlots = {};
+
+            const hasDate = cols.some(c => c.type === "date");
+            const hasAffection = cols.some(c => c.type === "affection");
+            const customCols = cols.filter(c => c.type !== "weather" && c.type !== "luck" && c.type !== "date" && c.type !== "affection" && c.type !== "time");
+
+            const apiKey = state.apiConfig?.apiKey;
+            const proxyUrl = state.apiConfig?.proxyUrl || "https://api.openai.com";
+            const model = state.apiConfig?.model || "gpt-3.5-turbo";
+
+            const currentHistory = (groupChat ? groupChat.history : targetObj.history) || [];
+
+            // AI 先回传数据（日期、时间、好感度判定与自定义字段）
+            if (apiKey && (hasDate || hasAffection || customCols.length > 0)) {
+              try {
+                const recentHistory = currentHistory.slice(-6).map(m => `${m.senderName || m.name || m.sender || '某人'}: ${m.content}`).join("\n");
+                const charListStr = registeredChars.map(c => `- ${c.name} 当前好感度: ${(typeof c.affection === "number") ? c.affection : 50}`).join("\n");
+                const customColHints = customCols.map(c => `- ${c.label}：${c.note || '结合上下文填写简要词'}`).join("\n");
+                const promptText = `你作为系统状态栏的数据判定器。请结合上文剧情，严格输出纯 JSON 数据。
+【已登记角色列表】:
+${charListStr || "- 无特定角色"}
+【好感度规则】:
+1. 仅当本回合剧情角色产生情感增减时才调整好感度，单次最大增加 +${maxInc}，最大减少 -${maxDec}。
+2. 如果好感度无变化，delta 必须为 0。
+3. character 必须使用上述列表中已登记的角色全名，严禁把角色名写成好感度或其它词。
+【日期规则】:
+1. 只能填入年、月、日的纯数字，如 year: ${dateValues.year}, month: ${dateValues.month}, day: ${dateValues.day}，严禁包含汉字年、月、日，严禁包含标点符号或其它文本。
+【天气铁律】:
+天气完全由系统在后台抽取，AI绝对严禁在任何地方填空、生成、修改或自创天气！
+【幸运】:
+幸运已由系统后台命中【${hitLuck.name}】，AI严禁生成数字。
+${customCols.length > 0 ? `【其他栏目】:\n${customColHints}` : ''}
+
+聊天背景：
+${recentHistory || '无'}
+
+请严格且仅返回如下格式的 JSON 对象，严禁输出任何 markdown 代码块或解释：
+{"date": {"year": ${dateValues.year}, "month": ${dateValues.month}, "day": ${dateValues.day}}, "time": {"hour": "${timeValues.hour}", "minute": "${timeValues.minute}"}, "affection": {"character": "${registeredChars[0]?.name || ''}", "delta": 0}, "customSlots": {}}`;
+
+                let isGemini = proxyUrl === GEMINI_API_URL;
+                let response = null;
+                if (isGemini) {
+                  let geminiConfig = typeof toGeminiRequestData === "function"
+                    ? toGeminiRequestData(model, apiKey, promptText, [{ role: "user", content: "请输出状态栏JSON" }], isGemini)
+                    : null;
+                  if (geminiConfig) {
+                    response = await fetch(geminiConfig.url, geminiConfig.data);
+                  }
+                } else {
+                  response = await fetch(`${proxyUrl}/v1/chat/completions`, {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                      Authorization: `Bearer ${apiKey}`,
+                    },
+                    body: JSON.stringify({
+                      model: model,
+                      messages: [{ role: "system", content: promptText }, { role: "user", content: "输出状态栏JSON" }],
+                      temperature: 0.2,
+                      stream: false,
+                    }),
+                  });
+                }
+
+                if (response && response.ok) {
+                  const resData = await response.json();
+                  let rawText = isGemini
+                    ? resData?.candidates?.[0]?.content?.parts?.[0]?.text || ""
+                    : resData?.choices?.[0]?.message?.content || "";
+                  const jsonMatch = rawText.match(/\{[\s\S]*\}/);
+                  if (jsonMatch) {
+                    const parsed = JSON.parse(jsonMatch[0]);
+                    if (parsed.date) {
+                      const y = parseInt(String(parsed.date.year).replace(/\D/g, ""));
+                      const m = parseInt(String(parsed.date.month).replace(/\D/g, ""));
+                      const d = parseInt(String(parsed.date.day).replace(/\D/g, ""));
+                      if (y && m && d) dateValues = { year: y, month: m, day: d };
+                    }
+                    if (parsed.time && parsed.time.hour) {
+                      timeValues = {
+                        hour: String(parsed.time.hour).replace(/\D/g, "").padStart(2, "0"),
+                        minute: String(parsed.time.minute || "00").replace(/\D/g, "").padStart(2, "0")
+                      };
+                    }
+                    if (parsed.affection && typeof parsed.affection.delta === "number" && parsed.affection.delta !== 0) {
+                      const matchedChar = registeredChars.find(c => c.name === parsed.affection.character);
+                      if (matchedChar && matchedChar.name !== "好感度") {
+                        let clampedDelta = Math.round(parsed.affection.delta);
+                        if (clampedDelta > maxInc) clampedDelta = maxInc;
+                        if (clampedDelta < -maxDec) clampedDelta = -maxDec;
+                        if (clampedDelta !== 0) {
+                          affectionResult = {
+                            character: matchedChar.name,
+                            delta: clampedDelta,
+                            charObj: matchedChar
+                          };
+                        }
+                      }
+                    }
+                    if (parsed.customSlots && typeof parsed.customSlots === "object") {
+                      customSlots = parsed.customSlots;
+                    }
+                  }
+                }
+              } catch (aiErr) {
+                console.warn("系统状态栏 AI 判定退避:", aiErr);
+              }
+            }
+
+            // 4. 天气：系统识别当前日期，日期与上一条状态栏相同时保持一致，否则按季节抽取
+            const currentDateStr = `${dateValues.year}年${dateValues.month}月${dateValues.day}日`;
+            let lastStatusDate = null;
+            let lastStatusWeather = null;
+
+            for (let i = currentHistory.length - 1; i >= 0; i--) {
+              const hMsg = currentHistory[i];
+              if (!hMsg || typeof hMsg.content !== "string") continue;
+              const dMatch = hMsg.content.match(/(?:\[?日期\]?)[：:]\s*(\d+年\d+月\d+日)/);
+              const wMatch = hMsg.content.match(/(?:\[?天气\]?)[：:]\s*([^\n\r]+)/);
+              if (dMatch && wMatch) {
+                lastStatusDate = dMatch[1].trim();
+                lastStatusWeather = wMatch[1].trim();
+                break;
+              }
+            }
+
+            let drawnWeatherName = "";
+            if (lastStatusDate && lastStatusDate === currentDateStr && lastStatusWeather) {
+              // 日期与上一条相同时，天气保持一致，当天不重复抽取
+              drawnWeatherName = lastStatusWeather;
+            } else {
+              const monthNum = parseInt(dateValues.month, 10) || (new Date().getMonth() + 1);
+              const weatherCol = cols.find(c => c.type === "weather");
+              const chosenPoolName = (weatherCol && weatherCol.format) ? weatherCol.format : "温带气候";
+              if (typeof window.drawWeatherFromCurrentPool === "function") {
+                const drawn = window.drawWeatherFromCurrentPool(monthNum, chosenPoolName);
+                drawnWeatherName = drawn ? drawn.name : "晴天";
+              } else {
+                drawnWeatherName = "晴天";
+              }
+            }
+
+            // 5. 组装全部栏目，合成一条消息发送
+            let resultLines = [];
+            for (const col of cols) {
+              let label = col.label || "栏目";
+              let fmt = col.format || "*";
+
+              if (col.type === "date") {
+                resultLines.push(`${label}：${dateValues.year}年${dateValues.month}月${dateValues.day}日`);
+              } else if (col.type === "time") {
+                resultLines.push(`${label}：${timeValues.hour}:${timeValues.minute}`);
+              } else if (col.type === "weather") {
+                resultLines.push(`${label}：${drawnWeatherName}`);
+              } else if (col.type === "luck") {
+                resultLines.push(`${label}：${hitLuck.name}`);
+              } else if (col.type === "affection") {
+                if (affectionResult && affectionResult.delta !== 0 && affectionResult.charObj) {
+                  const targetChar = affectionResult.charObj;
+                  const oldAff = (typeof targetChar.affection === "number") ? targetChar.affection : 50;
+                  const delta = affectionResult.delta;
+                  const newAff = Math.max(0, oldAff + delta);
+                  targetChar.affection = newAff;
+                  await db.chats.put(targetChar);
+
+                  const sign = delta > 0 ? `+${delta}` : `${delta}`;
+                  resultLines.push(`${label}：${targetChar.name}好感度${sign}=${newAff}`);
+                }
+              } else {
+                let val = customSlots[label] || customSlots[col.id] || fmt;
+                resultLines.push(`${label}：${val}`);
+              }
+            }
+
+            return resultLines.join("\n");
+          } catch (err) {
+            console.warn("generateSystemStatusContent 异常降级:", err);
+            return null;
+          }
+        }
+
         async function triggerAiResponse() {
           if (!state.activeChatId) return;
           const chatId = state.activeChatId;
@@ -24821,6 +25197,75 @@ lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer
           // 骰子角色的消息由本地规则生成，不调用 AI 接口
           if (!chat.isGroup && chat.roleType === "dice") {
             return;
+          }
+
+          // 系统状态栏角色（单聊）：合并为同一条消息，同一个气泡内，AI 禁止生成其他任何消息
+          if (!chat.isGroup && chat.roleType === "system_status") {
+            const statusContent = await generateSystemStatusContent(chat);
+            if (statusContent) {
+              const statusMsg = {
+                id: "msg_" + Date.now(),
+                sender: "ai",
+                role: "assistant",
+                name: chat.name || "系统状态",
+                avatar: chat.settings?.aiAvatar || DEFAULT_STATUS_AVATAR,
+                content: statusContent,
+                timestamp: Date.now()
+              };
+              if (!chat.history) chat.history = [];
+              chat.history.push(statusMsg);
+              await incrementMessageCount(chatId);
+              await db.chats.put(chat);
+              appendMessage(statusMsg, chat);
+              renderChatList();
+            }
+            return;
+          }
+
+          // 群聊处理：检查群成员中的系统状态栏角色，按触发模式生成状态栏消息
+          if (chat.isGroup) {
+            const statusMember = (chat.members || []).find(
+              (m) => m.roleType === "system_status" || (state.chats[m.id] && state.chats[m.id].roleType === "system_status")
+            );
+            if (statusMember) {
+              if (!statusMember.roleType) statusMember.roleType = "system_status";
+              const sourceChat = state.chats[statusMember.id];
+              if ((!statusMember.settings || !statusMember.settings.columns) && sourceChat && sourceChat.settings) {
+                statusMember.settings = JSON.parse(JSON.stringify(sourceChat.settings));
+              }
+              const triggerMode = statusMember.settings?.triggerMode || statusMember.triggerMode || (sourceChat && sourceChat.settings?.triggerMode) || "always";
+              if (triggerMode === "always" || triggerMode === "default") {
+                const statusContent = await generateSystemStatusContent(statusMember, chat);
+                if (statusContent) {
+                  const statusMsg = {
+                    id: "msg_" + Date.now(),
+                    sender: "ai",
+                    role: "assistant",
+                    senderName: statusMember.groupNickname || statusMember.originalName || "系统状态",
+                    name: statusMember.groupNickname || statusMember.originalName || "系统状态",
+                    avatar: statusMember.avatar || (sourceChat && sourceChat.settings?.aiAvatar) || DEFAULT_STATUS_AVATAR,
+                    content: statusContent,
+                    timestamp: Date.now()
+                  };
+                  if (!chat.history) chat.history = [];
+                  chat.history.push(statusMsg);
+                  await incrementMessageCount(chatId);
+                  await db.chats.put(chat);
+                  if (state.activeChatId === chatId) {
+                    appendMessage(statusMsg, chat);
+                  }
+                  renderChatList();
+                }
+              }
+            }
+
+            const roleplayMembers = (chat.members || []).filter(
+              (m) => m.roleType !== "system_status" && m.roleType !== "dice" && !m.isMuted
+            );
+            if (roleplayMembers.length === 0) {
+              renderChatList();
+              return;
+            }
           }
 
           const messagesContainer = document.getElementById("chat-messages");
@@ -24843,7 +25288,7 @@ lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer
           ) {
             const linkedContents = chat.settings.linkedWorldBookIds
               .map((id) => {
-                const book = state.worldBooks.find((b) => b.id === id);
+                const book = (state.worldBooks || []).find((b) => b.id === id);
                 // 这里使用了 stripHtmlAndCode 清理函数，确保纯文本
                 return book && book.content
                   ? `\n\n## 世界书条目: ${book.name}\n${stripHtmlAndCode(book.content)}`
@@ -25838,7 +26283,7 @@ lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer
             ) {
               const linkedContents = chat.settings.linkedWorldBookIds
                 .map((bookId) => {
-                  const worldBook = state.worldBooks.find(
+                  const worldBook = (state.worldBooks || []).find(
                     (wb) => wb.id === bookId,
                   );
 
@@ -26039,7 +26484,10 @@ lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer
               const countdownContext = await getCountdownContext(chatId); // <--- 把chatId传进去
               const streakContext = await getStreakContext(chat); // <-- 全新添加：获取火花状态
 
-              const membersList = chat.members
+              const roleplayMembers = chat.members.filter(
+                (m) => m.roleType !== "system_status" && m.roleType !== "dice"
+              );
+              const membersList = roleplayMembers
                 .map((m) => {
                   const muteStatus = m.isMuted
                     ? " (【状态：已被禁言，禁止让他发言】)"
@@ -26077,7 +26525,7 @@ lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer
 			# 【【【身份铁律：这是最高指令，必须严格遵守】】】
 			1.  **核心任务**: 你的唯一任务是扮演且仅能扮演下方“群成员列表”中明确列出的角色。
 			2.  **用户识别**: 用户的身份是【${myNickname}】。你【绝对、永远、在任何情况下都不能】生成 \`name\` 字段为 **"${myNickname}"** 的消息。
-			3.  **禁止杜撰**: 【绝对禁止】扮演任何未在“群成员列表”中出现的角色。
+			3.  **禁止杜撰**: 【绝对禁止】扮演任何未在“群成员列表”中出现的角色。系统状态栏由系统处理，严禁以系统状态栏名义发送消息，正文严禁自创天气。
 			4.  **【【【格式铁律：这是你的生命线，违者生成失败】】】**:
 			    -   你的回复【必须且只能】是一个严格的JSON数组格式的字符串。
 			    -   数组中的【每一个元素都必须是一个JSON对象】。
@@ -26085,7 +26533,7 @@ lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit, fewer
 			    -   缺少 "name" 字段的回复是无效的，会被系统拒绝。
 			5.  **角色扮演**: 严格遵守下方“群成员列表及人设”中的每一个角色的设定。
 			# 群成员列表及人设 (name字段是你要使用的【本名】)
-			${chat.members.map((m) => `- **${m.originalName}**: (群昵称为: ${m.groupNickname}) 人设: ${m.persona}`).join("\n")}
+			${roleplayMembers.map((m) => `- **${m.originalName}**: (群昵称为: ${m.groupNickname}) 人设: ${m.persona}`).join("\n")}
 			6.  **禁止出戏**: 绝不能透露你是AI、模型，或提及“扮演”、“生成”等词语。并且不能一直要求和用户见面，这是线上聊天，决不允许出现或者发展线下剧情！！
 			7.  **情景感知**: 注意当前时间是 ${currentTime}。
 			8.  **红包互动**:
@@ -26486,6 +26934,82 @@ ${libraryList}
                 console.error("加载饿了么菜单失败:", error);
                 elemeContext += "【注意：饿了么菜单加载失败。】";
               }
+              let systemStatusPromptBlock = "";
+              if (chat.roleType === "system_status") {
+                const now = new Date();
+                const year = now.getFullYear();
+                const month = now.getMonth() + 1;
+                const day = now.getDate();
+                const hours = String(now.getHours()).padStart(2, '0');
+                const minutes = String(now.getMinutes()).padStart(2, '0');
+                const currentDateStr = `${year}年${month}月${day}日`;
+                const currentTimeStr = `${hours}:${minutes}`;
+
+                const luckRoll = Math.floor(Math.random() * 100) + 1;
+                const luckIntervals = chat.settings.luckIntervals || [];
+                const hitLuck = (luckIntervals || []).find(it => luckRoll >= it.min && luckRoll < it.max) || (luckIntervals || [])[0] || { name: "波澜不惊", note: "运势平平" };
+
+                // 抽取天气：从已保存的天气池中按概率抽取
+                let drawnWeather = null;
+                const weatherCol = (chat.settings.columns || []).find(c => c.type === "weather");
+                const weatherPools = (typeof window.getStoredWeatherPools === "function" ? window.getStoredWeatherPools() : null) || [
+                  { id: "weather_temperate", name: "温带气候", items: [{ name: "晴天", rate: 36, note: "温和宜人，阳光明媚，视野开阔" }] }
+                ];
+                const selectedPoolName = (weatherCol && weatherCol.format) ? weatherCol.format : "温带气候";
+                const targetPool = weatherPools.find(p => p.name === selectedPoolName || p.id === selectedPoolName) || weatherPools[0];
+                if (targetPool && Array.isArray(targetPool.items) && targetPool.items.length > 0) {
+                  const totalRate = targetPool.items.reduce((sum, it) => sum + (parseFloat(it.rate) || 0), 0);
+                  if (totalRate > 0) {
+                    let rand = Math.random() * totalRate;
+                    for (const it of targetPool.items) {
+                      const r = parseFloat(it.rate) || 0;
+                      if (rand < r) {
+                        drawnWeather = it;
+                        break;
+                      }
+                      rand -= r;
+                    }
+                    if (!drawnWeather) drawnWeather = targetPool.items[targetPool.items.length - 1];
+                  } else {
+                    drawnWeather = targetPool.items[0];
+                  }
+                }
+                if (!drawnWeather) {
+                  drawnWeather = { name: "晴天", note: "温和宜人，阳光明媚，视野开阔" };
+                }
+
+                let colSpecs = [];
+                (chat.settings.columns || []).forEach(col => {
+                  let fmt = col.format || "*";
+                  if (col.type === "date") {
+                    colSpecs.push(`${col.label}：${currentDateStr}`);
+                  } else if (col.type === "time") {
+                    colSpecs.push(`${col.label}：${currentTimeStr}`);
+                  } else if (col.type === "weather") {
+                    colSpecs.push(`${col.label}：${drawnWeather.name}`);
+                  } else if (col.type === "luck") {
+                    colSpecs.push(`${col.label}：${hitLuck.name}`);
+                  } else if (col.type === "affection") {
+                    colSpecs.push(`${col.label}：(请在此填空，如：好感度+2=82)`);
+                  } else {
+                    colSpecs.push(`${col.label}：(请在此按格式填空：${fmt}${col.note ? '，' + col.note : ''})`);
+                  }
+                });
+
+                systemStatusPromptBlock = `
+# 【系统状态栏单气泡输出铁律（绝对禁止拆分成多条气泡）】
+1. 无论有多少个项目，系统状态栏的所有内容【必须且只能】合并在 chatResponse 数组的【第1条消息】中（每项之间用换行符 \\n 分隔），【绝对禁止】将每个项目拆分为独立气泡！
+2. 系统状态栏格式必须严格遵循以下内容（行首严禁带“-”，严禁改动任何标签）：
+${colSpecs.join('\n')}
+3. 你的第2条及后续消息气泡，请根据角色人设与当前剧情展开正常的对话与描写。
+
+# 【后台环境注入：当前天气】
+- 当前天气：${drawnWeather.name}
+- 天气注解与氛围：${drawnWeather.note}
+（注意：上述天气与注解为系统在【${targetPool.name}】天气池中随机抽取的真实环境，后续角色的对话和描写必须始终围绕并呼应此天气的感官细节，严禁无中生有私自更改天气！）
+`;
+              }
+
               systemPrompt = `### **【第一部分：角色核心设定】**
 
 			你现在将扮演一个名为“**${chat.name}**”的角色。
@@ -26497,6 +27021,7 @@ ${libraryList}
       -情侣头像库：${coupleAvatarLibraryContext}
 			- **世界观/NPC**: ${npcContext}
 			${petContext}
+			${systemStatusPromptBlock}
 			**2. 你的当前状态:**
 			- **状态描述**: 【${chat.status.text}】
 			- **情侣空间**: ${chat.loversSpaceData ? "已开启" : "未开启"}
@@ -27272,6 +27797,38 @@ ${libraryList}
               console.log(messagesArray);
             }
 
+            // 无论增加多少个项目，确保开头的系统状态栏项目全部合并为单一气泡，禁止拆分
+            if (messagesArray && messagesArray.length > 0) {
+              const statusPrefixes = (chat.settings?.columns || []).map(c => c.label).filter(Boolean);
+              function isStatusBubble(item) {
+                if (!item) return false;
+                const txt = String(item.content || item.message || "").trim();
+                if (!txt) return false;
+                if (/^\[[^\]\n]+\][：:]/.test(txt)) return true;
+                return statusPrefixes.some(p => txt.startsWith(p));
+              }
+
+              if (isStatusBubble(messagesArray[0])) {
+                let statusContents = [];
+                let mergeCount = 0;
+                for (let i = 0; i < messagesArray.length; i++) {
+                  if (isStatusBubble(messagesArray[i])) {
+                    statusContents.push(String(messagesArray[i].content || messagesArray[i].message || "").trim());
+                    mergeCount++;
+                  } else {
+                    break;
+                  }
+                }
+                if (mergeCount > 1) {
+                  const mergedText = statusContents.join("\n");
+                  const firstMsg = { ...messagesArray[0] };
+                  if (firstMsg.content !== undefined) firstMsg.content = mergedText;
+                  if (firstMsg.message !== undefined) firstMsg.message = mergedText;
+                  messagesArray.splice(0, mergeCount, firstMsg);
+                }
+              }
+            }
+
             // 最终处理心声数据
             if (innerVoiceData) {
               console.log(
@@ -27356,7 +27913,7 @@ ${libraryList}
 
               if (msgData.type === "group_call_response") {
                 if (msgData.decision === "join") {
-                  const member = chat.members.find(
+                  const member = (chat.members || []).find(
                     (m) => m.originalName === msgData.name,
                   );
                   if (
@@ -27459,7 +28016,7 @@ ${libraryList}
               }
               // 检查消息的发送者是否被禁言了
               if (chat.isGroup && msgData.name) {
-                const senderMember = chat.members.find(
+                const senderMember = (chat.members || []).find(
                   (m) => m.originalName === msgData.name,
                 );
                 if (senderMember && senderMember.isMuted) {
@@ -27658,7 +28215,7 @@ ${libraryList}
                 // ▲▲▲▲▲▲ 代码结束 ▲▲▲▲▲▲
 
                 case "waimai_response":
-                  const requestMessageIndex = chat.history.findIndex(
+                  const requestMessageIndex = (chat.history || []).findIndex(
                     (m) => m.timestamp === msgData.for_timestamp,
                   );
                   if (requestMessageIndex > -1) {
@@ -27676,7 +28233,7 @@ ${libraryList}
                   const myNickname = chat.settings.myNickname || "我";
 
                   // 权限检查：群主或管理员可以设置头衔
-                  const actorMember = chat.members.find(
+                  const actorMember = (chat.members || []).find(
                     (m) => m.originalName === actorName,
                   );
                   const isActorAdmin = actorMember && actorMember.isAdmin;
@@ -27697,7 +28254,7 @@ ${libraryList}
                     );
                   } else {
                     // 如果目标是其他成员
-                    const targetMember = chat.members.find(
+                    const targetMember = (chat.members || []).find(
                       (m) => m.groupNickname === targetName,
                     );
                     if (targetMember) {
@@ -27795,7 +28352,7 @@ ${libraryList}
                   const myNickname = chat.settings.myNickname || "我"; // 获取你自己的昵称
 
                   // 权限检查：确认操作者是群主
-                  const actorMember = chat.members.find(
+                  const actorMember = (chat.members || []).find(
                     (m) => m.originalName === actorName,
                   );
                   if (!actorMember || chat.ownerId !== actorMember.id) {
@@ -27813,7 +28370,7 @@ ${libraryList}
                     );
                   } else {
                     // 如果AI操作的目标是其他成员
-                    const targetMember = chat.members.find(
+                    const targetMember = (chat.members || []).find(
                       (m) => m.groupNickname === targetName,
                     );
                     if (targetMember) {
@@ -27861,13 +28418,13 @@ ${libraryList}
                 case "kick_member": {
                   const actorName = msgData.name;
                   const targetName = msgData.targetName;
-                  const actorMember = chat.members.find(
+                  const actorMember = (chat.members || []).find(
                     (m) => m.originalName === actorName,
                   );
 
                   // 权限检查：只有群主能执行
                   if (actorMember && chat.ownerId === actorMember.id) {
-                    const targetMemberIndex = chat.members.findIndex(
+                    const targetMemberIndex = (chat.members || []).findIndex(
                       (m) => m.groupNickname === targetName,
                     );
                     if (targetMemberIndex > -1) {
@@ -27935,7 +28492,7 @@ ${libraryList}
                   }
 
                   // 1. 权限检查：必须确保执行操作的角色是群主或管理员
-                  const actorMember = chat.members.find(
+                  const actorMember = (chat.members || []).find(
                     (m) => m.originalName === actorName,
                   );
                   if (!actorMember) {
@@ -27972,10 +28529,10 @@ ${libraryList}
                 case "mute_member": {
                   const actorName = msgData.name;
                   const targetName = msgData.targetName;
-                  const actorMember = chat.members.find(
+                  const actorMember = (chat.members || []).find(
                     (m) => m.originalName === actorName,
                   );
-                  const targetMember = chat.members.find(
+                  const targetMember = (chat.members || []).find(
                     (m) => m.groupNickname === targetName,
                   );
 
@@ -28007,10 +28564,10 @@ ${libraryList}
                 case "unmute_member": {
                   const actorName = msgData.name;
                   const targetName = msgData.targetName;
-                  const actorMember = chat.members.find(
+                  const actorMember = (chat.members || []).find(
                     (m) => m.originalName === actorName,
                   );
-                  const targetMember = chat.members.find(
+                  const targetMember = (chat.members || []).find(
                     (m) => m.groupNickname === targetName,
                   );
 
@@ -28162,7 +28719,7 @@ ${libraryList}
 
                   if (postToReply && postToReply.comments) {
                     // 1. 在微博的评论区里，找到被回复的那条评论
-                    const targetComment = postToReply.comments.find(
+                    const targetComment = (postToReply?.comments || []).find(
                       (c) => c.commentId === commentIdToReply,
                     );
 
@@ -28188,7 +28745,7 @@ ${libraryList}
                   continue; // 继续处理
                 }
                 case "lovers_space_response": {
-                  const invitationMsg = chat.history.find(
+                  const invitationMsg = (chat.history || []).find(
                     (m) =>
                       m.type === "lovers_space_invitation" &&
                       m.status === "pending",
@@ -28369,7 +28926,7 @@ ${libraryList}
                   const responseText = msgData.response_text;
 
                   // 找到用户发出的、还处于“等待中”的那个代付请求
-                  const requestMsg = chat.history.find(
+                  const requestMsg = (chat.history || []).find(
                     (m) =>
                       m.type === "cart_share_request" &&
                       m.payload.status === "pending",
@@ -28616,7 +29173,7 @@ ${libraryList}
 
                   if (chat.loversSpaceData && chat.loversSpaceData.photos) {
                     // 1. 查找照片 (使用 == 而不是 === 以兼容字符串/数字格式的时间戳)
-                    const targetPhoto = chat.loversSpaceData.photos.find(
+                    const targetPhoto = (chat.loversSpaceData?.photos || []).find(
                       (p) => p.timestamp == photoTimestamp,
                     );
 
@@ -28749,7 +29306,7 @@ ${libraryList}
 
                 // 这是AI回应你的邀请的逻辑
                 case "lovers_space_response": {
-                  const invitationMsg = chat.history.find(
+                  const invitationMsg = (chat.history || []).find(
                     (m) =>
                       m.type === "lovers_space_invitation" &&
                       m.status === "pending",
@@ -29938,14 +30495,14 @@ ${libraryList}
 
                 case "vote": {
                   // 使用大括号创建独立的块级作用域
-                  const pollToVote = chat.history.find(
+                  const pollToVote = (chat.history || []).find(
                     (m) => m.timestamp === msgData.poll_timestamp,
                   );
 
                   // 安全检查：如果投票不存在或已关闭，则不处理
                   if (pollToVote && !pollToVote.isClosed) {
                     // 1. 根据AI的“本名”，找到其成员对象，并获取正确的“群昵称”
-                    const member = chat.members.find(
+                    const member = (chat.members || []).find(
                       (m) => m.originalName === msgData.name,
                     );
                     const displayName = member
@@ -30007,7 +30564,7 @@ ${libraryList}
 
                 case "open_red_packet": {
                   // 使用大括号创建独立的块级作用域
-                  const packetToOpen = chat.history.find(
+                  const packetToOpen = (chat.history || []).find(
                     (m) => m.timestamp === msgData.packet_timestamp,
                   );
                   // 检查红包是否存在、是否没被领完、以及这个AI角色是否还没领过
@@ -30020,7 +30577,7 @@ ${libraryList}
                     )
                   ) {
                     // 1. 根据AI的本名(msgData.name)，从成员列表找到其正确的群昵称
-                    const member = chat.members.find(
+                    const member = (chat.members || []).find(
                       (m) => m.originalName === msgData.name,
                     );
                     const displayName = member
@@ -30160,7 +30717,7 @@ ${libraryList}
 
                 case "accept_transfer": {
                   // 使用大括号创建块级作用域
-                  const originalTransferMsgIndex = chat.history.findIndex(
+                  const originalTransferMsgIndex = (chat.history || []).findIndex(
                     (m) => m.timestamp === msgData.for_timestamp,
                   );
                   if (originalTransferMsgIndex > -1) {
@@ -30180,7 +30737,7 @@ ${libraryList}
 
                 case "decline_transfer": {
                   // 使用大括号创建块级作用域
-                  const originalTransferMsgIndex = chat.history.findIndex(
+                  const originalTransferMsgIndex = (chat.history || []).findIndex(
                     (m) => m.timestamp === msgData.for_timestamp,
                   );
                   if (originalTransferMsgIndex > -1) {
@@ -30233,7 +30790,7 @@ ${libraryList}
                   break;
 
                 case "quote_reply":
-                  const originalMessage = chat.history.find(
+                  const originalMessage = (chat.history || []).find(
                     (m) => m.timestamp === msgData.target_timestamp,
                   );
                   if (originalMessage) {
@@ -30709,7 +31266,7 @@ ${libraryList}
 
                   if (chat.isGroup) {
                     // 如果是群聊，尝试根据消息发送者名字找到对应的成员头像
-                    const member = chat.members.find(
+                    const member = (chat.members || []).find(
                       (m) => m.originalName === aiMessage.senderName,
                     );
                     if (member) {
@@ -31592,7 +32149,7 @@ ${libraryList}
         }
 
         function applyPersonaPreset(presetId) {
-          const preset = state.personaPresets.find((p) => p.id === presetId);
+          const preset = (state.personaPresets || []).find((p) => p.id === presetId);
           if (preset) {
             document.getElementById("my-avatar-preview").src = preset.avatar;
             document.getElementById("my-persona").value = preset.persona;
@@ -31631,7 +32188,7 @@ ${libraryList}
         }
 
         function openPersonaEditorForEdit() {
-          const preset = state.personaPresets.find(
+          const preset = (state.personaPresets || []).find(
             (p) => p.id === editingPersonaPresetId,
           );
           if (!preset) return;
@@ -31696,7 +32253,7 @@ ${libraryList}
             return;
           }
           if (editingPersonaPresetId) {
-            const preset = state.personaPresets.find(
+            const preset = (state.personaPresets || []).find(
               (p) => p.id === editingPersonaPresetId,
             );
             if (preset) {
@@ -32545,7 +33102,7 @@ ${libraryList}
           ) {
             const linkedContents = chat.settings.linkedWorldBookIds
               .map((bookId) => {
-                const worldBook = state.worldBooks.find(
+                const worldBook = (state.worldBooks || []).find(
                   (wb) => wb.id === bookId,
                 );
                 return worldBook && worldBook.content
@@ -32893,7 +33450,7 @@ ${libraryList}
                   parseInt(action.postId),
                 );
                 if (postToReply && postToReply.comments) {
-                  const targetComment = postToReply.comments.find(
+                  const targetComment = (postToReply?.comments || []).find(
                     (c) => c.commentId === action.commentId,
                   );
                   if (targetComment) {
@@ -33176,7 +33733,7 @@ ${libraryList}
 
           // --- 新增逻辑开始 ---
           const chat = state.chats[state.activeChatId];
-          const message = chat.history.find((m) => m.timestamp === timestamp);
+          const message = (chat.history || []).find((m) => m.timestamp === timestamp);
           const rerollNaiBtn = document.getElementById("reroll-nai-btn");
 
           // 检查消息类型是否为 naiimag
@@ -33202,7 +33759,7 @@ ${libraryList}
           if (!activeMessageTimestamp || !state.activeChatId) return;
 
           const chat = state.chats[state.activeChatId];
-          const msgIndex = chat.history.findIndex(
+          const msgIndex = (chat.history || []).findIndex(
             (m) => m.timestamp === activeMessageTimestamp,
           );
           if (msgIndex === -1) return;
@@ -33431,7 +33988,7 @@ ${libraryList}
 
           const timestampToEdit = activeMessageTimestamp;
           const chat = state.chats[state.activeChatId];
-          const message = chat.history.find(
+          const message = (chat.history || []).find(
             (m) => m.timestamp === timestampToEdit,
           );
           if (!message) return;
@@ -33520,7 +34077,7 @@ ${libraryList}
         async function copyMessageContent() {
           if (!activeMessageTimestamp) return;
           const chat = state.chats[state.activeChatId];
-          const message = chat.history.find(
+          const message = (chat.history || []).find(
             (m) => m.timestamp === activeMessageTimestamp,
           );
           if (!message) return;
@@ -33621,7 +34178,7 @@ ${libraryList}
           const timestampToEdit = activeMessageTimestamp;
 
           const chat = state.chats[state.activeChatId];
-          const message = chat.history.find(
+          const message = (chat.history || []).find(
             (m) => m.timestamp === timestampToEdit,
           );
           if (!message) return;
@@ -33788,7 +34345,7 @@ ${libraryList}
           if (!timestamp) return;
 
           const chat = state.chats[state.activeChatId];
-          const messageIndex = chat.history.findIndex(
+          const messageIndex = (chat.history || []).findIndex(
             (m) => m.timestamp === timestamp,
           );
           if (messageIndex === -1) return;
@@ -34118,12 +34675,21 @@ ${libraryList}
                 originalName: contactChat.name,
                 groupNickname: contactChat.name,
                 avatar: contactChat.settings.aiAvatar || defaultAvatar,
-                persona: contactChat.settings.aiPersona,
+                persona: contactChat.settings.aiPersona || "",
+                age: contactChat.settings.age || "",
+                birthday: contactChat.settings.birthday || "",
+                gender: contactChat.settings.gender || "",
+                genderNote: contactChat.settings.genderNote || "",
                 avatarFrame: contactChat.settings.aiAvatarFrame || "",
+                cocPanel: contactChat.settings.aiCocPanel ? JSON.parse(JSON.stringify(contactChat.settings.aiCocPanel)) : null,
                 isAdmin: false,
                 groupTitle: "",
               };
               if (contactChat.roleType) memObj.roleType = contactChat.roleType;
+              if (contactChat.roleType === "system_status") {
+                memObj.settings = JSON.parse(JSON.stringify(contactChat.settings || {}));
+                memObj.triggerMode = memObj.settings.triggerMode || "always";
+              }
               members.push(memObj);
             } else {
               // 处理NPC的逻辑
@@ -34131,7 +34697,7 @@ ${libraryList}
               // 遍历所有角色，查找他们各自的NPC库
               for (const chat of Object.values(state.chats)) {
                 if (chat.npcLibrary) {
-                  const npc = chat.npcLibrary.find((n) => n.id === contactId);
+                  const npc = (chat.npcLibrary || []).find((n) => n.id === contactId);
                   if (npc) {
                     foundNpc = npc;
                     break; // 找到了就跳出循环
@@ -34350,11 +34916,14 @@ ${libraryList}
             actionsHtml += `<button class="action-btn danger" data-action="remove-member" data-member-id="${member.id}">踢出</button>`;
           }
 
+          const memAvatar = member.avatar || (state.chats[member.id]?.settings?.aiAvatar) || defaultGroupMemberAvatar;
+          const memName = member.groupNickname || member.originalName || (state.chats[member.id]?.name) || "成员";
+
           // 最终拼接
           item.innerHTML = `
-			        <img src="${member.avatar}" class="avatar">
+			        <img src="${memAvatar}" class="avatar">
 			        <div class="info">
-			            <span class="name">${member.groupNickname}</span>
+			            <span class="name">${memName}</span>
 			            <div class="tags">
 			                ${roleTag}
 			                ${titleTag}
@@ -34385,7 +34954,7 @@ ${libraryList}
             targetIsOwner = isOwner;
             targetIsAdmin = isAdmin;
           } else {
-            targetMember = chat.members.find((m) => m.id === memberId);
+            targetMember = (chat.members || []).find((m) => m.id === memberId);
             if (!targetMember) return;
             targetIsOwner = chat.ownerId === memberId;
             targetIsAdmin = targetMember.isAdmin;
@@ -34494,6 +35063,10 @@ ${libraryList}
                 groupTitle: "",
               };
               if (contactChat.roleType) memObj.roleType = contactChat.roleType;
+              if (contactChat.roleType === "system_status") {
+                memObj.settings = JSON.parse(JSON.stringify(contactChat.settings || {}));
+                memObj.triggerMode = memObj.settings.triggerMode || "always";
+              }
               chat.members.push(memObj);
               addedNames.push(`“${contactChat.name}”`);
             } else {
@@ -34601,7 +35174,7 @@ ${libraryList}
           const chat = state.chats[state.activeChatId];
           const isOwner = chat.ownerId === "user";
           const isAdmin = chat.settings.isUserAdmin;
-          const memberToRemove = chat.members.find((m) => m.id === memberId);
+          const memberToRemove = (chat.members || []).find((m) => m.id === memberId);
 
           // 权限检查
           if (
@@ -34616,7 +35189,7 @@ ${libraryList}
             return;
           }
 
-          const memberIndex = chat.members.findIndex((m) => m.id === memberId);
+          const memberIndex = (chat.members || []).findIndex((m) => m.id === memberId);
           if (memberIndex === -1) return;
 
           const memberName = memberToRemove.groupNickname;
@@ -34804,7 +35377,7 @@ ${libraryList}
           const chat = state.chats[state.activeChatId];
           if (!chat) return;
 
-          const messageIndex = chat.history.findIndex(
+          const messageIndex = (chat.history || []).findIndex(
             (m) => m.timestamp === originalTimestamp,
           );
           if (messageIndex === -1) return;
@@ -35002,7 +35575,7 @@ ${libraryList}
                   action.type === "group_call_response" &&
                   action.decision === "join"
                 ) {
-                  const member = chat.members.find(
+                  const member = (chat.members || []).find(
                     (m) => m.originalName === action.name,
                   );
                   if (member) videoCallState.participants.push(member);
@@ -35593,7 +36166,7 @@ ${libraryList}
           ) {
             const linkedContents = chat.settings.linkedWorldBookIds
               .map((bookId) => {
-                const worldBook = state.worldBooks.find(
+                const worldBook = (state.worldBooks || []).find(
                   (wb) => wb.id === bookId,
                 );
                 return worldBook && worldBook.content
@@ -35864,7 +36437,7 @@ ${libraryList}
           const chat = state.chats[state.activeChatId];
           if (!chat) return;
 
-          const messageIndex = chat.history.findIndex(
+          const messageIndex = (chat.history || []).findIndex(
             (m) => m.timestamp === originalTimestamp,
           );
           if (messageIndex === -1) return;
@@ -36180,7 +36753,7 @@ ${libraryList}
           ) {
             const linkedContents = chat.settings.linkedWorldBookIds
               .map((bookId) => {
-                const worldBook = state.worldBooks.find(
+                const worldBook = (state.worldBooks || []).find(
                   (wb) => wb.id === bookId,
                 );
                 return worldBook && worldBook.content
@@ -36793,7 +37366,7 @@ ${libraryList}
          */
         async function handleUserVote(timestamp, choice) {
           const chat = state.chats[state.activeChatId];
-          const poll = chat.history.find((m) => m.timestamp === timestamp);
+          const poll = (chat.history || []).find((m) => m.timestamp === timestamp);
           const myNickname = chat.isGroup
             ? chat.settings.myNickname || "我"
             : "我";
@@ -36857,7 +37430,7 @@ ${libraryList}
          */
         async function endPoll(timestamp) {
           const chat = state.chats[state.activeChatId];
-          const poll = chat.history.find((m) => m.timestamp === timestamp);
+          const poll = (chat.history || []).find((m) => m.timestamp === timestamp);
           if (!poll || poll.isClosed) return;
 
           const confirmed = await showCustomConfirm(
@@ -36892,7 +37465,7 @@ ${libraryList}
          */
         function showPollResults(timestamp) {
           const chat = state.chats[state.activeChatId];
-          const poll = chat.history.find((m) => m.timestamp === timestamp);
+          const poll = (chat.history || []).find((m) => m.timestamp === timestamp);
           if (!poll || !poll.isClosed) return;
 
           let resultsHtml = `<p><strong>${poll.question}</strong></p><hr style="opacity: 0.2; margin: 10px 0;">`;
@@ -37239,7 +37812,7 @@ ${libraryList}
             ) {
               const linkedContents = chat.settings.linkedWorldBookIds
                 .map((bookId) => {
-                  const worldBook = state.worldBooks.find(
+                  const worldBook = (state.worldBooks || []).find(
                     (wb) => wb.id === bookId,
                   );
                   return worldBook && worldBook.content
@@ -37396,7 +37969,7 @@ ${libraryList}
                 // 假设第一条消息包含了 senderName (在 messagesArray[0] 里可能是 name 字段)
                 // 注意：triggerInactiveAiAction 里的逻辑比较复杂，这里 messagesArray 的元素是 {name:..., message:...}
                 const senderName = messagesArray[0].name;
-                const member = chat.members.find(
+                const member = (chat.members || []).find(
                   (m) => m.originalName === senderName,
                 );
                 if (member) bgSenderAvatar = member.avatar;
@@ -37585,7 +38158,7 @@ ${libraryList}
           // 安全检查，确保 chat 和 history 都存在
           if (!chat || !chat.history) return;
 
-          const message = chat.history.find((m) => m.timestamp === timestamp);
+          const message = (chat.history || []).find((m) => m.timestamp === timestamp);
           if (!message || message.type !== "share_link") {
             console.error("无法找到或消息类型不匹配的分享链接:", timestamp);
             return; // 如果找不到消息，就直接退出
@@ -37830,7 +38403,7 @@ ${libraryList}
           if (!activeMessageTimestamp) return;
 
           const chat = state.chats[state.activeChatId];
-          const message = chat.history.find(
+          const message = (chat.history || []).find(
             (m) => m.timestamp === activeMessageTimestamp,
           );
           if (!message) return;
@@ -37899,7 +38472,7 @@ ${libraryList}
           activeTransferTimestamp = timestamp;
 
           const chat = state.chats[state.activeChatId];
-          const message = chat.history.find((m) => m.timestamp === timestamp);
+          const message = (chat.history || []).find((m) => m.timestamp === timestamp);
           if (message) {
             // 将AI的名字填入弹窗
             document.getElementById("transfer-sender-name").textContent =
@@ -37929,7 +38502,7 @@ ${libraryList}
 
           const timestamp = activeTransferTimestamp;
           const chat = state.chats[state.activeChatId];
-          const messageIndex = chat.history.findIndex(
+          const messageIndex = (chat.history || []).findIndex(
             (m) => m.timestamp === timestamp,
           );
           if (messageIndex === -1) return;
@@ -38375,7 +38948,7 @@ ${libraryList}
           const chat = state.chats[state.activeChatId];
           if (!chat) return;
 
-          const messageIndex = chat.history.findIndex(
+          const messageIndex = (chat.history || []).findIndex(
             (m) => m.timestamp === timestamp,
           );
           if (messageIndex === -1) return;
@@ -38493,7 +39066,7 @@ ${libraryList}
             for (const book of booksToUpdate) {
               book.categoryId = null;
               await db.worldBooks.put(book);
-              const bookInState = state.worldBooks.find(
+              const bookInState = (state.worldBooks || []).find(
                 (wb) => wb.id === book.id,
               );
               if (bookInState) bookInState.categoryId = null;
@@ -38614,7 +39187,7 @@ ${libraryList}
 
           if (editingNpcId) {
             // 更新现有的NPC
-            const npc = chat.npcLibrary.find((n) => n.id === editingNpcId);
+            const npc = (chat.npcLibrary || []).find((n) => n.id === editingNpcId);
             if (npc) {
               npc.name = name;
               npc.persona = persona;
@@ -38787,7 +39360,7 @@ ${libraryList}
             currentFrameUrl = chat.settings.myAvatarFrame || "";
             previewAvatarUrl = chat.settings.myAvatar || defaultAvatar;
           } else if (type === "member" && targetId) {
-            const member = chat.members.find((m) => m.id === targetId);
+            const member = (chat.members || []).find((m) => m.id === targetId);
             if (member) {
               currentFrameUrl = member.avatarFrame || "";
               previewAvatarUrl = member.avatar || defaultGroupMemberAvatar;
@@ -38874,7 +39447,7 @@ ${libraryList}
             } else if (type === "my") {
               chat.settings.myAvatarFrame = url;
             } else if (type === "member" && target) {
-              const member = chat.members.find((m) => m.id === target);
+              const member = (chat.members || []).find((m) => m.id === target);
               if (member) member.avatarFrame = url;
             }
 
@@ -39423,7 +39996,7 @@ ${libraryList}
           // 检查当前配置是否匹配任何一个预设
           const { proxyUrl, apiKey } = state.apiConfig;
           const matchingPreset = state.apiPresets
-            ? state.apiPresets.find(
+            ? (state.apiPresets || []).find(
                 (p) => p.proxyUrl === proxyUrl && p.apiKey === apiKey,
               )
             : null;
@@ -39445,7 +40018,7 @@ ${libraryList}
           const selectedId = parseInt(selectEl.value);
 
           if (selectedId && state.apiPresets) {
-            const selectedPreset = state.apiPresets.find(
+            const selectedPreset = (state.apiPresets || []).find(
               (p) => p.id === selectedId,
             );
             if (selectedPreset) {
@@ -39462,7 +40035,7 @@ ${libraryList}
           const selectEl = document.getElementById("api-preset-select");
           const selectedId = parseInt(selectEl.value);
           const selectedPreset = state.apiPresets
-            ? state.apiPresets.find((p) => p.id === selectedId)
+            ? (state.apiPresets || []).find((p) => p.id === selectedId)
             : null;
 
           const modal = document.getElementById("preset-actions-modal");
@@ -39543,7 +40116,7 @@ ${libraryList}
             return;
           }
 
-          const preset = state.apiPresets.find((p) => p.id === presetId);
+          const preset = (state.apiPresets || []).find((p) => p.id === presetId);
           if (preset) {
             preset.proxyUrl = proxyUrl;
             preset.apiKey = apiKey;
@@ -39559,7 +40132,7 @@ ${libraryList}
          * 删除当前选中的预设
          */
         async function deleteSelectedApiPreset(presetId) {
-          const preset = state.apiPresets.find((p) => p.id === presetId);
+          const preset = (state.apiPresets || []).find((p) => p.id === presetId);
           if (preset) {
             const confirmed = await showCustomConfirm(
               "确认删除",
@@ -39606,7 +40179,7 @@ ${libraryList}
           // 检查当前聊天的CSS是否匹配任何一个预设
           const currentCss = customCssInput.value.trim();
           const matchingPreset = state.bubbleStylePresets
-            ? state.bubbleStylePresets.find((p) => p.css.trim() === currentCss)
+            ? (state.bubbleStylePresets || []).find((p) => p.css.trim() === currentCss)
             : null;
 
           if (matchingPreset) {
@@ -39627,7 +40200,7 @@ ${libraryList}
           const selectedId = parseInt(selectEl.value);
 
           if (selectedId && state.bubbleStylePresets) {
-            const selectedPreset = state.bubbleStylePresets.find(
+            const selectedPreset = (state.bubbleStylePresets || []).find(
               (p) => p.id === selectedId,
             );
             if (selectedPreset) {
@@ -39646,7 +40219,7 @@ ${libraryList}
           );
           const selectedId = parseInt(selectEl.value);
           const selectedPreset = state.bubbleStylePresets
-            ? state.bubbleStylePresets.find((p) => p.id === selectedId)
+            ? (state.bubbleStylePresets || []).find((p) => p.id === selectedId)
             : null;
 
           const modal = document.getElementById("preset-actions-modal"); // 复用现有模态框
@@ -39720,7 +40293,7 @@ ${libraryList}
           const customCssInput = document.getElementById("custom-css-input");
           const css = customCssInput.value.trim();
 
-          const preset = state.bubbleStylePresets.find(
+          const preset = (state.bubbleStylePresets || []).find(
             (p) => p.id === presetId,
           );
           if (preset) {
@@ -39737,7 +40310,7 @@ ${libraryList}
          * 删除当前选中的预设
          */
         async function deleteSelectedPreset(presetId) {
-          const preset = state.bubbleStylePresets.find(
+          const preset = (state.bubbleStylePresets || []).find(
             (p) => p.id === presetId,
           );
           if (preset) {
@@ -40975,7 +41548,7 @@ ${libraryList}
                 "--- 世界观设定 (必须严格遵守) ---\n" +
                 chat.settings.linkedWorldBookIds
                   .map((id) => {
-                    const book = state.worldBooks.find((b) => b.id === id);
+                    const book = (state.worldBooks || []).find((b) => b.id === id);
                     return book ? `[${book.name}]: ${book.content}` : "";
                   })
                   .join("\n\n");
@@ -41395,7 +41968,7 @@ ${libraryList}
                 "--- 世界观设定 (必须严格遵守) ---\n" +
                 chat.settings.linkedWorldBookIds
                   .map((id) => {
-                    const book = state.worldBooks.find((b) => b.id === id);
+                    const book = (state.worldBooks || []).find((b) => b.id === id);
                     return book ? `[${book.name}]: ${book.content}` : "";
                   })
                   .join("\n\n");
@@ -42379,7 +42952,7 @@ ${libraryList}
                 "--- 世界观设定 (这是你必须严格遵守的背景) ---\n" +
                 chat.settings.linkedWorldBookIds
                   .map((id) => {
-                    const book = state.worldBooks.find((b) => b.id === id);
+                    const book = (state.worldBooks || []).find((b) => b.id === id);
                     return book ? `[${book.name}]: ${book.content}` : "";
                   })
                   .join("\n\n");
@@ -43689,7 +44262,7 @@ ${libraryList}
               } else {
                 if (chat.isGroup) {
                   senderName = msg.senderName;
-                  const member = chat.members.find(
+                  const member = (chat.members || []).find(
                     (m) => m.originalName === senderName,
                   );
                   senderAvatar = member
@@ -43759,7 +44332,7 @@ ${libraryList}
           const chat = state.chats[state.activeChatId];
           if (!chat) return;
 
-          const targetIndex = chat.history.findIndex(
+          const targetIndex = (chat.history || []).findIndex(
             (msg) => msg.timestamp === timestamp,
           );
           if (targetIndex === -1) {
@@ -45748,7 +46321,7 @@ ${libraryList}
           // 如果选择的不是“自定义输入”
           if (selectedId) {
             // 从全局 state 中根据 ID 查找预设
-            const preset = state.offlinePresets.find(
+            const preset = (state.offlinePresets || []).find(
               (p) => p.id === selectedId,
             );
             if (preset) {
@@ -45829,7 +46402,7 @@ ${libraryList}
          * 用当前输入框的内容更新选中的预设
          */
         async function updateSelectedOfflinePreset(presetId) {
-          const preset = state.offlinePresets.find((p) => p.id === presetId);
+          const preset = (state.offlinePresets || []).find((p) => p.id === presetId);
           if (!preset) return;
 
           const confirmed = await showCustomConfirm(
@@ -45858,7 +46431,7 @@ ${libraryList}
          * 删除选中的预设
          */
         async function deleteSelectedOfflinePreset(presetId) {
-          const preset = state.offlinePresets.find((p) => p.id === presetId);
+          const preset = (state.offlinePresets || []).find((p) => p.id === presetId);
           if (!preset) return;
 
           const confirmed = await showCustomConfirm(
@@ -46168,7 +46741,7 @@ ${libraryList}
          */
         async function editSummary(timestamp) {
           const chat = state.chats[state.activeChatId];
-          const summary = chat.history.find(
+          const summary = (chat.history || []).find(
             (msg) => msg.timestamp === timestamp,
           );
           if (!summary) return;
@@ -46214,7 +46787,7 @@ ${libraryList}
 
             if (lastRemainingSummary) {
               // 3. 如果还有其他总结，就找到它在历史记录中的位置
-              const lastSummaryMessageIndexInHistory = chat.history.findIndex(
+              const lastSummaryMessageIndexInHistory = (chat.history || []).findIndex(
                 (m) => m.timestamp === lastRemainingSummary.timestamp,
               );
               // 4. 新的索引就是它前面那条普通消息的索引
@@ -46283,7 +46856,7 @@ ${libraryList}
          */
         async function handleConciseSummary(timestamp) {
           const chat = state.chats[state.activeChatId];
-          const summary = chat.history.find(
+          const summary = (chat.history || []).find(
             (msg) => msg.timestamp === timestamp,
           );
           if (!summary) return;
@@ -47410,7 +47983,7 @@ ${libraryList}
           if (settings.linkedWorldBookIds) {
             wbText = settings.linkedWorldBookIds
               .map((id) => {
-                const b = state.worldBooks.find((wb) => wb.id === id);
+                const b = (state.worldBooks || []).find((wb) => wb.id === id);
                 return b ? b.content : "";
               })
               .join("");
@@ -47515,7 +48088,7 @@ ${libraryList}
           ) {
             const linkedContents = settings.linkedWorldBookIds
               .map((bookId) => {
-                const worldBook = state.worldBooks.find(
+                const worldBook = (state.worldBooks || []).find(
                   (wb) => wb.id === bookId,
                 );
                 return worldBook ? worldBook.content : "";
@@ -47934,7 +48507,7 @@ ${libraryList}
             isAdminNow = chat.settings.isUserAdmin;
           } else {
             // 如果是其他成员，保持原有逻辑不变
-            const member = chat.members.find((m) => m.id === memberId);
+            const member = (chat.members || []).find((m) => m.id === memberId);
             if (!member) return;
 
             // 不能将群主设为管理员或取消其管理员身份
@@ -47984,7 +48557,7 @@ ${libraryList}
             targetNickname = chat.settings.myNickname || "我";
             oldTitle = chat.settings.myGroupTitle || "";
           } else {
-            const member = chat.members.find((m) => m.id === memberId);
+            const member = (chat.members || []).find((m) => m.id === memberId);
             if (!member) return;
             targetNickname = member.groupNickname;
             oldTitle = member.groupTitle || "";
@@ -48002,7 +48575,7 @@ ${libraryList}
             if (memberId === "user") {
               chat.settings.myGroupTitle = trimmedTitle;
             } else {
-              const member = chat.members.find((m) => m.id === memberId);
+              const member = (chat.members || []).find((m) => m.id === memberId);
               if (member) member.groupTitle = trimmedTitle;
             }
 
@@ -48025,7 +48598,7 @@ ${libraryList}
          */
         async function handleTransferOwnership(memberId) {
           const chat = state.chats[state.activeChatId];
-          const newOwner = chat.members.find((m) => m.id === memberId);
+          const newOwner = (chat.members || []).find((m) => m.id === memberId);
           if (!newOwner) return;
 
           // 获取旧群主的昵称，也就是你自己的昵称
@@ -50921,7 +51494,7 @@ ${libraryList}
               }
               await db.worldBooks.bulkPut(booksToUpdate);
               booksToUpdate.forEach((updatedBook) => {
-                const bookInState = state.worldBooks.find(
+                const bookInState = (state.worldBooks || []).find(
                   (wb) => wb.id === updatedBook.id,
                 );
                 if (bookInState) bookInState.categoryId = null;
@@ -51519,7 +52092,7 @@ ${libraryList}
          */
         window.loadBranchCheckpoint = async function (checkpointId) {
           const chat = state.chats[state.activeChatId];
-          const checkpoint = chat.checkpoints.find(
+          const checkpoint = (chat.checkpoints || []).find(
             (cp) => cp.id === checkpointId,
           );
 
@@ -53473,37 +54046,25 @@ ${libraryList}
             options,
           );
 
-          while (true) {
+          const encodedPrompt = encodeURIComponent(prompt);
+          let queryParams = `width=${width}&height=${height}&seed=${seed}&model=${model}`;
+          if (nologo) queryParams += "&nologo=true";
+
+          const currentApiConfig =
+            window.state && window.state.apiConfig
+              ? window.state.apiConfig
+              : null;
+          const pollApiKey = currentApiConfig
+            ? currentApiConfig.pollinationsApiKey
+            : null;
+
+          // 1. === 有 API Key 的情况 ===
+          if (pollApiKey) {
             try {
-              const encodedPrompt = encodeURIComponent(prompt);
-              // 尝试获取全局 state，如果不存在则为 null
-              const currentApiConfig =
-                window.state && window.state.apiConfig
-                  ? window.state.apiConfig
-                  : null;
-              const pollApiKey = currentApiConfig
-                ? currentApiConfig.pollinationsApiKey
-                : null;
-
-              // 构建基础参数
-              let queryParams = `width=${width}&height=${height}&seed=${seed}&model=${model}`;
-              if (nologo) queryParams += "&nologo=true";
-
-              // 1. === 有 API Key 的情况 ===
-              if (pollApiKey) {
-                const primaryUrl = `https://gen.pollinations.ai/image/${encodedPrompt}?${queryParams}&key=${pollApiKey}`;
-                console.log(
-                  `[Global Image Gen] 使用 API Key 请求: ${primaryUrl}`,
-                );
-
-                const response = await fetch(primaryUrl, { method: "GET" });
-
-                if (!response.ok) {
-                  throw new Error(`API Key 请求失败: ${response.status}`);
-                }
-
+              const primaryUrl = `https://gen.pollinations.ai/image/${encodedPrompt}?${queryParams}&key=${pollApiKey}`;
+              const response = await fetch(primaryUrl, { method: "GET" });
+              if (response.ok) {
                 const blob = await response.blob();
-                // 将 Blob 转为 Base64 以便存储和持久化加载 (解决 blob:null 报错问题)
                 return await new Promise((resolve, reject) => {
                   const reader = new FileReader();
                   reader.onloadend = () => resolve(reader.result);
@@ -53511,33 +54072,38 @@ ${libraryList}
                   reader.readAsDataURL(blob);
                 });
               }
+            } catch (e) {
+              console.warn(`[Global Image Gen] API Key 请求异常: ${e.message}`);
+            }
+          }
 
-              // 2. === 无 API Key (公开接口) 的情况 ===
-              // 定义加载器
-              const loadImage = (url) =>
-                new Promise((resolve, reject) => {
-                  const img = new Image();
-                  img.src = url;
-                  img.onload = () => resolve(url);
-                  img.onerror = () => reject(new Error(`图片加载失败: ${url}`));
-                });
+          // 2. === 公开接口重试逻辑 (最多 2 次) ===
+          const loadImage = (url) =>
+            new Promise((resolve, reject) => {
+              const img = new Image();
+              img.src = url;
+              img.onload = () => resolve(url);
+              img.onerror = () => reject(new Error("图片加载失败"));
+            });
 
-              // 优先尝试 gen.pollinations.ai
+          for (let attempt = 1; attempt <= 2; attempt++) {
+            try {
               const primaryUrl = `https://gen.pollinations.ai/image/${encodedPrompt}?${queryParams}`;
-
               return await loadImage(primaryUrl).catch(async () => {
-                console.warn(`[Global Image Gen] 主接口失败，尝试备用接口...`);
-                // 备用接口 pollinations.ai/p/
                 const fallbackUrl = `https://pollinations.ai/p/${encodedPrompt}?${queryParams}`;
                 return await loadImage(fallbackUrl);
               });
-            } catch (error) {
-              console.error(
-                `[Global Image Gen] 生成失败，5秒后自动重试... 错误: ${error.message}`,
-              );
-              await new Promise((resolve) => setTimeout(resolve, 5000));
+            } catch (err) {
+              console.warn(`[Global Image Gen] 第 ${attempt} 次尝试失败`);
+              if (attempt < 2) {
+                await new Promise((r) => setTimeout(r, 1000));
+              }
             }
           }
+
+          // 3. === 最终降级保证 ===
+          console.warn("[Global Image Gen] 图片生成接口暂时不可用，使用备用占位图片");
+          return `https://picsum.photos/seed/${seed}/${width}/${height}`;
         };
         /* ==================================================
    【全屏三击触发版】桌面拖拽系统
@@ -54755,6 +55321,486 @@ ${libraryList}
             });
           }
 
+          const addChoiceStatusBtn = document.getElementById("add-choice-status-btn");
+          const addStatusModal = document.getElementById("add-status-modal");
+          const cancelAddStatusBtn = document.getElementById("cancel-add-status-btn");
+          const confirmAddStatusBtn = document.getElementById("confirm-add-status-btn");
+          const statusCreateNameInput = document.getElementById("status-create-name-input");
+          const DEFAULT_STATUS_AVATAR = "https://api.iconify.design/lucide:activity.svg?color=%2310b981";
+
+          if (cancelAddStatusBtn && addStatusModal) {
+            cancelAddStatusBtn.addEventListener("click", () => {
+              addStatusModal.classList.remove("visible");
+            });
+          }
+
+          if (addChoiceStatusBtn) {
+            addChoiceStatusBtn.addEventListener("click", () => {
+              if (addContactDropdown) addContactDropdown.style.display = "none";
+              if (addContactChoiceModal) addContactChoiceModal.classList.remove("visible");
+              if (statusCreateNameInput) statusCreateNameInput.value = "系统状态";
+              if (addStatusModal) addStatusModal.classList.add("visible");
+            });
+          }
+
+          async function createStatusChat(name) {
+            const newChatId = "chat_" + Date.now();
+            const statusChat = {
+              id: newChatId,
+              name: (name && name.trim()) ? name.trim() : "系统状态",
+              roleType: "system_status",
+              isGroup: false,
+              isPinned: false,
+              npcLibrary: [],
+              relationship: {
+                status: "friend",
+                blockedTimestamp: null,
+                applicationReason: "",
+              },
+              status: {
+                text: "在线",
+                lastUpdate: Date.now(),
+                isBusy: false,
+              },
+              settings: {
+                aiPersona: "我是系统状态栏，负责展现并记录当前聊天故事的核心动态与数值规则。",
+                myPersona: "主角",
+                maxMemory: 10,
+                aiAvatar: DEFAULT_STATUS_AVATAR,
+                myAvatar: defaultAvatar,
+                triggerMode: "default",
+                columns: [],
+                affectionConfig: {
+                  maxIncrease: 10,
+                  maxDecrease: 10
+                },
+                luckIntervals: [
+                  { id: "lk_1", min: 0, max: 10, name: "天降洪福", note: "天降洪福：本回合获得一次额外的运气加成" },
+                  { id: "lk_2", min: 10, max: 30, name: "小有福气", note: "小有福气：运气尚可，偶有小喜" },
+                  { id: "lk_3", min: 30, max: 70, name: "波澜不惊", note: "波澜不惊：运势平平" },
+                  { id: "lk_4", min: 70, max: 90, name: "小有不顺", note: "小有不顺：略有阻碍" },
+                  { id: "lk_5", min: 90, max: 100, name: "大祸临头", note: "大祸临头：遭逢厄运" }
+                ],
+                weatherPool: ["晴朗", "多云", "阴天", "小雨", "大雨", "暴雪", "微风"]
+              },
+              history: [],
+              musicData: { totalTime: 0 },
+              characterPhoneData: {
+                lastGenerated: null,
+                chats: {},
+                shoppingCart: [],
+                memos: [],
+                browserHistory: [],
+                photoAlbum: [],
+                bank: { balance: 0, transactions: [] },
+                trajectory: [],
+                appUsage: [],
+                diary: [],
+              },
+              houseData: null,
+            };
+
+            state.chats[newChatId] = statusChat;
+            await db.chats.put(statusChat);
+            renderChatList();
+          }
+
+          if (confirmAddStatusBtn) {
+            confirmAddStatusBtn.addEventListener("click", async () => {
+              const name = statusCreateNameInput ? statusCreateNameInput.value.trim() : "";
+              if (!name) {
+                alert("请输入名称");
+                return;
+              }
+              await createStatusChat(name);
+              if (addStatusModal) addStatusModal.classList.remove("visible");
+            });
+          }
+
+          function renderSystemStatusSettings(chat) {
+            const personaInput = document.getElementById("system-status-persona-input");
+            if (personaInput) personaInput.value = chat.settings.aiPersona || "";
+
+            const triggerMode = chat.settings.triggerMode || "default";
+            const radios = document.querySelectorAll('input[name="system-status-trigger-mode"]');
+            radios.forEach((r) => {
+              r.checked = (r.value === triggerMode);
+            });
+
+            renderSystemStatusColumnsList(chat);
+          }
+
+          let currentStatusTarget = null;
+          let currentStatusContainerId = "system-status-columns-list";
+
+          function openStatusWeatherPoolModal(chatOrMember, col, onUpdate) {
+            const modal = document.getElementById("system-status-weather-pool-modal");
+            const listEl = document.getElementById("status-weather-pools-list");
+            const manageBtn = document.getElementById("manage-status-weather-pools-btn");
+            const cancelBtn = document.getElementById("cancel-status-weather-pool-btn");
+            if (!modal || !listEl) return;
+
+            if (manageBtn) {
+              manageBtn.remove();
+            }
+
+            const pools = (typeof window.getStoredWeatherPools === "function" ? window.getStoredWeatherPools() : null) || [
+              { id: "weather_temperate", name: "温带气候" },
+              { id: "weather_tropical", name: "热带气候" },
+              { id: "weather_frigid", name: "寒带气候" }
+            ];
+
+            listEl.innerHTML = "";
+            const currentSelected = col.format || pools[0].name;
+
+            pools.forEach(pool => {
+              const itemBtn = document.createElement("button");
+              itemBtn.type = "button";
+              itemBtn.className = "moe-btn-secondary";
+              const isSelected = (pool.name === currentSelected || pool.id === currentSelected);
+              itemBtn.style.cssText = `width: 100%; height: 36px; padding: 0 12px; font-size: 13px; border-radius: 12px; text-align: left; display: flex; align-items: center; justify-content: space-between; border: 1px solid ${isSelected ? 'var(--accent-color)' : 'var(--border-color)'}; background: ${isSelected ? 'var(--card-bg)' : 'var(--secondary-bg)'}; color: ${isSelected ? 'var(--accent-color)' : 'var(--text-primary)'}; font-weight: ${isSelected ? '600' : 'normal'}; cursor: pointer; box-sizing: border-box;`;
+              itemBtn.innerHTML = `
+                <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1;">${pool.name}</span>
+                <span style="font-size: 11px; color: var(--text-secondary); margin-left: 6px; flex-shrink: 0;">${pool.items ? pool.items.length + '项天气' : ''}</span>
+              `;
+              itemBtn.addEventListener("click", async () => {
+                col.format = pool.name;
+                if (chatOrMember.id && state.chats[chatOrMember.id]) {
+                  await db.chats.put(state.chats[chatOrMember.id]);
+                }
+                modal.classList.remove("visible");
+                if (typeof onUpdate === "function") {
+                  onUpdate();
+                } else {
+                  renderSystemStatusColumnsList(chatOrMember, currentStatusContainerId);
+                }
+              });
+              listEl.appendChild(itemBtn);
+            });
+
+            if (cancelBtn) {
+              cancelBtn.onclick = () => {
+                modal.classList.remove("visible");
+              };
+            }
+
+            modal.classList.add("visible");
+          }
+
+          function renderSystemStatusColumnsList(targetObj, containerId = "system-status-columns-list") {
+            const container = document.getElementById(containerId);
+            if (!container || !targetObj) return;
+            container.innerHTML = "";
+
+            currentStatusTarget = targetObj;
+            currentStatusContainerId = containerId;
+
+            if (!targetObj.settings) targetObj.settings = {};
+            if (!targetObj.settings.columns) targetObj.settings.columns = targetObj.columns || [];
+
+            const weatherPoolsList = (typeof window.getStoredWeatherPools === "function" ? window.getStoredWeatherPools() : null) || [
+              { id: "weather_temperate", name: "温带气候" },
+              { id: "weather_tropical", name: "热带气候" },
+              { id: "weather_frigid", name: "寒带气候" }
+            ];
+
+            targetObj.settings.columns.forEach((col, index) => {
+              const itemDiv = document.createElement("div");
+              itemDiv.className = "status-col-item";
+              itemDiv.style.cssText = "display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px;";
+
+              const isPreset = (col.type && col.type !== "general");
+              const isWeather = (col.type === "weather");
+              const isAffection = (col.type === "affection");
+              const isLuck = (col.type === "luck");
+
+              let rightControlHtml = "";
+              if (isWeather) {
+                const currentVal = col.format || weatherPoolsList[0].name;
+                const firstChar = (currentVal && currentVal.length > 0) ? currentVal[0] : "";
+                rightControlHtml = `
+                  <div class="moe-input col-weather-selector-btn" style="flex: 1; min-width: 0; height: 34px; padding: 0 10px; font-size: 13px; border-radius: 12px; background: var(--secondary-bg); border: 1px solid var(--border-color); box-sizing: border-box; display: flex; align-items: center; justify-content: center; cursor: pointer; user-select: none;">
+                    <span class="col-weather-pool-name" style="color: var(--text-primary); font-size: 13px; font-weight: 600;">${firstChar}</span>
+                  </div>
+                `;
+              } else {
+                rightControlHtml = `
+                  <input type="text" class="moe-input col-format-input" value="${col.format || ''}" placeholder="格式" ${isPreset ? 'readonly' : ''} style="flex: 1; min-width: 0; height: 34px; padding: 6px 10px; font-size: 13px; border-radius: 12px; background: var(--secondary-bg); border: 1px solid var(--border-color); box-sizing: border-box; color: var(--text-primary); ${isPreset ? 'cursor: not-allowed;' : ''}">
+                `;
+              }
+
+              const circleBtnCss = "width: 24px; height: 24px; min-width: 24px; max-width: 24px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; padding: 0; border: 1px solid var(--border-color); background: var(--secondary-bg); color: var(--text-secondary); cursor: pointer; flex-shrink: 0; box-sizing: border-box;";
+
+              let subConfigHtml = "";
+              if (isAffection) {
+                const maxInc = targetObj.settings.affectionConfig?.maxIncrease ?? 10;
+                const maxDec = targetObj.settings.affectionConfig?.maxDecrease ?? 10;
+                subConfigHtml = `
+                  <div style="margin-top: 2px; padding: 8px 12px; background: var(--secondary-bg); border-radius: 12px; border: 1px solid var(--border-color); display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--text-secondary);">
+                    <span>单次最多加</span>
+                    <input type="number" class="moe-input col-aff-inc" style="width: 50px; text-align: center; border-radius: 8px; padding: 2px 4px; font-size: 12px;" value="${maxInc}">
+                    <span>最多减</span>
+                    <input type="number" class="moe-input col-aff-dec" style="width: 50px; text-align: center; border-radius: 8px; padding: 2px 4px; font-size: 12px;" value="${maxDec}">
+                  </div>
+                `;
+              } else if (isLuck) {
+                subConfigHtml = `
+                  <div style="margin-top: 2px; display: flex; flex-direction: column; gap: 6px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                      <span style="font-size: 12px; color: var(--text-secondary); font-weight: 600;">幸运区间设置 1d100</span>
+                      <button type="button" class="col-add-luck-btn" style="${circleBtnCss}">+</button>
+                    </div>
+                    <div class="col-luck-intervals-container" style="display: flex; flex-direction: column; gap: 6px;"></div>
+                  </div>
+                `;
+              }
+
+              itemDiv.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 6px; width: 100%;">
+                  <input type="text" class="moe-input col-label-input" value="${col.label || ''}" placeholder="标签" ${isPreset ? 'readonly' : ''} style="width: 76px; min-width: 76px; max-width: 76px; height: 34px; box-sizing: border-box; flex-shrink: 0; padding: 6px 4px; text-align: center; font-size: 13px; border-radius: 12px; background: var(--secondary-bg); border: 1px solid var(--border-color); color: var(--text-primary); ${isPreset ? 'cursor: not-allowed;' : ''}">
+                  <span style="color: var(--text-secondary); font-weight: bold; flex-shrink: 0;">:</span>
+                  ${rightControlHtml}
+                  <button type="button" class="col-up-btn" style="${circleBtnCss}" title="上移">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M6 15l6-6 6 6z"/></svg>
+                  </button>
+                  <button type="button" class="col-down-btn" style="${circleBtnCss}" title="下移">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M6 9l6 6 6-6z"/></svg>
+                  </button>
+                  <button type="button" class="col-del-btn" style="${circleBtnCss}" title="删除">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"><line x1="5" y1="5" x2="19" y2="19"></line><line x1="19" y1="5" x2="5" y2="19"></line></svg>
+                  </button>
+                </div>
+                <div>
+                  <textarea class="moe-input col-note-input" placeholder="备注" rows="1" style="font-size: 12px; width: 100%; border-radius: 12px; background: var(--secondary-bg); border: 1px solid var(--border-color); padding: 6px 10px; min-height: 32px; box-sizing: border-box; color: var(--text-primary); resize: vertical;">${col.note || ''}</textarea>
+                </div>
+                ${subConfigHtml}
+              `;
+
+              const upBtn = itemDiv.querySelector(".col-up-btn");
+              const downBtn = itemDiv.querySelector(".col-down-btn");
+              const delBtn = itemDiv.querySelector(".col-del-btn");
+
+              if (index === 0 && upBtn) {
+                upBtn.style.opacity = "0.3";
+                upBtn.style.cursor = "not-allowed";
+              }
+              if (index === targetObj.settings.columns.length - 1 && downBtn) {
+                downBtn.style.opacity = "0.3";
+                downBtn.style.cursor = "not-allowed";
+              }
+
+              upBtn?.addEventListener("click", () => {
+                if (index > 0) {
+                  const temp = targetObj.settings.columns[index];
+                  targetObj.settings.columns[index] = targetObj.settings.columns[index - 1];
+                  targetObj.settings.columns[index - 1] = temp;
+                  renderSystemStatusColumnsList(targetObj, containerId);
+                }
+              });
+
+              downBtn?.addEventListener("click", () => {
+                if (index < targetObj.settings.columns.length - 1) {
+                  const temp = targetObj.settings.columns[index];
+                  targetObj.settings.columns[index] = targetObj.settings.columns[index + 1];
+                  targetObj.settings.columns[index + 1] = temp;
+                  renderSystemStatusColumnsList(targetObj, containerId);
+                }
+              });
+
+              delBtn?.addEventListener("click", () => {
+                targetObj.settings.columns.splice(index, 1);
+                renderSystemStatusColumnsList(targetObj, containerId);
+              });
+
+              if (!isPreset) {
+                itemDiv.querySelector(".col-label-input")?.addEventListener("input", (e) => {
+                  targetObj.settings.columns[index].label = e.target.value;
+                });
+                itemDiv.querySelector(".col-format-input")?.addEventListener("input", (e) => {
+                  targetObj.settings.columns[index].format = e.target.value;
+                });
+              }
+
+              if (isWeather) {
+                itemDiv.querySelector(".col-weather-selector-btn")?.addEventListener("click", () => {
+                  openStatusWeatherPoolModal(targetObj, col, () => {
+                    renderSystemStatusColumnsList(targetObj, containerId);
+                  });
+                });
+              }
+
+              itemDiv.querySelector(".col-note-input")?.addEventListener("input", (e) => {
+                targetObj.settings.columns[index].note = e.target.value;
+              });
+
+              if (isAffection) {
+                const incInput = itemDiv.querySelector(".col-aff-inc");
+                const decInput = itemDiv.querySelector(".col-aff-dec");
+                if (!targetObj.settings.affectionConfig) targetObj.settings.affectionConfig = { maxIncrease: 10, maxDecrease: 10 };
+                incInput?.addEventListener("change", (e) => {
+                  targetObj.settings.affectionConfig.maxIncrease = parseInt(e.target.value) || 0;
+                });
+                decInput?.addEventListener("change", (e) => {
+                  targetObj.settings.affectionConfig.maxDecrease = parseInt(e.target.value) || 0;
+                });
+              }
+
+              if (isLuck) {
+                const luckContainer = itemDiv.querySelector(".col-luck-intervals-container");
+                const addLuckBtn = itemDiv.querySelector(".col-add-luck-btn");
+                if (!targetObj.settings.luckIntervals) targetObj.settings.luckIntervals = [];
+
+                function renderLuckSubList() {
+                  if (!luckContainer) return;
+                  luckContainer.innerHTML = "";
+                  targetObj.settings.luckIntervals.forEach((item, lkIndex) => {
+                    const lkDiv = document.createElement("div");
+                    lkDiv.style.cssText = "display: flex; flex-direction: column; gap: 4px; padding: 8px 10px; background: var(--secondary-bg); border-radius: 12px; border: 1px solid var(--border-color);";
+                    lkDiv.innerHTML = `
+                      <div style="display: flex; align-items: center; gap: 4px;">
+                        <input type="number" class="moe-input lk-min" value="${item.min}" style="width: 42px; text-align: center; font-size: 11px; border-radius: 8px; padding: 2px;">
+                        <span style="font-size: 11px; color: var(--text-secondary);">≤x＜</span>
+                        <input type="number" class="moe-input lk-max" value="${item.max}" style="width: 42px; text-align: center; font-size: 11px; border-radius: 8px; padding: 2px;">
+                        <span style="font-size: 11px; color: var(--text-secondary);">→</span>
+                        <input type="text" class="moe-input lk-name" value="${item.name || ''}" placeholder="名称" style="flex: 1; font-size: 11px; border-radius: 8px; padding: 2px 6px;">
+                        <button type="button" class="lk-del-btn" style="${circleBtnCss}" title="删除">
+                          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round">
+                            <line x1="5" y1="5" x2="19" y2="19"></line>
+                            <line x1="19" y1="5" x2="5" y2="19"></line>
+                          </svg>
+                        </button>
+                      </div>
+                      <textarea class="moe-input lk-note" placeholder="备注" rows="1" style="font-size: 11px; border-radius: 8px; padding: 4px 6px; min-height: 28px; resize: vertical; box-sizing: border-box; width: 100%;">${item.note || ''}</textarea>
+                    `;
+
+                    lkDiv.querySelector(".lk-del-btn")?.addEventListener("click", () => {
+                      targetObj.settings.luckIntervals.splice(lkIndex, 1);
+                      renderLuckSubList();
+                    });
+                    lkDiv.querySelector(".lk-min")?.addEventListener("change", (e) => {
+                      targetObj.settings.luckIntervals[lkIndex].min = parseInt(e.target.value) || 0;
+                    });
+                    lkDiv.querySelector(".lk-max")?.addEventListener("change", (e) => {
+                      targetObj.settings.luckIntervals[lkIndex].max = parseInt(e.target.value) || 0;
+                    });
+                    lkDiv.querySelector(".lk-name")?.addEventListener("input", (e) => {
+                      targetObj.settings.luckIntervals[lkIndex].name = e.target.value;
+                    });
+                    lkDiv.querySelector(".lk-note")?.addEventListener("input", (e) => {
+                      targetObj.settings.luckIntervals[lkIndex].note = e.target.value;
+                    });
+
+                    luckContainer.appendChild(lkDiv);
+                  });
+                }
+
+                renderLuckSubList();
+
+                addLuckBtn?.addEventListener("click", () => {
+                  targetObj.settings.luckIntervals.push({
+                    id: "lk_" + Date.now(),
+                    min: 0,
+                    max: 10,
+                    name: "新幸运区间",
+                    note: ""
+                  });
+                  renderLuckSubList();
+                });
+              }
+
+              container.appendChild(itemDiv);
+            });
+          }
+
+          const colTypeModal = document.getElementById("system-status-col-type-modal");
+          const cancelColTypeBtn = document.getElementById("cancel-status-col-type-btn");
+          const addColBtn = document.getElementById("system-status-add-col-btn");
+          const memberAddColBtn = document.getElementById("member-status-add-col-btn");
+          const addLuckBtn = document.getElementById("system-status-add-luck-btn");
+
+          if (cancelColTypeBtn && colTypeModal) {
+            cancelColTypeBtn.addEventListener("click", () => {
+              colTypeModal.classList.remove("visible");
+            });
+          }
+
+          if (addColBtn && colTypeModal) {
+            addColBtn.addEventListener("click", () => {
+              currentStatusContainerId = "system-status-columns-list";
+              currentStatusTarget = state.chats[state.activeChatId];
+              colTypeModal.classList.add("visible");
+            });
+          }
+
+          if (memberAddColBtn && colTypeModal) {
+            memberAddColBtn.addEventListener("click", () => {
+              currentStatusContainerId = "member-status-columns-list";
+              const chat = state.chats[state.activeChatId];
+              if (chat && chat.members) {
+                const member = chat.members.find(m => m.id === editingMemberId);
+                if (member) currentStatusTarget = member;
+              }
+              colTypeModal.classList.add("visible");
+            });
+          }
+
+          document.querySelectorAll(".status-col-type-option").forEach((btn) => {
+            btn.addEventListener("click", () => {
+              const target = currentStatusTarget || state.chats[state.activeChatId];
+              if (!target) return;
+              if (!target.settings) target.settings = {};
+              if (!target.settings.columns) target.settings.columns = target.columns || [];
+
+              const type = btn.getAttribute("data-type");
+              let newCol = { id: "col_" + Date.now(), type, label: "", format: "*", note: "" };
+              if (type === "general") {
+                newCol.label = "[栏目]";
+                newCol.format = "*";
+              } else if (type === "date") {
+                newCol.label = "[日期]";
+                newCol.format = "*年*月*日";
+              } else if (type === "time") {
+                newCol.label = "[时间]";
+                newCol.format = "*：*";
+              } else if (type === "weather") {
+                const pools = (typeof window.getStoredWeatherPools === "function" ? window.getStoredWeatherPools() : null) || [
+                  { id: "weather_temperate", name: "温带气候" }
+                ];
+                newCol.label = "[天气]";
+                newCol.format = pools[0]?.name || "温带气候";
+              } else if (type === "affection") {
+                newCol.label = "[好感度]";
+                newCol.format = "[角色全名]好感度[+/-]*=*";
+              } else if (type === "luck") {
+                newCol.label = "[幸运]";
+                newCol.format = "1d100";
+              } else if (type === "location") {
+                newCol.label = "[地点]";
+                newCol.format = "*";
+              }
+
+              target.settings.columns.push(newCol);
+              if (colTypeModal) colTypeModal.classList.remove("visible");
+              renderSystemStatusColumnsList(target, currentStatusContainerId);
+            });
+          });
+
+          if (addLuckBtn) {
+            addLuckBtn.addEventListener("click", () => {
+              const chat = state.chats[state.activeChatId];
+              if (!chat || chat.roleType !== "system_status") return;
+              if (!chat.settings.luckIntervals) chat.settings.luckIntervals = [];
+              chat.settings.luckIntervals.push({
+                id: "lk_" + Date.now(),
+                min: 0,
+                max: 10,
+                name: "新幸运区间",
+                note: "",
+              });
+              renderSystemStatusLuckList(chat);
+            });
+          }
+
           if (addChoiceFriendBtn) {
             addChoiceFriendBtn.addEventListener("click", () => {
               if (addContactDropdown) addContactDropdown.style.display = "none";
@@ -55022,7 +56068,7 @@ ${libraryList}
                   };
                 }
               } else if (Array.isArray(chat.members)) {
-                const dm = chat.members.find(
+                const dm = (chat.members || []).find(
                   (m) =>
                     m.roleType === "dice" ||
                     (state.chats[m.id] && state.chats[m.id].roleType === "dice"),
@@ -55746,7 +56792,7 @@ ${libraryList}
             .getElementById("save-world-book-btn")
             .addEventListener("click", async () => {
               if (!editingWorldBookId) return;
-              const book = state.worldBooks.find(
+              const book = (state.worldBooks || []).find(
                 (wb) => wb.id === editingWorldBookId,
               );
               if (book) {
@@ -55811,7 +56857,7 @@ ${libraryList}
                 // 3. 如果以上都不是，说明是想开始播放或只展开文字
                 else {
                   const clickedTimestamp = parseInt(bubble.dataset.timestamp);
-                  const startIndex = chat.history.findIndex(
+                  const startIndex = (chat.history || []).findIndex(
                     (m) => m.timestamp === clickedTimestamp,
                   );
                   if (startIndex === -1) return;
@@ -55965,7 +57011,7 @@ ${libraryList}
                 const chat = state.chats[state.activeChatId];
                 if (chat && wrapper) {
                   const timestamp = parseInt(wrapper.dataset.timestamp);
-                  const recalledMsg = chat.history.find(
+                  const recalledMsg = (chat.history || []).find(
                     (m) => m.timestamp === timestamp,
                   );
                   if (recalledMsg && recalledMsg.recalledData) {
@@ -56503,7 +57549,14 @@ ${libraryList}
               // 显隐对方人设卡片与导入我的人设按钮
               const aiPersonaCard = document.getElementById("ai-persona-card");
               if (aiPersonaCard) {
-                aiPersonaCard.style.display = (isGroup || chat.roleType === "dice") ? "none" : "block";
+                aiPersonaCard.style.display = (isGroup || chat.roleType === "dice" || chat.roleType === "system_status") ? "none" : "block";
+              }
+              const systemStatusSettingsCard = document.getElementById("system-status-settings-card");
+              if (systemStatusSettingsCard) {
+                systemStatusSettingsCard.style.display = (chat.roleType === "system_status") ? "block" : "none";
+              }
+              if (chat.roleType === "system_status" && typeof renderSystemStatusSettings === "function") {
+                renderSystemStatusSettings(chat);
               }
               const importMyPersonaBtn = document.getElementById("import-my-persona-btn");
               if (importMyPersonaBtn) {
@@ -56569,7 +57622,7 @@ ${libraryList}
 
               // 2. 动态创建带头像的复选框
               otherChats.forEach((otherChat) => {
-                const existingLink = chat.settings.linkedMemories.find(
+                const existingLink = (chat.settings?.linkedMemories || []).find(
                   (link) => link.chatId === otherChat.id,
                 );
                 const isChecked = existingLink ? "checked" : "";
@@ -56964,27 +58017,72 @@ ${libraryList}
           function openMemberEditor(memberId) {
             editingMemberId = memberId;
             const chat = state.chats[state.activeChatId];
-            const member = chat.members.find((m) => m.id === memberId);
+            const member = (chat.members || []).find((m) => m.id === memberId);
             if (!member) return;
 
             if (typeof member.isMuted === "undefined") {
               member.isMuted = false; // 为旧数据兼容
             }
 
+            const sourceChat = state.chats[member.id];
+            if (!member.roleType && sourceChat && sourceChat.roleType) {
+              member.roleType = sourceChat.roleType;
+            }
+            const isStatusRole = (member.roleType === "system_status" || (sourceChat && sourceChat.roleType === "system_status"));
+            if (isStatusRole) {
+              member.roleType = "system_status";
+            }
+
             populateAgeSelectOptions();
             document.getElementById("member-name-input").value =
-              member.groupNickname;
+              member.groupNickname || member.originalName || (sourceChat && sourceChat.name) || "";
             document.getElementById("member-persona-input").value =
-              member.persona;
+              member.persona || member.settings?.aiPersona || (sourceChat && sourceChat.settings?.aiPersona) || "";
             setAgeSelectValue("member-age-input", member.age);
             setBirthdaySelects("member", member.birthday);
             setGenderInputValue("member", member.gender);
             document.getElementById("member-gender-note-input").value =
               member.genderNote || "";
             document.getElementById("member-avatar-preview").src =
-              member.avatar;
-            if (window.memberCocPanel) {
+              member.avatar || (sourceChat && sourceChat.settings?.aiAvatar) || (isStatusRole ? DEFAULT_STATUS_AVATAR : defaultAvatar);
+            if (!isStatusRole && window.memberCocPanel) {
               window.memberCocPanel.setData(member.cocPanel);
+            }
+            const humanGroups = ["member-age-group", "member-birthday-group", "member-gender-group", "member-coc-panel-container"];
+            humanGroups.forEach(id => {
+              const el = document.getElementById(id);
+              if (el) el.style.display = isStatusRole ? "none" : "";
+            });
+            const syncBtn = document.getElementById("sync-member-persona-btn");
+            if (syncBtn) syncBtn.style.display = isStatusRole ? "none" : "";
+
+            const statusContainer = document.getElementById("member-system-status-container");
+            if (statusContainer) {
+              statusContainer.style.display = isStatusRole ? "block" : "none";
+              if (isStatusRole) {
+                if (!member.settings) member.settings = {};
+                const sourceChat = state.chats[member.id];
+                if (sourceChat && sourceChat.settings) {
+                  if (!member.settings.columns || member.settings.columns.length === 0) {
+                    member.settings.columns = JSON.parse(JSON.stringify(sourceChat.settings.columns || []));
+                  }
+                  if (!member.settings.luckIntervals || member.settings.luckIntervals.length === 0) {
+                    member.settings.luckIntervals = JSON.parse(JSON.stringify(sourceChat.settings.luckIntervals || []));
+                  }
+                  if (!member.settings.affectionConfig) {
+                    member.settings.affectionConfig = JSON.parse(JSON.stringify(sourceChat.settings.affectionConfig || { maxIncrease: 10, maxDecrease: 10 }));
+                  }
+                  if (!member.settings.triggerMode) {
+                    member.settings.triggerMode = sourceChat.settings.triggerMode || "always";
+                  }
+                }
+                const triggerMode = member.settings.triggerMode || member.triggerMode || "always";
+                const radios = document.querySelectorAll('input[name="member-system-status-trigger-mode"]');
+                radios.forEach((r) => {
+                  r.checked = (r.value === triggerMode);
+                });
+                renderSystemStatusColumnsList(member, "member-status-columns-list");
+              }
             }
 
             // ★★★ 我们在这里为新按钮绑定了点击事件 ★★★
@@ -57017,10 +58115,11 @@ ${libraryList}
             });
           document
             .getElementById("save-member-settings-btn")
-            .addEventListener("click", () => {
+            .addEventListener("click", async () => {
               if (!editingMemberId) return;
               const chat = state.chats[state.activeChatId];
-              const member = chat.members.find((m) => m.id === editingMemberId);
+              const member = (chat.members || []).find((m) => m.id === editingMemberId);
+              if (!member) return;
 
               const newNickname = document
                 .getElementById("member-name-input")
@@ -57045,6 +58144,26 @@ ${libraryList}
               if (window.memberCocPanel) {
                 member.cocPanel = window.memberCocPanel.getData();
               }
+
+              if (member.roleType === "system_status") {
+                if (!member.settings) member.settings = {};
+                const selectedRadio = document.querySelector('input[name="member-system-status-trigger-mode"]:checked');
+                const triggerModeVal = selectedRadio ? selectedRadio.value : "always";
+                member.settings.triggerMode = triggerModeVal;
+                member.triggerMode = triggerModeVal;
+                member.settings.aiPersona = member.persona;
+                const sourceChat = state.chats[member.id];
+                if (sourceChat) {
+                  if (!sourceChat.settings) sourceChat.settings = {};
+                  sourceChat.settings.columns = member.settings.columns;
+                  sourceChat.settings.luckIntervals = member.settings.luckIntervals;
+                  sourceChat.settings.affectionConfig = member.settings.affectionConfig;
+                  sourceChat.settings.triggerMode = triggerModeVal;
+                  sourceChat.settings.aiPersona = member.persona;
+                  await db.chats.put(sourceChat);
+                }
+              }
+              await db.chats.put(chat);
 
               renderGroupMemberSettings(chat.members);
               document
@@ -57551,6 +58670,19 @@ ${libraryList}
                   enabled: groupActivityEnabled,
                   interval: groupActivityInterval,
                   lastActivityTimestamp: lastTimestamp, // 保留上次的时间戳
+                };
+              } else if (chat.roleType === "system_status") {
+                const sysPersonaInput = document.getElementById("system-status-persona-input");
+                if (sysPersonaInput) chat.settings.aiPersona = sysPersonaInput.value.trim();
+
+                const triggerRadio = document.querySelector('input[name="system-status-trigger-mode"]:checked');
+                if (triggerRadio) chat.settings.triggerMode = triggerRadio.value;
+
+                const maxInc = document.getElementById("system-status-max-increase");
+                const maxDec = document.getElementById("system-status-max-decrease");
+                chat.settings.affectionConfig = {
+                  maxIncrease: maxInc ? (parseInt(maxInc.value) || 10) : 10,
+                  maxDecrease: maxDec ? (parseInt(maxDec.value) || 10) : 10,
                 };
               } else {
                 chat.settings.aiPersona =
@@ -58198,7 +59330,7 @@ ${libraryList}
                 // 1. 在删除前，检查被删除的消息中是否包含投票
                 let deletedPollsInfo = [];
                 for (const timestamp of selectedMessages) {
-                  const msg = chat.history.find(
+                  const msg = (chat.history || []).find(
                     (m) => m.timestamp === timestamp,
                   );
                   if (msg && msg.type === "poll") {
@@ -59227,7 +60359,7 @@ ${libraryList}
                   .first();
 
                 if (!existing) {
-                  const messageToSave = chat.history.find(
+                  const messageToSave = (chat.history || []).find(
                     (msg) => msg.timestamp === timestamp,
                   );
                   if (messageToSave) {
@@ -59664,7 +60796,7 @@ ${libraryList}
 
               if (videoCallState.isGroupCall) {
                 const chat = state.chats[videoCallState.activeChatId];
-                const requester = chat.members.find(
+                const requester = (chat.members || []).find(
                   (m) => m.name === videoCallState.callRequester,
                 );
                 if (requester) {
@@ -60371,7 +61503,7 @@ ${libraryList}
           // 创建新函数来处理渲染逻辑
           function openSharedHistoryViewer(timestamp) {
             const chat = state.chats[state.activeChatId];
-            const message = chat.history.find((m) => m.timestamp === timestamp);
+            const message = (chat.history || []).find((m) => m.timestamp === timestamp);
             if (!message || message.type !== "share_card") return;
 
             const viewerModal = document.getElementById(
@@ -60534,7 +61666,7 @@ ${libraryList}
               if (chat && wrapper) {
                 // 从父容器上找到时间戳
                 const timestamp = parseInt(wrapper.dataset.timestamp);
-                const recalledMsg = chat.history.find(
+                const recalledMsg = (chat.history || []).find(
                   (m) => m.timestamp === timestamp,
                 );
 
