@@ -650,10 +650,10 @@ window.executeDiceCommand = function(rawContent, chat, diceInfo) {
     };
 
     const renderAttrItem = (lbl, val) => `
-      <div style="display: flex; align-items: center; white-space: nowrap; font-size: 11px;">
-        <span style="font-weight: 600; color: var(--text-primary); display: inline-block; width: 26px; text-align-last: justify;">${lbl}</span>
-        <span style="color: var(--text-primary); margin-right: 2px;">:</span>
-        <span style="color: #444; font-weight: 600; font-size: 11px; display: inline-block; width: 22px; text-align: left;">${val}</span>
+      <div style="display: flex; align-items: center; white-space: nowrap; font-size: 11px; gap: 1px;">
+        <span style="font-weight: 600; color: var(--text-secondary); display: inline-block;">${lbl}</span>
+        <span style="color: var(--text-secondary);">:</span>
+        <span style="color: var(--text-secondary); opacity: 0.85; font-weight: 600; font-size: 11px; display: inline-block; padding-left: 1px;">${val}</span>
       </div>
     `;
 
@@ -666,7 +666,7 @@ window.executeDiceCommand = function(rawContent, chat, diceInfo) {
         <div class="coc-gen-result-card" style="font-size: 11px; line-height: 1.5; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; margin-top: 4px; overflow: hidden;">
           <div class="coc-card-header" style="padding: 6px 10px; font-weight: 600; color: var(--text-primary); font-size: 12px; background: var(--secondary-bg); border-bottom: 1px solid var(--border-color);">COC7 七版人物属性</div>
           <div style="padding: 8px 10px;">
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px 8px; font-size: 11px; color: var(--text-primary);">
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px 8px; font-size: 11px; color: var(--text-secondary);">
               ${renderAttrItem("力量", attrs.str)}
               ${renderAttrItem("敏捷", attrs.dex)}
               ${renderAttrItem("体质", attrs.con)}
@@ -677,16 +677,16 @@ window.executeDiceCommand = function(rawContent, chat, diceInfo) {
               ${renderAttrItem("智力", attrs.int)}
               ${renderAttrItem("幸运", attrs.luk)}
             </div>
-            <div style="display: flex; align-items: center; gap: 14px; font-size: 11px; margin-top: 6px; color: var(--text-primary);">
-              <div style="display: flex; align-items: center; white-space: nowrap;">
-                <span style="font-weight: 600; color: var(--text-primary); display: inline-block; width: 26px; text-align-last: justify;">HP</span>
-                <span style="color: var(--text-primary); margin-right: 2px;">:</span>
-                <span style="color: #444; font-weight: 600; font-size: 11px; display: inline-block; width: 22px; text-align: left;">${calc.hp}</span>
+            <div style="display: flex; align-items: center; gap: 14px; font-size: 11px; margin-top: 6px; color: var(--text-secondary);">
+              <div style="display: flex; align-items: center; white-space: nowrap; gap: 1px;">
+                <span style="font-weight: 600; color: var(--text-secondary);">HP</span>
+                <span style="color: var(--text-secondary);">:</span>
+                <span style="color: var(--text-secondary); opacity: 0.85; font-weight: 600; font-size: 11px; padding-left: 1px;">${calc.hp}</span>
               </div>
-              <div style="display: flex; align-items: center; white-space: nowrap;">
-                <span style="font-weight: 600; color: var(--text-primary); display: inline-block; width: 26px; text-align-last: justify;">DB</span>
-                <span style="color: var(--text-primary); margin-right: 2px;">:</span>
-                <span style="color: #444; font-weight: 600; font-size: 11px; text-align: left;">${calc.db}</span>
+              <div style="display: flex; align-items: center; white-space: nowrap; gap: 1px;">
+                <span style="font-weight: 600; color: var(--text-secondary);">DB</span>
+                <span style="color: var(--text-secondary);">:</span>
+                <span style="color: var(--text-secondary); opacity: 0.85; font-weight: 600; font-size: 11px; padding-left: 1px;">${calc.db}</span>
               </div>
             </div>
             <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 6px;">
@@ -709,7 +709,7 @@ window.executeDiceCommand = function(rawContent, chat, diceInfo) {
           <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 6px; margin-bottom: 6px; overflow: hidden;">
             <div class="coc-card-header" style="padding: 4px 8px; font-size: 11px; font-weight: 600; color: var(--text-primary); background: var(--secondary-bg); border-bottom: 1px solid var(--border-color);">方案 ${i}</div>
             <div style="padding: 6px 8px;">
-              <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px 6px; font-size: 11px; color: var(--text-primary);">
+              <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px 6px; font-size: 11px; color: var(--text-secondary);">
                 ${renderAttrItem("力量", a.str)}
                 ${renderAttrItem("敏捷", a.dex)}
                 ${renderAttrItem("体质", a.con)}
@@ -720,16 +720,16 @@ window.executeDiceCommand = function(rawContent, chat, diceInfo) {
                 ${renderAttrItem("智力", a.int)}
                 ${renderAttrItem("幸运", a.luk)}
               </div>
-              <div style="display: flex; align-items: center; gap: 14px; font-size: 11px; margin-top: 5px; color: var(--text-primary);">
-                <div style="display: flex; align-items: center; white-space: nowrap;">
-                  <span style="font-weight: 600; color: var(--text-primary); display: inline-block; width: 26px; text-align-last: justify;">HP</span>
-                  <span style="color: var(--text-primary); margin-right: 2px;">:</span>
-                  <span style="color: #444; font-weight: 600; font-size: 11px; display: inline-block; width: 22px; text-align: left;">${calc.hp}</span>
+              <div style="display: flex; align-items: center; gap: 14px; font-size: 11px; margin-top: 5px; color: var(--text-secondary);">
+                <div style="display: flex; align-items: center; white-space: nowrap; gap: 1px;">
+                  <span style="font-weight: 600; color: var(--text-secondary);">HP</span>
+                  <span style="color: var(--text-secondary);">:</span>
+                  <span style="color: var(--text-secondary); opacity: 0.85; font-weight: 600; font-size: 11px; padding-left: 1px;">${calc.hp}</span>
                 </div>
-                <div style="display: flex; align-items: center; white-space: nowrap;">
-                  <span style="font-weight: 600; color: var(--text-primary); display: inline-block; width: 26px; text-align-last: justify;">DB</span>
-                  <span style="color: var(--text-primary); margin-right: 2px;">:</span>
-                  <span style="color: #444; font-weight: 600; font-size: 11px; text-align: left;">${calc.db}</span>
+                <div style="display: flex; align-items: center; white-space: nowrap; gap: 1px;">
+                  <span style="font-weight: 600; color: var(--text-secondary);">DB</span>
+                  <span style="color: var(--text-secondary);">:</span>
+                  <span style="color: var(--text-secondary); opacity: 0.85; font-weight: 600; font-size: 11px; padding-left: 1px;">${calc.db}</span>
                 </div>
               </div>
               <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 4px;">
