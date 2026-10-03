@@ -48,12 +48,6 @@ const COC_STANDARD_SKILLS = [
   { name: "克苏鲁神话", base: 0 }
 ];
 
-const DEFAULT_COC_SKILLS = {};
-COC_STANDARD_SKILLS.forEach(s => {
-  DEFAULT_COC_SKILLS[s.name] = s.base;
-});
-window.DEFAULT_COC_SKILLS = DEFAULT_COC_SKILLS;
-
 function getSkillBaseValue(skillName, stats = {}) {
   if (skillName === "闪避") {
     const dex = parseInt(stats.dex, 10);
@@ -242,11 +236,7 @@ class CocPanel {
 
     const openBtn = this.container.querySelector(".coc-open-skills-modal-btn");
     if (openBtn) {
-      openBtn.addEventListener("click", (e) => {
-        if (e) {
-          e.preventDefault();
-          e.stopPropagation();
-        }
+      openBtn.addEventListener("click", () => {
         openCocSkillsModal(this);
       });
     }
@@ -332,21 +322,10 @@ let currentActiveCocPanel = null;
 function getStoredCocPresets() {
   try {
     const raw = localStorage.getItem("coc_skill_presets");
-    if (raw) {
-      const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
-    }
+    return raw ? JSON.parse(raw) : [];
   } catch (e) {
+    return [];
   }
-  const defaultSkills = (typeof getDefaultCocData === "function") ? getDefaultCocData().skills : (DEFAULT_COC_SKILLS || {});
-  return [
-    {
-      id: "preset_coc_default",
-      name: "标准预设",
-      skills: { ...defaultSkills },
-      customSkills: []
-    }
-  ];
 }
 
 function saveStoredCocPresets(presets) {
@@ -361,11 +340,10 @@ function loadCocModalPresetsList(selectedId = "") {
   const select = document.getElementById("coc-modal-preset-select");
   if (!select) return;
   const presets = getStoredCocPresets();
-  const currentId = selectedId || localStorage.getItem("coc_active_skill_preset_id") || (presets[0] ? presets[0].id : "");
-  select.innerHTML = presets.map(p => `<option value="${p.id}" ${p.id === currentId ? "selected" : ""}>${p.name}</option>`).join("");
-  if (currentId) {
-    select.value = currentId;
-    localStorage.setItem("coc_active_skill_preset_id", currentId);
+  select.innerHTML = '<option value="">预设方案</option>' +
+    presets.map(p => `<option value="${p.id}" ${p.id === selectedId ? "selected" : ""}>${p.name}</option>`).join("");
+  if (selectedId) {
+    select.value = selectedId;
   }
 }
 
@@ -444,26 +422,17 @@ function renderCocModalSkillsGrid() {
 }
 
 function openCocSkillsModal(cocPanelInstance) {
-  if (!cocPanelInstance) return;
   currentActiveCocPanel = cocPanelInstance;
   const modal = document.getElementById("coc-skills-modal");
   if (!modal) return;
 
-  if (!currentActiveCocPanel.data) {
-    currentActiveCocPanel.data = getDefaultCocData();
-  }
-
-  if (!currentActiveCocPanel.data.skills || typeof currentActiveCocPanel.data.skills !== "object" || Object.keys(currentActiveCocPanel.data.skills).length === 0) {
+  if (!currentActiveCocPanel.data.skills || Object.keys(currentActiveCocPanel.data.skills).length === 0) {
     const def = getDefaultCocData();
     currentActiveCocPanel.data.skills = { ...def.skills, ...(currentActiveCocPanel.data.skills || {}) };
   }
 
-  try {
-    renderCocModalSkillsGrid();
-    loadCocModalPresetsList();
-  } catch (err) {
-    console.error("渲染技能面板出错:", err);
-  }
+  renderCocModalSkillsGrid();
+  loadCocModalPresetsList();
 
   modal.classList.add("visible");
 }
@@ -473,7 +442,7 @@ function closeCocSkillsModal() {
   if (modal) {
     modal.classList.remove("visible");
   }
-  if (currentActiveCocPanel && typeof currentActiveCocPanel.updateTotalPoints === "function") {
+  if (currentActiveCocPanel) {
     currentActiveCocPanel.updateTotalPoints();
   }
 }
@@ -482,17 +451,6 @@ function closeCocSkillsModal() {
 function initCocSkillsModalEvents() {
   const modal = document.getElementById("coc-skills-modal");
   if (!modal) return;
-
-  const content = modal.querySelector(".coc-skills-modal-content");
-  if (content) {
-    content.onclick = (e) => e.stopPropagation();
-  }
-
-  modal.onclick = (e) => {
-    if (e.target === modal) {
-      closeCocSkillsModal();
-    }
-  };
 
   const closeBtn = document.getElementById("close-coc-skills-modal-btn");
   const cancelBtn = document.getElementById("cancel-coc-skills-modal-btn");
@@ -642,10 +600,9 @@ function initCocSkillsModalEvents() {
   const presetSelect = document.getElementById("coc-modal-preset-select");
   if (presetSelect) {
     presetSelect.onchange = () => {
+      if (!currentActiveCocPanel) return;
       const presetId = presetSelect.value;
       if (!presetId) return;
-      localStorage.setItem("coc_active_skill_preset_id", presetId);
-      if (!currentActiveCocPanel) return;
       const presets = getStoredCocPresets();
       const preset = presets.find(p => p.id === presetId);
       if (!preset) return;

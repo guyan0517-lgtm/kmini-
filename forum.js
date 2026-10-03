@@ -207,15 +207,17 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("group-screen-title").textContent = groupName;
     const fanficBar = document.getElementById("fanfic-preference-bar");
 
+    // 根据小组名显示或隐藏特定UI
     if (groupName === "同人文小组") {
       fanficBar.style.display = "block";
       await populateFanficSelectors();
-      await loadFanficPresets();
+      await loadFanficPresets(); // ★ 新增：加载预设
 
-      const fanficContent = document.getElementById("fanfic-bar-content");
-      const fanficToggle = document.getElementById("fanfic-bar-toggle-icon");
-      if (fanficContent) fanficContent.classList.remove("collapsed");
-      if (fanficToggle) fanficToggle.classList.remove("collapsed");
+      // 默认折叠起来，不占用空间
+      document.getElementById("fanfic-bar-content").classList.add("collapsed");
+      document
+        .getElementById("fanfic-bar-toggle-icon")
+        .classList.add("collapsed");
     } else {
       fanficBar.style.display = "none";
     }
@@ -2877,41 +2879,10 @@ ${lastChapter.content || ""}
   // ▲▲▲ 替换结束 ▲▲▲
   // ▼▼▼ 【全新】论坛功能事件监听器 ▼▼▼
 
-  async function openFanficGroupDirectly() {
-    let fanficGroup = null;
-    try {
-      fanficGroup = await db.forumGroups.where("name").equals("同人文小组").first();
-      if (!fanficGroup) {
-        const newId = Date.now();
-        fanficGroup = {
-          id: newId,
-          name: "同人文小组",
-          description: "同人文创作小组",
-          avatar: "https://api.iconify.design/lucide:book-open.svg?color=%23ff7f50",
-          categories: ["同人文"]
-        };
-        await db.forumGroups.add(fanficGroup);
-      }
-    } catch (e) {
-      console.error("查找或创建同人文小组失败:", e);
-    }
-    if (fanficGroup) {
-      await openGroup(fanficGroup.id, "同人文小组");
-    } else {
-      showScreen("forum-screen");
-    }
-  }
-
-  // 2. 当用户点击“书柜”App图标时，直接打开同人文小组面板
-  const forumIcon = document.querySelector(".desktop-app-icon[onclick=\"showScreen('forum-screen')\"]");
-  if (forumIcon) {
-    forumIcon.onclick = null;
-    forumIcon.addEventListener("click", (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      openFanficGroupDirectly();
-    });
-  }
+  // 2. 当用户点击“圈子”App图标时，渲染小组列表
+  document
+    .querySelector(".desktop-app-icon[onclick=\"showScreen('forum-screen')\"]")
+    .addEventListener("click", renderForumScreen);
 
   // 3. 绑定小组页和帖子页的返回按钮
   document

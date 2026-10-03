@@ -59,11 +59,11 @@ self.addEventListener('push', event => {
     data = { title: '新消息', body: event.data.text() };
   }
 
-  const title = data.title || '四半世紀';
+  const title = data.title || 'EPhone';
   const options = {
     body: data.body,
-    icon: 'icon.png',
-    badge: 'icon.png',
+    icon: 'https://i.postimg.cc/Kj8JnRcp/267611-CC01-F8-A3-B4910-A2-C2-FFDE479-DC.jpg',
+    badge: 'https://i.postimg.cc/Kj8JnRcp/267611-CC01-F8-A3-B4910-A2-C2-FFDE479-DC.jpg',
     data: data.data || {},
   };
 

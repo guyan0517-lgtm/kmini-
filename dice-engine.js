@@ -5,14 +5,13 @@
 const DEFAULT_DICE_TEMPLATES = {
   roll: "{角色名} 骰出了: {表达式}={结果}",
   check: "{角色名} 进行 {技能} 检定：D100={结果}/{技能数值} [{成功等级}]",
-  st: "{角色名} 修改属性成功：{变更列表}",
   sc: "{角色名} 的理智检定：D100={结果}/{SAN} [{成功等级}] 理智变化: {旧SAN}→{新SAN}",
   growth: "{角色名} 进行 {技能} 成长检定：D100={结果}/{技能数值} [{成功等级}]",
   ti: "{角色名} 突发临时疯狂症状：{疯狂症状}",
   secret: "这是暗骰，结果仅 KP 可见",
   hp: "{角色名} 的 HP 变化: {旧HP}→{新HP}",
   coc: "{角色名} 生成了一组 COC7 属性",
-  coc5: "{角色名} 生成了 5 组 COC7 属性"
+  coc6: "{角色名} 生成了 5 组 COC7 属性"
 };
 
 // COC 七版规则书完整条文
@@ -43,15 +42,6 @@ const COC7_RULEBOOK_COMMAND_DOCS = [
 【大失败（Fumble）】：当技能数值低于50时，掷出96至100点均为大失败；当技能数值达到或超过50时，仅掷出100点为大失败。必然失败并可能招致灾难性的副作用。
 奖励骰与惩罚骰（Bonus and Penalty Dice）：
 当情况对调查员极为有利或极其不利时使用。除常规掷出个位骰与十位骰外，额外投掷一个或多个十位数骰子。奖励骰在所有十位骰中选取最小值与个位结合；惩罚骰在所有十位骰中选取最大值与个位结合。`
-  },
-  {
-    key: "st",
-    name: "属性修改",
-    syntax: ".st 属性/技能 数值 或 .st hp/mp/san±n",
-    vars: "{角色名}、{变更列表}",
-    desc: `属性与技能录入修改指令（Set Characteristic & Skill Values）：
-允许玩家快速录入或修改角色面板中的属性、生命（HP）、理智（SAN）、魔法（MP）以及各项技能数值。
-支持批量录入（如 .st 力量60敏捷70）、运算调整（如 .st hp+5 或 .st san-3），操作完成后自动同步回写至角色数据面板。`
   },
   {
     key: "sc",
@@ -85,9 +75,9 @@ const COC7_RULEBOOK_COMMAND_DOCS = [
 属性总和计算：前八项主要属性之和为核心点数，含幸运为全属性总点数。生成后气泡内附带选择并导入按钮，可一键写回当前玩家的人物卡并重算衍生数值。`
   },
   {
-    key: "coc5",
+    key: "coc6",
     name: "多组生成",
-    syntax: ".coc5",
+    syntax: ".coc6",
     vars: "{角色名}",
     desc: `多方案属性生成（Alternative Method - Creating Multiple Sets）：
 为给予玩家多样的角色构思空间，允许一次性生成五组符合七版标准公式的完整属性方案。
@@ -336,21 +326,6 @@ function generateCoc7Attributes() {
   return { str, con, siz, dex, app, int, pow, edu, luk, total, totalWithLuk };
 }
 
-const COC_KEY_MAP = {
-  "str": "str", "力量": "str",
-  "dex": "dex", "敏捷": "dex",
-  "con": "con", "体质": "con",
-  "pow": "pow", "意志": "pow",
-  "siz": "siz", "体型": "siz",
-  "edu": "edu", "教育": "edu",
-  "app": "app", "外貌": "app",
-  "int": "int", "智力": "int", "灵感": "int",
-  "luk": "luk", "幸运": "luk",
-  "hp": "hp", "生命": "hp",
-  "mp": "mp", "魔法": "mp",
-  "san": "san", "理智": "san", "心智": "san"
-};
-
 // 核心指令解析函数
 window.executeDiceCommand = function(rawContent, chat, diceInfo) {
   if (!rawContent || typeof rawContent !== "string") return null;
@@ -391,25 +366,14 @@ window.executeDiceCommand = function(rawContent, chat, diceInfo) {
     return { handled: true, text };
   }
 
-  // 3. 技能/属性检定 .ra 技能名/属性名 或 .ra 技能名 b/p
+  // 3. 技能检定 .ra 技能名 或 .ra 技能名 b/p
   const raMatch = cmdLine.match(/^ra\s+([^\s]+)(?:\s+(b\d*|p\d*))?$/i);
   if (raMatch) {
     const skillName = raMatch[1].trim();
     const bpMod = raMatch[2] ? raMatch[2].toLowerCase() : "";
 
-    const lowerKey = skillName.toLowerCase();
-    const mappedKey = COC_KEY_MAP[lowerKey] || COC_KEY_MAP[skillName];
-
     let skillVal = 50;
-    if (mappedKey) {
-      if (["hp", "mp", "san"].includes(mappedKey)) {
-        if (userCoc.calculated && typeof userCoc.calculated[mappedKey] !== "undefined") {
-          skillVal = parseInt(userCoc.calculated[mappedKey], 10) || 0;
-        }
-      } else if (userCoc.stats && typeof userCoc.stats[mappedKey] !== "undefined") {
-        skillVal = parseInt(userCoc.stats[mappedKey], 10) || 0;
-      }
-    } else if (userCoc.skills && typeof userCoc.skills[skillName] !== "undefined") {
+    if (userCoc.skills && typeof userCoc.skills[skillName] !== "undefined") {
       skillVal = parseInt(userCoc.skills[skillName], 10) || 0;
     } else if (userCoc.stats && typeof userCoc.stats[skillName] !== "undefined") {
       skillVal = parseInt(userCoc.stats[skillName], 10) || 0;
@@ -463,73 +427,6 @@ window.executeDiceCommand = function(rawContent, chat, diceInfo) {
       成功等级: level
     });
     return { handled: true, text };
-  }
-
-  // 3.5 属性/技能录入与修改 .st 力量60 / .st hp+5 / .st 侦查 80
-  const stMatch = cmdLine.match(/^st\s+(.+)$/i);
-  if (stMatch) {
-    const stContent = stMatch[1].trim();
-    const regex = /([^\s\d\+\-\=]+)\s*([\+\-\=])?\s*(\d+)/g;
-    let match;
-    const changes = [];
-
-    if (!userCoc.stats) userCoc.stats = {};
-    if (!userCoc.calculated) userCoc.calculated = {};
-    if (!userCoc.skills) userCoc.skills = {};
-
-    let statsChanged = false;
-
-    while ((match = regex.exec(stContent)) !== null) {
-      const key = match[1].trim();
-      const op = match[2] || "=";
-      const val = parseInt(match[3], 10) || 0;
-
-      const lowerKey = key.toLowerCase();
-      const mappedKey = COC_KEY_MAP[lowerKey] || COC_KEY_MAP[key];
-
-      if (mappedKey) {
-        if (["hp", "mp", "san"].includes(mappedKey)) {
-          const cur = parseInt(userCoc.calculated[mappedKey], 10) || (mappedKey === "san" ? (userCoc.stats.pow || 50) : 10);
-          let newVal = cur;
-          if (op === "+") newVal = cur + val;
-          else if (op === "-") newVal = cur - val;
-          else newVal = val;
-          userCoc.calculated[mappedKey] = Math.max(0, newVal);
-          changes.push(`${key.toUpperCase()}: ${userCoc.calculated[mappedKey]}`);
-        } else {
-          const cur = parseInt(userCoc.stats[mappedKey], 10) || 50;
-          let newVal = cur;
-          if (op === "+") newVal = cur + val;
-          else if (op === "-") newVal = cur - val;
-          else newVal = val;
-          userCoc.stats[mappedKey] = Math.max(0, newVal);
-          statsChanged = true;
-          changes.push(`${key}: ${userCoc.stats[mappedKey]}`);
-        }
-      } else {
-        const cur = parseInt(userCoc.skills[key], 10) || (typeof getSkillBaseValue === "function" ? getSkillBaseValue(key, userCoc.stats) : 0);
-        let newVal = cur;
-        if (op === "+") newVal = cur + val;
-        else if (op === "-") newVal = cur - val;
-        else newVal = val;
-        userCoc.skills[key] = Math.max(0, newVal);
-        changes.push(`${key}: ${userCoc.skills[key]}`);
-      }
-    }
-
-    if (statsChanged && typeof calculateCocStats === "function") {
-      userCoc.calculated = calculateCocStats(userCoc.stats, userCoc.calculated);
-    }
-
-    if (changes.length > 0) {
-      if (!chat.settings) chat.settings = {};
-      chat.settings.myCocPanel = userCoc;
-      if (window.myCocPanel) {
-        window.myCocPanel.setData(userCoc);
-      }
-      const text = `${userName} 修改属性成功：${changes.join(" | ")}`;
-      return { handled: true, text, persistChat: true };
-    }
   }
 
   // 4. 理智检定 .sc 成功损失/失败损失
@@ -629,128 +526,51 @@ window.executeDiceCommand = function(rawContent, chat, diceInfo) {
     return { handled: true, text };
   }
 
-  // 8. 属性生成 .coc 与 .coc5
-  const cocMatch = cmdLine.match(/^coc(5)?$/i);
-  if (cocMatch) {
-    const isFive = cocMatch[1] === "5";
+  // 8. 属性生成 .coc 与 .coc6
+  if (cmdLine.toLowerCase() === "coc") {
+    const attrs = generateCoc7Attributes();
+    const dataStr = encodeURIComponent(JSON.stringify(attrs));
+    const cardHtml = `
+      <div class="coc-gen-result-card" style="font-size: 12px; line-height: 1.4; padding: 6px; background: var(--secondary-bg); border: 1px solid var(--border-color); border-radius: 6px; margin-top: 4px;">
+        <div style="font-weight: bold; margin-bottom: 4px; color: var(--text-primary);">🎲 COC7 七版人物属性</div>
+        <div>力量:${attrs.str} 敏捷:${attrs.dex} 体质:${attrs.con} 意志:${attrs.pow} 体型:${attrs.siz}</div>
+        <div>教育:${attrs.edu} 外貌:${attrs.app} 智力:${attrs.int} 幸运:${attrs.luk}</div>
+        <div style="font-size: 11px; color: var(--text-secondary); margin-top: 2px;">合计:${attrs.total} 含幸运:${attrs.totalWithLuk}</div>
+        <button type="button" class="moe-btn-compact coc-apply-attrs-btn" data-attrs="${dataStr}" style="margin-top: 6px; padding: 2px 10px; font-size: 11px; border-radius: 4px; background: var(--card-bg); border: 1px solid var(--border-color); cursor: pointer; color: var(--accent-color); font-weight: 600;">选择</button>
+      </div>
+    `;
+    const text = `${userName} 生成了一组 COC7 属性`;
+    return { handled: true, text, html: cardHtml };
+  }
 
-    const getCalcSummary = (str, con, pow, siz) => {
-      const hp = Math.floor((con + siz) / 10);
-      const sum = str + siz;
-      let db = "0";
-      if (sum < 65) db = "-2";
-      else if (sum <= 84) db = "-1";
-      else if (sum <= 124) db = "0";
-      else if (sum <= 164) db = "+1D4";
-      else if (sum <= 204) db = "+1D6";
-      else if (sum <= 284) db = "+2D6";
-      else if (sum <= 364) db = "+3D6";
-      else db = "+4D6";
-      return { hp, db };
-    };
+  if (cmdLine.toLowerCase() === "coc6") {
+    let listHtml = "";
+    for (let i = 1; i <= 5; i++) {
+      const a = generateCoc7Attributes();
+      const dataStr = encodeURIComponent(JSON.stringify(a));
+      listHtml += `
+        <div style="padding: 4px 6px; margin-bottom: 4px; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 5px;">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <strong style="color:var(--text-primary);">方案 ${i}</strong>
+            <button type="button" class="moe-btn-compact coc-apply-attrs-btn" data-attrs="${dataStr}" style="padding: 1px 8px; font-size: 10px; border-radius: 4px; background: var(--secondary-bg); border: 1px solid var(--border-color); cursor: pointer; color: var(--accent-color); font-weight: 600;">选择</button>
+          </div>
+          <div style="font-size: 11px; color: var(--text-primary); margin-top: 2px;">
+            力:${a.str} 敏:${a.dex} 体:${a.con} 意:${a.pow} 体型:${a.siz} 教:${a.edu} 貌:${a.app} 智:${a.int} 运:${a.luk}
+          </div>
+          <div style="font-size: 10px; color: var(--text-secondary);">合计:${a.total} 含运:${a.totalWithLuk}</div>
+        </div>
+      `;
+    }
 
-    const renderAttrItem = (lbl, val) => `
-      <div style="display: flex; align-items: center; white-space: nowrap; font-size: 11px;">
-        <span style="font-weight: 600; color: var(--text-primary); display: inline-block; width: 26px; text-align-last: justify;">${lbl}</span>
-        <span style="color: var(--text-primary); margin-right: 2px;">:</span>
-        <span style="color: #444; font-weight: 600; font-size: 11px; display: inline-block; width: 22px; text-align: left;">${val}</span>
+    const fullHtml = `
+      <div class="coc-gen-multi-card" style="font-size: 12px; line-height: 1.4; padding: 6px; background: var(--secondary-bg); border: 1px solid var(--border-color); border-radius: 6px; margin-top: 4px;">
+        <div style="font-weight: bold; margin-bottom: 6px; color: var(--text-primary);">🎲 COC7 七版人物属性生成 5组</div>
+        ${listHtml}
       </div>
     `;
 
-    if (!isFive) {
-      const attrs = generateCoc7Attributes();
-      const calc = getCalcSummary(attrs.str, attrs.con, attrs.pow, attrs.siz);
-      const dataStr = encodeURIComponent(JSON.stringify(attrs));
-
-      const cardHtml = `
-        <div class="coc-gen-result-card" style="font-size: 11px; line-height: 1.5; background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 8px; margin-top: 4px; overflow: hidden;">
-          <div class="coc-card-header" style="padding: 6px 10px; font-weight: 600; color: var(--text-primary); font-size: 12px; background: var(--secondary-bg); border-bottom: 1px solid var(--border-color);">COC7 七版人物属性</div>
-          <div style="padding: 8px 10px;">
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px 8px; font-size: 11px; color: var(--text-primary);">
-              ${renderAttrItem("力量", attrs.str)}
-              ${renderAttrItem("敏捷", attrs.dex)}
-              ${renderAttrItem("体质", attrs.con)}
-              ${renderAttrItem("意志", attrs.pow)}
-              ${renderAttrItem("体型", attrs.siz)}
-              ${renderAttrItem("教育", attrs.edu)}
-              ${renderAttrItem("外貌", attrs.app)}
-              ${renderAttrItem("智力", attrs.int)}
-              ${renderAttrItem("幸运", attrs.luk)}
-            </div>
-            <div style="display: flex; align-items: center; gap: 14px; font-size: 11px; margin-top: 6px; color: var(--text-primary);">
-              <div style="display: flex; align-items: center; white-space: nowrap;">
-                <span style="font-weight: 600; color: var(--text-primary); display: inline-block; width: 26px; text-align-last: justify;">HP</span>
-                <span style="color: var(--text-primary); margin-right: 2px;">:</span>
-                <span style="color: #444; font-weight: 600; font-size: 11px; display: inline-block; width: 22px; text-align: left;">${calc.hp}</span>
-              </div>
-              <div style="display: flex; align-items: center; white-space: nowrap;">
-                <span style="font-weight: 600; color: var(--text-primary); display: inline-block; width: 26px; text-align-last: justify;">DB</span>
-                <span style="color: var(--text-primary); margin-right: 2px;">:</span>
-                <span style="color: #444; font-weight: 600; font-size: 11px; text-align: left;">${calc.db}</span>
-              </div>
-            </div>
-            <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 6px;">
-              <div style="font-size: 10px; color: var(--text-secondary);">合计:${attrs.total} 含幸运:${attrs.totalWithLuk}</div>
-              <button type="button" class="moe-btn-compact coc-apply-attrs-btn" data-attrs="${dataStr}" style="padding: 2px 10px; font-size: 10px; border-radius: 10px; background: var(--secondary-bg); border: 1px solid var(--border-color); cursor: pointer; color: var(--accent-color); font-weight: 600;">选择</button>
-            </div>
-          </div>
-        </div>
-      `;
-      const text = `${userName} 生成了一组 COC7 属性`;
-      return { handled: true, text, html: cardHtml };
-    } else {
-      let listHtml = "";
-
-      for (let i = 1; i <= 5; i++) {
-        const a = generateCoc7Attributes();
-        const calc = getCalcSummary(a.str, a.con, a.pow, a.siz);
-        const dataStr = encodeURIComponent(JSON.stringify(a));
-        listHtml += `
-          <div style="background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 6px; margin-bottom: 6px; overflow: hidden;">
-            <div class="coc-card-header" style="padding: 4px 8px; font-size: 11px; font-weight: 600; color: var(--text-primary); background: var(--secondary-bg); border-bottom: 1px solid var(--border-color);">方案 ${i}</div>
-            <div style="padding: 6px 8px;">
-              <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px 6px; font-size: 11px; color: var(--text-primary);">
-                ${renderAttrItem("力量", a.str)}
-                ${renderAttrItem("敏捷", a.dex)}
-                ${renderAttrItem("体质", a.con)}
-                ${renderAttrItem("意志", a.pow)}
-                ${renderAttrItem("体型", a.siz)}
-                ${renderAttrItem("教育", a.edu)}
-                ${renderAttrItem("外貌", a.app)}
-                ${renderAttrItem("智力", a.int)}
-                ${renderAttrItem("幸运", a.luk)}
-              </div>
-              <div style="display: flex; align-items: center; gap: 14px; font-size: 11px; margin-top: 5px; color: var(--text-primary);">
-                <div style="display: flex; align-items: center; white-space: nowrap;">
-                  <span style="font-weight: 600; color: var(--text-primary); display: inline-block; width: 26px; text-align-last: justify;">HP</span>
-                  <span style="color: var(--text-primary); margin-right: 2px;">:</span>
-                  <span style="color: #444; font-weight: 600; font-size: 11px; display: inline-block; width: 22px; text-align: left;">${calc.hp}</span>
-                </div>
-                <div style="display: flex; align-items: center; white-space: nowrap;">
-                  <span style="font-weight: 600; color: var(--text-primary); display: inline-block; width: 26px; text-align-last: justify;">DB</span>
-                  <span style="color: var(--text-primary); margin-right: 2px;">:</span>
-                  <span style="color: #444; font-weight: 600; font-size: 11px; text-align: left;">${calc.db}</span>
-                </div>
-              </div>
-              <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 4px;">
-                <div style="font-size: 10px; color: var(--text-secondary);">合计:${a.total} 含运:${a.totalWithLuk}</div>
-                <button type="button" class="moe-btn-compact coc-apply-attrs-btn" data-attrs="${dataStr}" style="padding: 1px 10px; font-size: 10px; border-radius: 10px; background: var(--secondary-bg); border: 1px solid var(--border-color); cursor: pointer; color: var(--accent-color); font-weight: 600;">选择</button>
-              </div>
-            </div>
-          </div>
-        `;
-      }
-
-      const fullHtml = `
-        <div class="coc-gen-multi-card" style="font-size: 11px; line-height: 1.5; padding: 8px 10px; background: var(--secondary-bg); border: 1px solid var(--border-color); border-radius: 8px; margin-top: 4px;">
-          <div class="coc-card-header" style="font-weight: 600; margin-bottom: 6px; color: var(--text-primary); font-size: 12px;">COC7 七版人物属性生成 5组</div>
-          ${listHtml}
-        </div>
-      `;
-
-      const text = `${userName} 生成了 5 组 COC7 属性`;
-      return { handled: true, text, html: fullHtml };
-    }
+    const text = `${userName} 生成了 5 组 COC7 属性`;
+    return { handled: true, text, html: fullHtml };
   }
 
   return null;
@@ -770,9 +590,7 @@ document.addEventListener("click", async (e) => {
     if (!chat) return;
 
     if (!chat.settings) chat.settings = {};
-    if (!chat.settings.myCocPanel) {
-      chat.settings.myCocPanel = (typeof getDefaultCocData === "function" ? getDefaultCocData() : { stats: {}, skills: {}, calculated: {} });
-    }
+    if (!chat.settings.myCocPanel) chat.settings.myCocPanel = (typeof getDefaultCocData === "function" ? getDefaultCocData() : { stats: {}, skills: {}, calculated: {} });
 
     chat.settings.myCocPanel.stats = {
       str: a.str,
@@ -790,14 +608,10 @@ document.addEventListener("click", async (e) => {
       chat.settings.myCocPanel.calculated = calculateCocStats(chat.settings.myCocPanel.stats, chat.settings.myCocPanel.calculated);
     }
 
-    if (!chat.settings.myCocPanel.skills) chat.settings.myCocPanel.skills = {};
-    chat.settings.myCocPanel.skills["闪避"] = Math.floor(a.dex / 2);
-
     if (window.myCocPanel) {
       window.myCocPanel.setData(chat.settings.myCocPanel);
     }
 
-    state.chats[state.activeChatId] = chat;
     await db.chats.put(chat);
     const targetName = chat.settings?.myName || chat.settings?.myNickname || "我";
     const msg = `已导入${targetName}的面板`;
@@ -874,8 +688,8 @@ function renderCommandsTab(container) {
   }).join("");
 
   container.innerHTML = `
-    <div style="display: flex; gap: 4px; align-items: center; margin-bottom: 10px; width: 100%; box-sizing: border-box; position: relative; z-index: 5;">
-      <select id="cmd-preset-select" class="moe-input" style="flex: 1 1 auto; height: 28px; min-height: 28px; font-size: 11px; padding: 2px 8px; min-width: 90px; color: var(--text-primary); background-color: var(--card-bg, #ffffff); position: relative; z-index: 5; opacity: 1; visibility: visible; border-radius: 14px;">
+    <div style="display: flex; gap: 4px; align-items: center; margin-bottom: 10px; width: 100%; box-sizing: border-box;">
+      <select id="cmd-preset-select" class="moe-input" style="flex: 1 1 auto; height: 26px; font-size: 11px; padding: 2px 4px; min-width: 90px;">
         ${presetOptionsHtml}
       </select>
       <button type="button" id="cmd-new-preset-btn" class="moe-btn-mini" style="flex: 0 0 auto !important; width: auto !important; max-width: 44px !important; padding: 2px 6px !important; font-size: 11px !important; height: 26px !important; line-height: 20px !important;">新建</button>
@@ -990,8 +804,8 @@ function renderWeatherTab(container) {
   }).join("");
 
   container.innerHTML = `
-    <div style="display: flex; gap: 4px; align-items: center; margin-bottom: 10px; width: 100%; box-sizing: border-box; position: relative; z-index: 5;">
-      <select id="weather-pool-select" class="moe-input" style="flex: 1 1 auto; height: 28px; min-height: 28px; font-size: 11px; padding: 2px 8px; min-width: 90px; color: var(--text-primary); background-color: var(--card-bg, #ffffff); position: relative; z-index: 5; opacity: 1; visibility: visible; border-radius: 14px;">
+    <div style="display: flex; gap: 4px; align-items: center; margin-bottom: 10px; width: 100%; box-sizing: border-box;">
+      <select id="weather-pool-select" class="moe-input" style="flex: 1 1 auto; height: 26px; font-size: 11px; padding: 2px 4px; min-width: 90px;">
         ${poolOptionsHtml}
       </select>
       <button type="button" id="weather-new-pool-btn" class="moe-btn-mini" style="flex: 0 0 auto !important; width: auto !important; max-width: 44px !important; padding: 2px 6px !important; font-size: 11px !important; height: 26px !important; line-height: 20px !important;">新建</button>
