@@ -63779,14 +63779,12 @@ ${colSpecs.join('\n')}
             .addEventListener("click", handleGenerateMembers);
 
           // 预设功能按钮
-          const datingPresetSelect = document.getElementById("dating-preset-select");
-          if (datingPresetSelect && typeof handleDatingPresetSelect === "function") {
-            datingPresetSelect.addEventListener("change", handleDatingPresetSelect);
-          }
-          const manageDatingPresetsBtn = document.getElementById("manage-dating-presets-btn");
-          if (manageDatingPresetsBtn && typeof openDatingPresetManager === "function") {
-            manageDatingPresetsBtn.addEventListener("click", openDatingPresetManager);
-          }
+          document
+            .getElementById("dating-preset-select")
+            .addEventListener("change", handleDatingPresetSelect);
+          document
+            .getElementById("manage-dating-presets-btn")
+            .addEventListener("click", openDatingPresetManager);
 
           // --- 表情分类功能事件绑定 ---
           document
