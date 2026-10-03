@@ -721,51 +721,48 @@ if (document.readyState === "loading") {
 function openCocFillModal(cocPanel) {
   let modal = document.getElementById("coc-inject-modal");
   if (!modal) {
-    modal = document.createElement("div");
-    modal.id = "coc-inject-modal";
-    modal.className = "modal";
-    document.body.appendChild(modal);
+    modal = document.getElementById("coc-worldbook-fill-modal");
+    if (!modal) {
+      modal = document.createElement("div");
+      modal.id = "coc-inject-modal";
+      modal.className = "modal";
+      modal.innerHTML = `
+        <div class="modal-content" style="max-width: 320px; padding: 14px; border-radius: 16px;">
+          <div class="modal-header" style="font-size: 14px; font-weight: 600; text-align: center; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
+            <span>数据注入</span>
+            <button type="button" class="close-btn" id="close-coc-inject-modal-btn" style="background: none; border: none; font-size: 18px; cursor: pointer; color: var(--text-secondary);">&times;</button>
+          </div>
+          <div class="modal-body" style="padding: 4px 0;">
+            <div style="display: flex; gap: 8px; margin-bottom: 12px;">
+              <button type="button" class="moe-btn-secondary coc-inject-tab-btn" id="coc-inject-tab-wb" data-type="worldbook" style="flex: 1; height: 28px; font-size: 12px; border-radius: 8px; border: 1px solid var(--accent-color); background: var(--accent-color); color: #ffffff; cursor: pointer;">世界书</button>
+              <button type="button" class="moe-btn-secondary coc-inject-tab-btn" id="coc-inject-tab-mod" data-type="module" style="flex: 1; height: 28px; font-size: 12px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--secondary-bg); color: var(--text-primary); cursor: pointer;">模组</button>
+            </div>
+            <div id="coc-inject-wb-section">
+              <label style="font-size: 12px; color: var(--text-secondary); margin-bottom: 6px; display: block;">选择世界书</label>
+              <select id="coc-inject-wb-select" class="moe-input" style="width: 100%; height: 32px; font-size: 12px; border-radius: 8px; padding: 4px 8px; box-sizing: border-box; color: var(--text-primary); background: var(--card-bg);">
+              </select>
+            </div>
+            <div id="coc-inject-mod-section" style="display: none;">
+              <div style="padding: 24px 10px; text-align: center; color: var(--text-secondary); font-size: 12px; background: var(--secondary-bg); border-radius: 8px; border: 1px dashed var(--border-color);">
+                暂无可用模组
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer" style="display: flex; gap: 8px; margin-top: 14px;">
+            <button type="button" class="cancel" id="cancel-coc-inject-btn" style="flex: 1; height: 30px; font-size: 12px; border-radius: 8px;">取消</button>
+            <button type="button" class="moe-btn" id="confirm-coc-inject-btn" style="flex: 1; height: 30px; font-size: 12px; border-radius: 8px;">确定</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+    }
   }
-
-  modal.innerHTML = `
-    <div class="modal-content" style="max-width: 270px; width: 85%; padding: 14px; border-radius: 16px; margin: auto; box-sizing: border-box; background: var(--card-bg); border: 1px solid var(--border-color); box-shadow: 0 4px 20px rgba(0,0,0,0.15); display: flex; flex-direction: column; align-items: center;">
-      <div class="modal-header" style="width: 100%; font-size: 14px; font-weight: 600; text-align: center; margin-bottom: 10px; padding: 0 0 8px 0; border-bottom: 1px solid var(--border-color); display: flex; justify-content: center; position: relative;">
-        <span style="color: var(--text-primary);">数据注入</span>
-        <button type="button" class="close-btn" id="close-coc-inject-modal-btn" style="position: absolute; right: 0; top: 0; background: none; border: none; font-size: 16px; cursor: pointer; color: var(--text-secondary); line-height: 1; padding: 0;">&times;</button>
-      </div>
-      <div class="modal-body" style="width: 100%; padding: 0; display: flex; flex-direction: column; align-items: center;">
-        <div style="display: flex; justify-content: center; gap: 8px; margin-bottom: 10px; width: 100%;">
-          <button type="button" class="moe-btn-secondary coc-inject-tab-btn" id="coc-inject-tab-wb" data-type="worldbook" style="width: 76px; height: 26px; font-size: 12px; border-radius: 8px; border: 1px solid var(--accent-color); background: var(--accent-color); color: #ffffff; cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0;">世界书</button>
-          <button type="button" class="moe-btn-secondary coc-inject-tab-btn" id="coc-inject-tab-mod" data-type="module" style="width: 76px; height: 26px; font-size: 12px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--secondary-bg); color: var(--text-primary); cursor: pointer; display: flex; align-items: center; justify-content: center; padding: 0;">模组</button>
-        </div>
-
-        <div id="coc-inject-wb-section" style="width: 100%;">
-          <div id="coc-inject-selected-wb-name" style="width: 100%; height: 32px; box-sizing: border-box; border-radius: 8px; background: var(--secondary-bg); border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; text-align: center; font-size: 12px; font-weight: 600; color: var(--accent-color); margin-bottom: 8px; padding: 0 10px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-            请选择世界书
-          </div>
-          <div id="coc-inject-wb-categories-tree" style="width: 100%; max-height: 170px; overflow-y: auto; box-sizing: border-box; border-radius: 8px; background: var(--secondary-bg); border: 1px solid var(--border-color); padding: 4px;">
-          </div>
-        </div>
-
-        <div id="coc-inject-mod-section" style="display: none; width: 100%;">
-          <div style="padding: 24px 10px; text-align: center; color: var(--text-secondary); font-size: 12px; background: var(--secondary-bg); border-radius: 8px; border: 1px dashed var(--border-color); width: 100%; box-sizing: border-box;">
-            暂无可用模组
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer" style="display: flex; justify-content: center; gap: 10px; margin-top: 12px; width: 100%;">
-        <button type="button" class="moe-btn-secondary" id="cancel-coc-inject-btn" style="width: 76px; height: 28px; font-size: 12px; border-radius: 8px; display: flex; align-items: center; justify-content: center; padding: 0; cursor: pointer;">取消</button>
-        <button type="button" class="moe-btn" id="confirm-coc-inject-btn" style="width: 76px; height: 28px; font-size: 12px; border-radius: 8px; display: flex; align-items: center; justify-content: center; padding: 0; cursor: pointer;">确定</button>
-      </div>
-    </div>
-  `;
 
   const wbTab = modal.querySelector("#coc-inject-tab-wb");
   const modTab = modal.querySelector("#coc-inject-tab-mod");
   const wbSection = modal.querySelector("#coc-inject-wb-section");
   const modSection = modal.querySelector("#coc-inject-mod-section");
-  const selectedWbNameEl = modal.querySelector("#coc-inject-selected-wb-name");
-  const treeContainer = modal.querySelector("#coc-inject-wb-categories-tree");
+  const wbSelect = modal.querySelector("#coc-inject-wb-select");
   const cancelBtn = modal.querySelector("#cancel-coc-inject-btn");
   const closeBtn = modal.querySelector("#close-coc-inject-modal-btn");
   const confirmBtn = modal.querySelector("#confirm-coc-inject-btn");
@@ -801,106 +798,23 @@ function openCocFillModal(cocPanel) {
   updateTabsUI();
 
   const worldBooks = (window.state && window.state.worldBooks) || [];
-  let selectedBookId = worldBooks.length > 0 ? worldBooks[0].id : null;
-
-  async function renderCategoryTree() {
-    if (!treeContainer) return;
-    treeContainer.innerHTML = "";
-
+  if (wbSelect) {
+    wbSelect.innerHTML = "";
     if (worldBooks.length === 0) {
-      treeContainer.innerHTML = '<div style="text-align: center; color: var(--text-secondary); font-size: 12px; padding: 16px 0;">暂无可用世界书</div>';
-      if (selectedWbNameEl) selectedWbNameEl.textContent = "暂无世界书";
-      return;
-    }
-
-    let categories = [];
-    if (window.db && window.db.worldBookCategories) {
-      try {
-        categories = await window.db.worldBookCategories.toArray();
-      } catch (e) {
-        categories = [];
-      }
-    }
-
-    const booksByCategoryId = worldBooks.reduce((acc, book) => {
-      const catId = book.categoryId || "uncategorized";
-      if (!acc[catId]) acc[catId] = [];
-      acc[catId].push(book);
-      return acc;
-    }, {});
-
-    const catList = [...categories];
-    if (booksByCategoryId["uncategorized"] && booksByCategoryId["uncategorized"].length > 0) {
-      if (!catList.some(c => c.id === "uncategorized")) {
-        catList.push({ id: "uncategorized", name: "未分类" });
-      }
-    }
-
-    const initialBook = worldBooks.find(b => b.id === selectedBookId) || worldBooks[0];
-    if (initialBook) {
-      selectedBookId = initialBook.id;
-      if (selectedWbNameEl) selectedWbNameEl.textContent = initialBook.name || "未命名世界书";
-    }
-
-    catList.forEach(category => {
-      const booksInCat = booksByCategoryId[category.id] || [];
-      if (booksInCat.length === 0) return;
-
-      const groupDiv = document.createElement("div");
-      groupDiv.style.cssText = "margin-bottom: 4px; width: 100%; box-sizing: border-box;";
-
-      const headerDiv = document.createElement("div");
-      headerDiv.style.cssText = "display: flex; align-items: center; justify-content: center; gap: 6px; padding: 5px 8px; font-size: 12px; font-weight: 600; color: var(--text-primary); cursor: pointer; user-select: none; border-radius: 6px; background: rgba(0,0,0,0.03);";
-      
-      const arrowSpan = document.createElement("span");
-      arrowSpan.style.cssText = "font-size: 9px; color: var(--text-secondary); transition: transform 0.2s; transform: rotate(0deg);";
-      arrowSpan.textContent = "▼";
-
-      const catNameSpan = document.createElement("span");
-      catNameSpan.textContent = `${category.name} (${booksInCat.length})`;
-
-      headerDiv.appendChild(arrowSpan);
-      headerDiv.appendChild(catNameSpan);
-
-      const itemsDiv = document.createElement("div");
-      itemsDiv.style.cssText = "display: flex; flex-direction: column; gap: 2px; padding: 4px 0 4px 8px;";
-
-      let isCollapsed = false;
-      headerDiv.onclick = () => {
-        isCollapsed = !isCollapsed;
-        itemsDiv.style.display = isCollapsed ? "none" : "flex";
-        arrowSpan.style.transform = isCollapsed ? "rotate(-90deg)" : "rotate(0deg)";
-      };
-
-      booksInCat.forEach(book => {
-        const isSelected = (book.id === selectedBookId);
-        const bookItem = document.createElement("div");
-        bookItem.style.cssText = `padding: 4px 8px; font-size: 11px; text-align: center; border-radius: 6px; cursor: pointer; user-select: none; transition: all 0.15s; ${isSelected ? 'background: var(--card-bg); color: var(--accent-color); font-weight: 600; border: 1px solid var(--accent-color);' : 'color: var(--text-primary); border: 1px solid transparent;'}`;
-        bookItem.textContent = book.name || "未命名世界书";
-
-        bookItem.onclick = (e) => {
-          e.stopPropagation();
-          selectedBookId = book.id;
-          if (selectedWbNameEl) selectedWbNameEl.textContent = book.name || "未命名世界书";
-          treeContainer.querySelectorAll("[data-wb-id]").forEach(el => {
-            const isCur = el.dataset.wbId === String(book.id);
-            el.style.background = isCur ? "var(--card-bg)" : "transparent";
-            el.style.color = isCur ? "var(--accent-color)" : "var(--text-primary)";
-            el.style.fontWeight = isCur ? "600" : "normal";
-            el.style.borderColor = isCur ? "var(--accent-color)" : "transparent";
-          });
-        };
-        bookItem.dataset.wbId = String(book.id);
-        itemsDiv.appendChild(bookItem);
+      const opt = document.createElement("option");
+      opt.value = "";
+      opt.textContent = "暂无可用世界书";
+      wbSelect.appendChild(opt);
+    } else {
+      worldBooks.forEach(b => {
+        const opt = document.createElement("option");
+        opt.value = b.id;
+        opt.textContent = b.name || "未命名世界书";
+        wbSelect.appendChild(opt);
       });
-
-      groupDiv.appendChild(headerDiv);
-      groupDiv.appendChild(itemsDiv);
-      treeContainer.appendChild(groupDiv);
-    });
+    }
   }
 
-  renderCategoryTree();
   modal.classList.add("visible");
 
   const closeModal = () => modal.classList.remove("visible");
@@ -918,6 +832,7 @@ function openCocFillModal(cocPanel) {
         return;
       }
 
+      const selectedBookId = wbSelect ? wbSelect.value : null;
       if (!selectedBookId) {
         closeModal();
         return;
@@ -1060,7 +975,6 @@ ${(book.content || '').slice(0, 3000)}
       }
     };
   }
-}
 }
 
 window.openCocFillModal = openCocFillModal;
