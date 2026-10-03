@@ -21435,20 +21435,7 @@ button, input, select, textarea, .moe-btn, .moe-btn-mini, .moe-btn-secondary, .d
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2) !important;
 }
 /* ================================================================= */
-.update-font-url-btn {
-  width: 38px !important;
-  min-width: 38px !important;
-  max-width: 44px !important;
-  padding: 0 4px !important;
-  font-size: 11px !important;
-  height: 22px !important;
-  line-height: 20px !important;
-  box-sizing: border-box !important;
-  flex-shrink: 0 !important;
-  display: inline-flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
+/* === ✨ 圈子 UI 终极美化包 v2.0：清透·可爱·高级·全覆盖 ✨ === */
 /* ================================================================= */
 
 /* --- 1. 全局背景优化 (让透视效果更明显) --- */

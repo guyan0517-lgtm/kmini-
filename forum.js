@@ -1318,13 +1318,11 @@ ${contextInstructions || "- 自由发挥，但保持连载节奏，注意人物�
       const seriesTitle =
         parsed.seriesTitle || `${char1Name}x${char2Name}的连载`;
       const chapterTitle = parsed.chapterTitle || "第一章";
-      const rawChapterContent =
+      const chapterContent =
         parsed.chapterContent ||
         parsed.story ||
         parsed.content ||
         "这一章的正文生成失败，请重试。";
-      const continuationPrompt = `\n\n【下一章生成指令/提示词】: 请基于第一章《${chapterTitle}》结尾，继续生成《${seriesTitle}》的第二章内容，保持角色性格与剧情走向。`;
-      const chapterContent = rawChapterContent + continuationPrompt;
       const chapterSummary = parsed.chapterSummary || "";
       const baseCategories = Array.isArray(parsed.categories)
         ? parsed.categories
@@ -2576,8 +2574,9 @@ ${JSON.stringify(publicFigures, null, 2)}
           }`,
       )
       .join("\n");
-    const maxChapterIndex = chapters.length > 0 ? Math.max(...chapters.map(c => c.chapterIndex || 0)) : 0;
-    const nextIndex = maxChapterIndex + 1;
+    const nextIndex =
+      (series.lastChapterIndex || lastChapter.chapterIndex || chapters.length) +
+      1;
 
     ongoingSeriesTasks.add(seriesId);
     await showCustomAlert("追更中...", `正在写第${nextIndex}章，稍等片刻...`);
@@ -2680,13 +2679,11 @@ ${lastChapter.content || ""}
       }
 
       const chapterTitle = parsed.chapterTitle || `第${nextIndex}章`;
-      const rawChapterContent =
+      const chapterContent =
         parsed.chapterContent ||
         parsed.story ||
         parsed.content ||
         "本章生成失败，请重试。";
-      const continuationPrompt = `\n\n【下一章生成指令/提示词】: 请基于第${nextIndex}章《${chapterTitle}》结尾，继续生成《${seriesTitle}》的第${nextIndex + 1}章内容，保持角色性格与剧情走向。`;
-      const chapterContent = rawChapterContent + continuationPrompt;
       const chapterSummary = parsed.chapterSummary || "";
       const baseCategories = Array.isArray(parsed.categories)
         ? parsed.categories
@@ -2919,7 +2916,7 @@ ${lastChapter.content || ""}
   // 3. 绑定小组页和帖子页的返回按钮
   document
     .getElementById("back-to-forum-list")
-    .addEventListener("click", () => showScreen("home-screen"));
+    .addEventListener("click", () => showScreen("forum-screen"));
   document
     .getElementById("back-to-group-screen")
     .addEventListener("click", () => {
@@ -3086,38 +3083,14 @@ ${lastChapter.content || ""}
               "rw",
               db.forumPosts,
               db.forumComments,
-              db.forumChapters,
-              db.forumSeries,
               async () => {
-                const targetPost = await db.forumPosts.get(parseInt(postId));
-                if (targetPost) {
-                  await db.forumComments
-                    .where("postId")
-                    .equals(parseInt(postId))
-                    .delete();
-                  await db.forumPosts.delete(parseInt(postId));
-
-                  if (targetPost.seriesId) {
-                    await db.forumChapters
-                      .where("postId")
-                      .equals(parseInt(postId))
-                      .delete();
-
-                    const remChapters = await db.forumChapters
-                      .where("seriesId")
-                      .equals(targetPost.seriesId)
-                      .toArray();
-
-                    const remMaxIndex = remChapters.length > 0
-                      ? Math.max(...remChapters.map(c => c.chapterIndex || 0))
-                      : 0;
-
-                    await db.forumSeries.update(targetPost.seriesId, {
-                      lastChapterIndex: remMaxIndex,
-                      isFinished: false
-                    });
-                  }
-                }
+                // 1. 删除所有与该帖子关联的评论
+                await db.forumComments
+                  .where("postId")
+                  .equals(parseInt(postId))
+                  .delete();
+                // 2. 删除帖子本身
+                await db.forumPosts.delete(parseInt(postId));
               },
             );
 
