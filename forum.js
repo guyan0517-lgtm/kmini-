@@ -207,17 +207,15 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("group-screen-title").textContent = groupName;
     const fanficBar = document.getElementById("fanfic-preference-bar");
 
-    // 根据小组名显示或隐藏特定UI
     if (groupName === "同人文小组") {
       fanficBar.style.display = "block";
       await populateFanficSelectors();
-      await loadFanficPresets(); // ★ 新增：加载预设
+      await loadFanficPresets();
 
-      // 默认折叠起来，不占用空间
-      document.getElementById("fanfic-bar-content").classList.add("collapsed");
-      document
-        .getElementById("fanfic-bar-toggle-icon")
-        .classList.add("collapsed");
+      const fanficContent = document.getElementById("fanfic-bar-content");
+      const fanficToggle = document.getElementById("fanfic-bar-toggle-icon");
+      if (fanficContent) fanficContent.classList.remove("collapsed");
+      if (fanficToggle) fanficToggle.classList.remove("collapsed");
     } else {
       fanficBar.style.display = "none";
     }
@@ -1320,11 +1318,13 @@ ${contextInstructions || "- 自由发挥，但保持连载节奏，注意人物�
       const seriesTitle =
         parsed.seriesTitle || `${char1Name}x${char2Name}的连载`;
       const chapterTitle = parsed.chapterTitle || "第一章";
-      const chapterContent =
+      const rawChapterContent =
         parsed.chapterContent ||
         parsed.story ||
         parsed.content ||
         "这一章的正文生成失败，请重试。";
+      const continuationPrompt = `\n\n【下一章生成指令/提示词】: 请基于第一章《${chapterTitle}》结尾，继续生成《${seriesTitle}》的第二章内容，保持角色性格与剧情走向。`;
+      const chapterContent = rawChapterContent + continuationPrompt;
       const chapterSummary = parsed.chapterSummary || "";
       const baseCategories = Array.isArray(parsed.categories)
         ? parsed.categories
@@ -2576,9 +2576,8 @@ ${JSON.stringify(publicFigures, null, 2)}
           }`,
       )
       .join("\n");
-    const nextIndex =
-      (series.lastChapterIndex || lastChapter.chapterIndex || chapters.length) +
-      1;
+    const maxChapterIndex = chapters.length > 0 ? Math.max(...chapters.map(c => c.chapterIndex || 0)) : 0;
+    const nextIndex = maxChapterIndex + 1;
 
     ongoingSeriesTasks.add(seriesId);
     await showCustomAlert("追更中...", `正在写第${nextIndex}章，稍等片刻...`);
@@ -2681,11 +2680,13 @@ ${lastChapter.content || ""}
       }
 
       const chapterTitle = parsed.chapterTitle || `第${nextIndex}章`;
-      const chapterContent =
+      const rawChapterContent =
         parsed.chapterContent ||
         parsed.story ||
         parsed.content ||
         "本章生成失败，请重试。";
+      const continuationPrompt = `\n\n【下一章生成指令/提示词】: 请基于第${nextIndex}章《${chapterTitle}》结尾，继续生成《${seriesTitle}》的第${nextIndex + 1}章内容，保持角色性格与剧情走向。`;
+      const chapterContent = rawChapterContent + continuationPrompt;
       const chapterSummary = parsed.chapterSummary || "";
       const baseCategories = Array.isArray(parsed.categories)
         ? parsed.categories
@@ -2879,15 +2880,46 @@ ${lastChapter.content || ""}
   // ▲▲▲ 替换结束 ▲▲▲
   // ▼▼▼ 【全新】论坛功能事件监听器 ▼▼▼
 
-  // 2. 当用户点击“圈子”App图标时，渲染小组列表
-  document
-    .querySelector(".desktop-app-icon[onclick=\"showScreen('forum-screen')\"]")
-    .addEventListener("click", renderForumScreen);
+  async function openFanficGroupDirectly() {
+    let fanficGroup = null;
+    try {
+      fanficGroup = await db.forumGroups.where("name").equals("同人文小组").first();
+      if (!fanficGroup) {
+        const newId = Date.now();
+        fanficGroup = {
+          id: newId,
+          name: "同人文小组",
+          description: "同人文创作小组",
+          avatar: "https://api.iconify.design/lucide:book-open.svg?color=%23ff7f50",
+          categories: ["同人文"]
+        };
+        await db.forumGroups.add(fanficGroup);
+      }
+    } catch (e) {
+      console.error("查找或创建同人文小组失败:", e);
+    }
+    if (fanficGroup) {
+      await openGroup(fanficGroup.id, "同人文小组");
+    } else {
+      showScreen("forum-screen");
+    }
+  }
+
+  // 2. 当用户点击“书柜”App图标时，直接打开同人文小组面板
+  const forumIcon = document.querySelector(".desktop-app-icon[onclick=\"showScreen('forum-screen')\"]");
+  if (forumIcon) {
+    forumIcon.onclick = null;
+    forumIcon.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      openFanficGroupDirectly();
+    });
+  }
 
   // 3. 绑定小组页和帖子页的返回按钮
   document
     .getElementById("back-to-forum-list")
-    .addEventListener("click", () => showScreen("forum-screen"));
+    .addEventListener("click", () => showScreen("home-screen"));
   document
     .getElementById("back-to-group-screen")
     .addEventListener("click", () => {
@@ -3054,14 +3086,38 @@ ${lastChapter.content || ""}
               "rw",
               db.forumPosts,
               db.forumComments,
+              db.forumChapters,
+              db.forumSeries,
               async () => {
-                // 1. 删除所有与该帖子关联的评论
-                await db.forumComments
-                  .where("postId")
-                  .equals(parseInt(postId))
-                  .delete();
-                // 2. 删除帖子本身
-                await db.forumPosts.delete(parseInt(postId));
+                const targetPost = await db.forumPosts.get(parseInt(postId));
+                if (targetPost) {
+                  await db.forumComments
+                    .where("postId")
+                    .equals(parseInt(postId))
+                    .delete();
+                  await db.forumPosts.delete(parseInt(postId));
+
+                  if (targetPost.seriesId) {
+                    await db.forumChapters
+                      .where("postId")
+                      .equals(parseInt(postId))
+                      .delete();
+
+                    const remChapters = await db.forumChapters
+                      .where("seriesId")
+                      .equals(targetPost.seriesId)
+                      .toArray();
+
+                    const remMaxIndex = remChapters.length > 0
+                      ? Math.max(...remChapters.map(c => c.chapterIndex || 0))
+                      : 0;
+
+                    await db.forumSeries.update(targetPost.seriesId, {
+                      lastChapterIndex: remMaxIndex,
+                      isFinished: false
+                    });
+                  }
+                }
               },
             );
 
